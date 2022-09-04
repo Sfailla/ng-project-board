@@ -27,27 +27,29 @@ import { Component, OnInit } from '@angular/core';
 
       .header {
         height: var(--header-height);
-        display: flex;
+        display: grid;
+        grid-template-columns: 18rem 1fr;
+
+        &__post {
+          height: var(--header-height);
+          background-color: $primary-color;
+        }
 
         &__toolbar {
           width: 100%;
           @include flex(space-between, center);
           padding: 0 20px;
           background-color: #fff;
-          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        &__post {
-          width: 6rem;
-          height: var(--header-height);
-          background-color: #0285ff;
+          border-bottom: 1px solid #e5e5e5;
         }
 
         &__logo {
           @include flex(flex-start);
 
           &--text {
-            color: #0285ff;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            color: $primary-color;
           }
         }
 
@@ -74,7 +76,7 @@ import { Component, OnInit } from '@angular/core';
         &__profile-name {
           font-size: 14px;
           font-weight: bold;
-          color: #00a8ff;
+          color: $primary-color;
           text-transform: uppercase;
         }
       }
