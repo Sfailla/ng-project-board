@@ -10,7 +10,7 @@ html {
   width: 100%;
   height: 100%;
   font-size: 62.5%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, "Segoe UI", Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   color: #333;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +22,7 @@ body {
   height: inherit;
   font-family: "Roboto", "Open Sans", sans-serif;
   font-size: 1.6rem;
-  background-color: $secondary-background-color;
+  background-color: $background-color;
 }
 
 a {
