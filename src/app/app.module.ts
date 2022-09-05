@@ -7,13 +7,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { IonicModule } from '@ionic/angular';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RegisterComponent,
-    SideMenuComponent
+    SideMenuComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
