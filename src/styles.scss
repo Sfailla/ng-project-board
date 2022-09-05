@@ -1,11 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "./styles/abstracts";
-@import "./styles/base";
-@import "./styles/vendor";
-@import "./styles/layouts";
-@import "./styles/components";
+@import './styles/abstracts';
+@import './theme/variables';
+@import './styles/base';
+@import './styles/vendor';
+@import './styles/layouts';
+@import './styles/components';
 
 :root {
-  --header-height: 6rem;
+	--header-height: 6rem;
+	--menu-width: 18rem;
 }
