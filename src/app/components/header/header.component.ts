@@ -15,7 +15,6 @@ import { Component, OnInit } from '@angular/core'
 				</div>
 				<div class="header__logo">
 					<ion-title class="header__logo--text">Project Board</ion-title>
-					<!-- <img src="assets/images/logo.png" alt="logo" /> -->
 				</div>
 			</ion-toolbar>
 		</ion-header>
