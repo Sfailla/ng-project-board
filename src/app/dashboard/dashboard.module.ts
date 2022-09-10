@@ -9,9 +9,6 @@ const routes: Routes = [{ path: '', component: DashboardComponent }]
 
 @NgModule({
 	declarations: [DashboardComponent],
-	imports: [CommonModule, IonicModule, ComponentsModule, RouterModule.forChild(routes)],
-	exports: [],
-	providers: [],
-	schemas: []
+	imports: [CommonModule, IonicModule, ComponentsModule, RouterModule.forChild(routes)]
 })
 export class DashboardModule {}
