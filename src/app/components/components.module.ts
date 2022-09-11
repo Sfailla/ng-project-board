@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common'
 import { HeaderComponent } from './header/header.component'
 import { SideMenuComponent } from './side-menu/side-menu.component'
 import { IonicModule } from '@ionic/angular'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
 	declarations: [HeaderComponent, SideMenuComponent],
-	imports: [CommonModule, IonicModule],
+	imports: [CommonModule, IonicModule, RouterModule],
 	exports: [HeaderComponent, SideMenuComponent]
 })
 export class ComponentsModule {}
