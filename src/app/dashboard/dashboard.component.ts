@@ -7,11 +7,17 @@ import { Component, OnInit } from '@angular/core'
 			<app-side-menu></app-side-menu>
 			<ion-content class="app-layout__content">
 				<app-header></app-header>
-				<ion-router-outlet></ion-router-outlet>
+				<ion-router-outlet class="router-outlet"></ion-router-outlet>
 			</ion-content>
 		</div>
 	`,
-	styles: [``]
+	styles: [
+		`
+			.router-outlet {
+				margin-top: var(--header-height);
+			}
+		`
+	]
 })
 export class DashboardComponent implements OnInit {
 	constructor() {}
