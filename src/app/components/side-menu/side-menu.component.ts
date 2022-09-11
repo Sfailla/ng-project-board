@@ -4,11 +4,21 @@ import { Component, OnInit } from '@angular/core'
 	selector: 'app-side-menu',
 	template: `
 		<div class="side-menu">
-			<div class="side-menu__header">
-				<span class="side-menu__header--logo"></span>
-				<span class="side-menu__header--logo-inner"></span>
+			<ion-header class="side-menu__header">
+				<ion-toolbar color="primary">
+					<ion-buttons slot="end">
+						<ion-button class="ion-menu-button ion-activatable">
+							<ion-icon name="menu"></ion-icon>
+							<ion-ripple-effect></ion-ripple-effect>
+						</ion-button>
+					</ion-buttons>
+				</ion-toolbar>
+			</ion-header>
+			<div class="side-menu__branding">
+				<span class="side-menu__branding--logo"></span>
+				<span class="side-menu__branding--logo-inner"></span>
 			</div>
-			<div class="side-menu__content">
+			<ion-content class="side-menu__content">
 				<ion-list class="side-menu__nav" lines="full">
 					<ion-item class="side-menu__nav-item" routerLink="/home" routerDirection="root">
 						<ion-icon name="home-outline"></ion-icon>
@@ -23,22 +33,48 @@ import { Component, OnInit } from '@angular/core'
 						<ion-label>Projects</ion-label>
 					</ion-item>
 				</ion-list>
-			</div>
+			</ion-content>
 		</div>
 	`,
 	styles: [
 		`
 			@import '../../../styles/abstracts';
 
-			:host {
-				z-index: 1;
-			}
-
 			.side-menu {
 				width: var(--menu-width);
 				height: 100%;
 				background-color: #ffffff;
 				border-right: 1px solid #e5e5e5;
+
+				& .ion-menu-button {
+					width: 4.5rem;
+					height: 4.5rem;
+					position: relative;
+					overflow: hidden;
+					margin-right: 1rem;
+					--background: transparent;
+					--color: #ffffff;
+					--border-radius: 50%;
+
+					--background-hover: #ffffff;
+					--color-hover: #ffffff;
+
+					&::part(native) {
+						transition: background 0.25s ease-in-out;
+					}
+
+					&:hover {
+						--background: rgba(255, 255, 255, 0.1);
+						--color: #ffffff;
+					}
+
+					& ion-icon {
+						width: 2.4rem;
+						height: 2.4rem;
+						margin: 0;
+						padding: 0;
+					}
+				}
 
 				&__header {
 					width: 100%;
@@ -47,6 +83,18 @@ import { Component, OnInit } from '@angular/core'
 					position: relative;
 					border-bottom: 1px solid #e5e5e5;
 					background-color: var(--ion-color-primary);
+
+					&::after {
+						height: 0;
+					}
+				}
+
+				&__branding {
+					width: 100%;
+					height: 6rem;
+					@include flex();
+					padding: 1rem;
+					position: relative;
 
 					&--logo {
 						width: 3rem;
@@ -112,7 +160,7 @@ import { Component, OnInit } from '@angular/core'
 				}
 
 				&__content {
-					height: calc(100% - 60px);
+					height: calc(100% - var(--header-height));
 					overflow-y: auto;
 				}
 
@@ -123,20 +171,25 @@ import { Component, OnInit } from '@angular/core'
 
 				&__nav-item {
 					width: 100%;
+					cursor: pointer;
 					--background-hover: var(--ion-color-primary);
+
+					&:first-child {
+						border-top: 1px solid #e5e5e5;
+					}
 
 					&:last-child {
 						width: 100%;
 						display: block;
 					}
+				}
 
-					& ion-icon {
-						margin-right: 1rem;
-					}
+				& ion-icon {
+					margin-right: 1rem;
+				}
 
-					& ion-label {
-						font-size: 1.4rem;
-					}
+				& ion-label {
+					font-size: 1.4rem;
 				}
 			}
 		`
