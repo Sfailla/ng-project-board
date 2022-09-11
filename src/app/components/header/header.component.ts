@@ -74,8 +74,6 @@ import { Component, OnInit } from '@angular/core'
 		`
 	]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 	constructor() {}
-
-	ngOnInit(): void {}
 }
