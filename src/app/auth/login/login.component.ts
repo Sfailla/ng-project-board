@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { NavController } from '@ionic/angular'
 
@@ -202,7 +202,7 @@ import { NavController } from '@ionic/angular'
 		`
 	]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 	loginForm: FormGroup
 
 	constructor(private fb: FormBuilder, public navCtrl: NavController) {
@@ -211,8 +211,6 @@ export class LoginComponent implements OnInit {
 			password: ['']
 		})
 	}
-
-	ngOnInit(): void {}
 
 	navigateTo(route: string): void {
 		this.navCtrl.navigateForward(route)
