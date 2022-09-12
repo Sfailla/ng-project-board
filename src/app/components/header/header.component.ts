@@ -40,7 +40,7 @@ import { Component, OnInit } from '@angular/core'
 					&--text {
 						font-size: 1.5rem;
 						text-transform: uppercase;
-						color: var(--ion-color-primary);
+						color: var(--ion-color-medium-shade);
 					}
 				}
 
@@ -67,7 +67,7 @@ import { Component, OnInit } from '@angular/core'
 				&__profile-name {
 					font-size: 14px;
 					font-weight: bold;
-					color: $primary-color;
+					color: var(--ion-color-medium-shade);
 					text-transform: uppercase;
 				}
 			}
