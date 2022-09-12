@@ -3,11 +3,14 @@ import { Component, OnInit } from '@angular/core'
 @Component({
 	selector: 'app-side-menu',
 	template: `
-		<div class="side-menu">
+		<div
+			class="side-menu"
+			[ngClass]="isMenuExpanded ? 'side-menu--expanded' : 'side-menu--collapsed'"
+		>
 			<ion-header class="side-menu__header">
 				<ion-toolbar color="primary">
 					<ion-buttons slot="end">
-						<ion-button class="ion-menu-button ion-activatable">
+						<ion-button class="ion-menu-button ion-activatable" (click)="toggleMenu()">
 							<ion-icon name="menu"></ion-icon>
 							<ion-ripple-effect></ion-ripple-effect>
 						</ion-button>
@@ -15,8 +18,7 @@ import { Component, OnInit } from '@angular/core'
 				</ion-toolbar>
 			</ion-header>
 			<div class="side-menu__branding">
-				<span class="side-menu__branding--logo"></span>
-				<span class="side-menu__branding--logo-inner"></span>
+				<app-logo></app-logo>
 			</div>
 			<ion-content class="side-menu__content">
 				<ion-list class="side-menu__nav" lines="full">
@@ -41,17 +43,25 @@ import { Component, OnInit } from '@angular/core'
 			@import '../../../styles/abstracts';
 
 			.side-menu {
-				width: var(--menu-width);
 				height: 100%;
 				background-color: #ffffff;
 				border-right: 1px solid #e5e5e5;
+				transition: width 0.3s ease-in-out;
+
+				&--expanded {
+					width: var(--menu-width-expanded);
+				}
+
+				&--collapsed {
+					width: var(--menu-width-collapsed);
+				}
 
 				& .ion-menu-button {
 					width: 4.5rem;
 					height: 4.5rem;
 					position: relative;
 					overflow: hidden;
-					margin-right: 1rem;
+					margin-right: 0.8rem;
 					--background: transparent;
 					--color: #ffffff;
 					--border-radius: 50%;
@@ -95,68 +105,6 @@ import { Component, OnInit } from '@angular/core'
 					@include flex();
 					padding: 1rem;
 					position: relative;
-
-					&--logo {
-						width: 3rem;
-						height: 3rem;
-						position: relative;
-						display: block;
-						@include flex();
-						background-color: $primary-color;
-						-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-						clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-
-						&::before {
-							content: '';
-							display: block;
-							height: 2.5rem;
-							width: 2.5rem;
-							background-color: white;
-							-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-							clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-						}
-
-						&::after {
-							content: '';
-							width: 2rem;
-							height: 2rem;
-							display: block;
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%, -50%);
-							background-color: $primary-color;
-							-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-							clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-						}
-					}
-
-					&--logo-inner {
-						width: 1.5rem;
-						height: 1.5rem;
-						position: absolute;
-						top: 50%;
-						left: 50%;
-						transform: translate(-50%, -50%);
-						display: block;
-						background-color: #ffffff;
-						-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-						clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-
-						&::after {
-							content: '';
-							width: 1rem;
-							height: 1rem;
-							position: absolute;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%, -50%);
-							display: block;
-							background-color: $primary-color;
-							-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-							clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-						}
-					}
 				}
 
 				&__content {
@@ -184,19 +132,31 @@ import { Component, OnInit } from '@angular/core'
 					}
 				}
 
-				& ion-icon {
-					margin-right: 1rem;
-				}
-
 				& ion-label {
 					font-size: 1.4rem;
+					padding-left: 1rem;
+					visibility: visible;
+					opacity: 1;
+					transition: all 0.3s ease-in-out;
+				}
+
+				&--collapsed ion-label {
+					visibility: hidden;
+					padding-left: 0;
+					opacity: 0;
 				}
 			}
 		`
 	]
 })
 export class SideMenuComponent implements OnInit {
+	isMenuExpanded = true
+
 	constructor() {}
 
 	ngOnInit(): void {}
+
+	toggleMenu() {
+		return (this.isMenuExpanded = !this.isMenuExpanded)
+	}
 }
