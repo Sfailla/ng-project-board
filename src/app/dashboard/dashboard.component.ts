@@ -13,8 +13,11 @@ import { Component, OnInit } from '@angular/core'
 	`,
 	styles: [
 		`
+			@import '../../styles/abstracts';
+
 			.router-outlet {
 				margin-top: var(--header-height);
+				background-color: $background-color;
 			}
 		`
 	]
