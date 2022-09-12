@@ -27,11 +27,11 @@ import { Component, OnInit } from '@angular/core'
 						<ion-label>Home</ion-label>
 					</ion-item>
 					<ion-item class="side-menu__nav-item" routerLink="/tasks" routerDirection="root">
-						<ion-icon slot="start" name="list-outline"></ion-icon>
+						<ion-icon name="list-outline" ionIconRemoveTitle [iconTitle]="'Tasks'"></ion-icon>
 						<ion-label>Tasks</ion-label>
 					</ion-item>
 					<ion-item class="side-menu__nav-item" routerLink="/projects" routerDirection="root">
-						<ion-icon name="layers-outline"></ion-icon>
+						<ion-icon name="layers-outline" ionIconRemoveTitle [iconTitle]="'Projects'"></ion-icon>
 						<ion-label>Projects</ion-label>
 					</ion-item>
 				</ion-list>
@@ -125,15 +125,12 @@ import { Component, OnInit } from '@angular/core'
 					&:first-child {
 						border-top: 1px solid #e5e5e5;
 					}
-
-					&:last-child {
-						width: 100%;
-						display: block;
-					}
 				}
 
 				& ion-label {
 					font-size: 1.4rem;
+					font-weight: 500;
+					font-family: montserrat;
 					padding-left: 1rem;
 					visibility: visible;
 					opacity: 1;
@@ -150,13 +147,16 @@ import { Component, OnInit } from '@angular/core'
 	]
 })
 export class SideMenuComponent implements OnInit {
-	isMenuExpanded = true
+	isMenuExpanded: boolean = true
 
 	constructor() {}
 
-	ngOnInit(): void {}
+	ngOnInit(): void {
+		this.isMenuExpanded = JSON.parse(localStorage.getItem('isMenuExpanded') as string)
+	}
 
 	toggleMenu() {
-		return (this.isMenuExpanded = !this.isMenuExpanded)
+		this.isMenuExpanded = !this.isMenuExpanded
+		localStorage.setItem('isMenuExpanded', JSON.stringify(this.isMenuExpanded))
 	}
 }
