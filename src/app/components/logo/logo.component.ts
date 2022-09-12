@@ -16,15 +16,15 @@ import { Component, OnInit } from '@angular/core'
 				position: relative;
 				display: block;
 				@include flex();
-				background-color: $primary-color;
+				background-color: var(--ion-color-danger);
 				-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 				clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 
 				&::before {
 					content: '';
 					display: block;
-					height: 2rem;
-					width: 2rem;
+					height: 2.2rem;
+					width: 2.2rem;
 					background-color: white;
 					-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 					clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -39,15 +39,15 @@ import { Component, OnInit } from '@angular/core'
 					top: 50%;
 					left: 50%;
 					transform: translate(-50%, -50%);
-					background-color: $primary-color;
+					background-color: var(--ion-color-danger);
 					-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 					clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 				}
 			}
 
 			.logo-inner {
-				width: 1rem;
-				height: 1rem;
+				width: 1.2rem;
+				height: 1.2rem;
 				position: absolute;
 				top: 50%;
 				left: 50%;
@@ -66,7 +66,7 @@ import { Component, OnInit } from '@angular/core'
 					left: 50%;
 					transform: translate(-50%, -50%);
 					display: block;
-					background-color: $primary-color;
+					background-color: var(--ion-color-danger);
 					-webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 					clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
 				}
