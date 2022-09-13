@@ -11,6 +11,9 @@
 npm-debug.log
 yarn-error.log
 
+# Apollo Angular
+generated/
+
 # IDEs and editors
 .idea/
 .project
