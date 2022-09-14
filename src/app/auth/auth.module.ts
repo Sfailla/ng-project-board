@@ -5,10 +5,11 @@ import { IonicModule } from '@ionic/angular'
 import { RouterModule, Routes } from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { LoginComponent } from './login/login.component'
+import { AuthProtectGuard } from './auth-protect.guard'
 
 const routes: Routes = [
-	{ path: 'register', component: RegisterComponent },
-	{ path: 'login', component: LoginComponent }
+	{ path: 'register', component: RegisterComponent, canActivate: [AuthProtectGuard] },
+	{ path: 'login', component: LoginComponent, canActivate: [AuthProtectGuard] }
 ]
 
 @NgModule({
