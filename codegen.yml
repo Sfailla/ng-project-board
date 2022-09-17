@@ -1,10 +1,15 @@
 overwrite: true
 schema: 'http://localhost:4000/graphql'
+documents: 'src/generated/*/*.gql'
 generates:
   src/generated/graphql.ts:
+    config:
+      sdkClass: true
+      ngModule: 'src/app/graphql.module#GraphQLModule'
     plugins:
       - 'typescript'
+      - 'typescript-operations'
       - 'typescript-apollo-angular'
-  ./graphql.schema.json:
+  src/generated/graphql.schema.json:
     plugins:
       - 'introspection'
