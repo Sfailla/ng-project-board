@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { NavController } from '@ionic/angular'
+import { AuthService } from '../auth.service'
 
 @Component({
 	selector: 'app-login',
@@ -18,7 +19,10 @@ import { NavController } from '@ionic/angular'
 								</ion-card-title>
 							</ion-card-header>
 							<ion-card-content class="card-content">
-								<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+								<form
+									[formGroup]="loginForm"
+									(ngSubmit)="onSubmit(loginForm.value.email, loginForm.value.password)"
+								>
 									<ion-item>
 										<ion-label position="floating">Email</ion-label>
 										<ion-input type="email" formControlName="email"></ion-input>
@@ -205,7 +209,11 @@ import { NavController } from '@ionic/angular'
 export class LoginComponent {
 	loginForm: FormGroup
 
-	constructor(private fb: FormBuilder, public navCtrl: NavController) {
+	constructor(
+		private fb: FormBuilder,
+		public navCtrl: NavController,
+		private authService: AuthService
+	) {
 		this.loginForm = this.fb.group({
 			email: [''],
 			password: ['']
@@ -216,5 +224,7 @@ export class LoginComponent {
 		this.navCtrl.navigateForward(route)
 	}
 
-	onSubmit() {}
+	async onSubmit(email: string, password: string): Promise<void> {
+		await this.authService.login(email, password)
+	}
 }
