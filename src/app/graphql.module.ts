@@ -4,29 +4,32 @@ import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular'
 import { HttpLink } from 'apollo-angular/http'
 import { InMemoryCache, ApolloLink } from '@apollo/client/core'
 import { setContext } from '@apollo/client/link/context'
+import { environment } from 'src/environments/environment'
+import { AuthTokenService } from './auth/auth-token.service'
 
-const graphqlURI = 'http://localhost:4000'
+const graphqlURI = environment.graphqlURI
 
-export function createApollo(httpLink: HttpLink) {
-	const headers = setContext((operation, context) => ({
+export function createApollo(httpLink: HttpLink, tokenService: AuthTokenService) {
+	const headers = setContext((_operation, _context) => ({
 		headers: {
 			Accept: 'charset=utf-8'
 		}
 	}))
 
-	const tokenHeader = setContext((operation, context) => {
-		// get token from authService
-		let token
+	const tokenHeader = setContext((_operation, _context) => {
+		const token = tokenService.getToken()
 
-		if (token === null) {
-			return {}
-		} else {
+		if (token) {
+			console.log({ token })
+
 			return {
 				headers: {
 					'x-auth-token': `${token}`
 				}
 			}
 		}
+
+		return {}
 	})
 
 	const link = ApolloLink.from([
@@ -48,7 +51,7 @@ export function createApollo(httpLink: HttpLink) {
 		{
 			provide: APOLLO_OPTIONS,
 			useFactory: createApollo,
-			deps: [HttpLink]
+			deps: [HttpLink, AuthTokenService]
 		}
 	]
 })
