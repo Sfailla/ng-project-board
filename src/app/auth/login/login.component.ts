@@ -1,8 +1,18 @@
 import { Component } from '@angular/core'
-import { FormGroup, FormBuilder } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { NavController } from '@ionic/angular'
 import { Subscription } from 'rxjs'
 import { AuthService } from '../auth.service'
+
+const validateFormFields = () => {
+	const email = ['', Validators.email, Validators.required]
+	const password = ['', Validators.required]
+
+	return {
+		email,
+		password
+	}
+}
 
 @Component({
 	selector: 'app-login',
@@ -216,7 +226,16 @@ export class LoginComponent {
 		public navController: NavController,
 		private authService: AuthService
 	) {
-		this.loginForm = this.fb.group({ email: [''], password: [''] })
+		this.loginForm = this.initializeLoginForm()
+	}
+
+	initializeLoginForm(): FormGroup {
+		const { email, password } = validateFormFields()
+
+		return this.fb.group({
+			email,
+			password
+		})
 	}
 
 	navigateTo(route: string): void {
@@ -225,9 +244,5 @@ export class LoginComponent {
 
 	async onSubmit(email: string, password: string): Promise<void> {
 		await this.authService.login(email, password)
-	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe()
 	}
 }

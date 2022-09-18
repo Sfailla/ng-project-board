@@ -1,6 +1,21 @@
 import { Component } from '@angular/core'
-import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { NavController } from '@ionic/angular'
+import { AuthService } from '../auth.service'
+
+const validateFormFields = () => {
+	const username = ['', Validators.minLength(3), Validators.maxLength(20), Validators.required]
+	const email = ['', Validators.email, Validators.required]
+	const password = ['', Validators.minLength(6), Validators.maxLength(20), Validators.required]
+	const confirmPassword = ['', Validators.required]
+
+	return {
+		username,
+		email,
+		password,
+		confirmPassword
+	}
+}
 
 @Component({
 	selector: 'app-register',
@@ -18,7 +33,17 @@ import { NavController } from '@ionic/angular'
 								</ion-card-title>
 							</ion-card-header>
 							<ion-card-content class="card-content">
-								<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+								<form
+									[formGroup]="registerForm"
+									(ngSubmit)="
+										onSubmit(
+											registerForm.value.username,
+											registerForm.value.email,
+											registerForm.value.password,
+											registerForm.value.currentPassword
+										)
+									"
+								>
 									<ion-item>
 										<ion-label position="floating">Username</ion-label>
 										<ion-input type="text" formControlName="username"></ion-input>
@@ -134,18 +159,30 @@ import { NavController } from '@ionic/angular'
 export class RegisterComponent {
 	registerForm: FormGroup
 
-	constructor(private fb: FormBuilder, public navCtrl: NavController) {
-		this.registerForm = this.fb.group({
-			username: [''],
-			email: [''],
-			password: [''],
-			confirmPassword: ['']
+	constructor(
+		private fb: FormBuilder,
+		public navController: NavController,
+		private authService: AuthService
+	) {
+		this.registerForm = this.initializeRegisterForm()
+	}
+
+	initializeRegisterForm(): FormGroup {
+		const { username, email, password, confirmPassword } = validateFormFields()
+
+		return this.fb.group({
+			username,
+			email,
+			password,
+			confirmPassword
 		})
 	}
 
 	navigateTo(route: string): void {
-		this.navCtrl.navigateForward(route)
+		this.navController.navigateForward(route)
 	}
 
-	onSubmit() {}
+	onSubmit(username: string, email: string, password: string, confirmPassword: string): void {
+		this.authService.register(username, email, password, confirmPassword)
+	}
 }
