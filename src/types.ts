@@ -1,5 +1,6 @@
 import { UrlTree } from '@angular/router'
 import { Observable } from 'rxjs'
+import { User } from './generated/graphql'
 
 export enum Routes {
 	Login = 'auth/login',
@@ -12,3 +13,7 @@ export type CanActivateReturnType =
 	| Promise<boolean | UrlTree>
 	| boolean
 	| UrlTree
+
+export type Me = {
+	me: User
+}
