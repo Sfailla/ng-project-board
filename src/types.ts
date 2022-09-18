@@ -1,6 +1,6 @@
 import { UrlTree } from '@angular/router'
 import { Observable } from 'rxjs'
-import { User } from './generated/graphql'
+import { User } from './generated/types.graphql-gen'
 
 export enum Routes {
 	Login = 'auth/login',
