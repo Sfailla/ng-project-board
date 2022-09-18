@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { FormGroup, FormBuilder } from '@angular/forms'
 import { NavController } from '@ionic/angular'
 import { Subscription } from 'rxjs'
-import { Routes } from '../../../types'
 import { AuthService } from '../auth.service'
 
 @Component({
@@ -208,7 +207,7 @@ import { AuthService } from '../auth.service'
 		`
 	]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 	loginForm: FormGroup
 	subscription!: Subscription
 
@@ -217,19 +216,7 @@ export class LoginComponent implements OnInit {
 		public navController: NavController,
 		private authService: AuthService
 	) {
-		this.loginForm = this.fb.group({
-			email: [''],
-			password: ['']
-		})
-	}
-
-	ngOnInit() {
-		this.subscription = this.authService.isLoggedIn$.subscribe(isLoggedIn => {
-			console.log({ isLoggedIn })
-			if (isLoggedIn) {
-				this.navController.navigateRoot(Routes.Dashboard)
-			}
-		})
+		this.loginForm = this.fb.group({ email: [''], password: [''] })
 	}
 
 	navigateTo(route: string): void {
