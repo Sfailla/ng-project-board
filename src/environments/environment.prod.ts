@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
-};
+	production: true,
+	graphqlURI: 'http://localhost:4000/graphql',
+	authTokenKey: 'auth-token',
+	authUserKey: 'auth-user'
+}
