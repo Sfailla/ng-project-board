@@ -10,7 +10,6 @@ import { LoginDocument as loginMutation, MeDocument as meQuery } from 'src/gener
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-	isLoggedIn$ = new BehaviorSubject<boolean>(false)
 	currentUser$ = new BehaviorSubject<User | null>(null)
 
 	constructor(
@@ -19,12 +18,12 @@ export class AuthService {
 		private router: Router
 	) {}
 
-	isLoggedIn() {
-		return this.isLoggedIn$.asObservable()
+	isAuthenticated() {
+		return !!this.tokenService.getToken()
 	}
 
 	getCurrentUser() {
-		return this.currentUser$.asObservable()
+		return this.currentUser$.value
 	}
 
 	async login(email: string, password: string): Promise<void> {
@@ -36,12 +35,9 @@ export class AuthService {
 			})
 			.subscribe(({ data, loading }: MutationResult) => {
 				const { user, token } = data?.login
-				console.log({ data, loading })
 
-				this.isLoggedIn$.next(true)
 				this.currentUser$.next(user)
 				this.tokenService.saveToken(token)
-				this.tokenService.saveUser(user)
 
 				this.router.navigate([Routes.Dashboard])
 			}),
@@ -49,21 +45,19 @@ export class AuthService {
 	}
 
 	getCurrentSession() {
+		if (!this.isAuthenticated()) {
+			return
+		}
+
 		this.apollo
 			.watchQuery<Me>({
 				query: meQuery,
 				fetchPolicy: 'no-cache'
 			})
-			.valueChanges.subscribe(({ data, loading }: ApolloQueryResult<Me>) => {
+			.valueChanges.subscribe(({ data }: ApolloQueryResult<Me>) => {
 				const { me } = data
-				console.log({ data, loading })
 
-				if (me) {
-					this.currentUser$.next(me)
-					this.isLoggedIn$.next(true)
-				}
-
-				return me
+				this.currentUser$.next(me)
 			}),
 			shareReplay(1)
 	}
