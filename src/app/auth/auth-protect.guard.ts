@@ -14,11 +14,7 @@ export class AuthProtectGuard implements CanActivate {
 		return this.authService.isLoggedIn().pipe(
 			take(1),
 			map((isLoggedIn: boolean) => {
-				if (isLoggedIn) {
-					return this.router.createUrlTree([Routes.Dashboard])
-				} else {
-					return true
-				}
+				return isLoggedIn ? this.router.createUrlTree([Routes.Dashboard]) : true
 			})
 		)
 	}
