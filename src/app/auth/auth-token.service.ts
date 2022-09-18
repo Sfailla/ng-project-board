@@ -10,7 +10,7 @@ const USER_KEY = environment.authUserKey
 export class AuthTokenService {
 	constructor() {}
 
-	destroyToken(): void {
+	destroySession(): void {
 		window.sessionStorage.clear()
 	}
 
