@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core'
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router'
-import { IonicModule } from '@ionic/angular'
+import { RouterModule, Routes } from '@angular/router'
 import { AuthProtectGuard } from './auth-protect.guard'
 import { LoginComponent } from './login/login.component'
 import { RegisterComponent } from './register/register.component'
@@ -11,7 +10,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
 })
-export class AuthRoutingRoutingModule {}
+export class AuthRoutingModule {}
