@@ -20,8 +20,6 @@ export function createApollo(httpLink: HttpLink, tokenService: AuthTokenService)
 		const token = tokenService.getToken()
 
 		if (token) {
-			console.log({ token })
-
 			return {
 				headers: {
 					'x-auth-token': `${token}`
@@ -32,12 +30,12 @@ export function createApollo(httpLink: HttpLink, tokenService: AuthTokenService)
 		return {}
 	})
 
+	const cache = new InMemoryCache()
 	const link = ApolloLink.from([
 		headers,
 		tokenHeader,
 		httpLink.create({ uri: graphqlURI, withCredentials: true })
 	])
-	const cache = new InMemoryCache()
 
 	return {
 		link,
