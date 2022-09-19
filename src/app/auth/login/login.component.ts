@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs'
 import { AuthService } from '../auth.service'
 
 const validateFormFields = () => {
-	const email = ['', Validators.email, Validators.required]
+	const email = ['', [Validators.required, Validators.email]]
 	const password = ['', Validators.required]
 
 	return {

@@ -4,10 +4,10 @@ import { NavController } from '@ionic/angular'
 import { AuthService } from '../auth.service'
 
 const validateFormFields = () => {
-	const username = ['', Validators.minLength(3), Validators.maxLength(20), Validators.required]
-	const email = ['', Validators.email, Validators.required]
-	const password = ['', Validators.minLength(6), Validators.maxLength(20), Validators.required]
-	const confirmPassword = ['', Validators.required]
+	const username = ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]]
+	const email = ['', [Validators.required, Validators.email]]
+	const password = ['', [Validators.required, Validators.minLength(4), Validators.maxLength(20)]]
+	const confirmPassword = ['', [Validators.required]]
 
 	return {
 		username,
