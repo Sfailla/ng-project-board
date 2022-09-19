@@ -6,11 +6,11 @@ import { AuthTokenService } from './auth-token.service'
 import { ApolloQueryResult } from '@apollo/client/core/types'
 import { Router } from '@angular/router'
 import { Me, Routes } from 'src/types'
-import { MeDocument as meQuery } from 'src/generated/queries/index.graphql-gen'
+import { MeDocument as meQuery } from '../../generated/queries/index.graphql-gen'
 import {
 	LoginDocument as loginMutation,
 	RegisterDocument as registerMutation
-} from 'src/generated/mutations/index.graphql-gen'
+} from '../../generated/mutations/index.graphql-gen'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
