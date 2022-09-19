@@ -1,22 +1,28 @@
-import { Component, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 
 @Component({
 	selector: 'app-header',
 	template: `
 		<ion-header class="ion-no-border header" collapse="fade">
-			<ion-toolbar class="header__toolbar">
-				<div class="header__profile" slot="end">
-					<div class="header__profile-photo">
-						<!-- <img src="assets/images/profile.jpg" alt="profile" /> -->
-					</div>
-					<div class="header__profile-info">
-						<span class="header__profile-name">User 1</span>
-					</div>
-				</div>
+			<div class="header__toolbar">
 				<div class="header__logo">
 					<ion-title class="header__logo--text">Project Board</ion-title>
 				</div>
-			</ion-toolbar>
+				<div class="header__profile" slot="end">
+					<ion-avatar class="header__profile-photo">
+						<img
+							alt="Silhouette of a person's head"
+							src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg"
+						/>
+					</ion-avatar>
+					<div class="header__profile-info">
+						<span class="header__profile-name">Sfailla</span>
+					</div>
+				</div>
+				<div class="header__profile-settings">
+					<ion-icon name="settings-outline"></ion-icon>
+				</div>
+			</div>
 		</ion-header>
 	`,
 	styles: [
@@ -31,9 +37,11 @@ import { Component, OnInit } from '@angular/core'
 				&__toolbar {
 					width: 100%;
 					height: 100%;
-					@include flex(space-between);
-					padding: 0 20px;
+					padding: 0 1rem;
 					background-color: #fff;
+					display: grid;
+					grid-template-columns: min-content 1fr 5rem;
+					align-items: center;
 				}
 
 				&__logo {
@@ -49,26 +57,50 @@ import { Component, OnInit } from '@angular/core'
 				}
 
 				&__profile {
-					@include flex(flex-start);
+					padding-right: 2rem;
+					@include flex(flex-end);
 				}
 
 				&__profile-photo {
-					width: 3.5rem;
-					height: 3.5rem;
+					width: 3rem;
+					height: 3rem;
 					border-radius: 50%;
 					background-color: #e5e5e5;
 				}
 
 				&__profile-info {
 					@include flex(flex-start);
-					margin-left: 10px;
+					margin-left: 5px;
 				}
 
 				&__profile-name {
 					font-size: 14px;
 					font-weight: bold;
+					letter-spacing: 0.5px;
 					color: var(--ion-color-medium-shade);
 					text-transform: uppercase;
+				}
+
+				&__profile-settings {
+					width: 6rem;
+					height: 100%;
+					color: var(--ion-color-medium-shade);
+					border-left: $primary-border;
+					@include flex();
+
+					&:hover {
+						color: var(--ion-color-danger);
+
+						& ion-icon {
+							transform: rotate(-60deg);
+						}
+					}
+
+					& ion-icon {
+						font-size: 2rem;
+						cursor: pointer;
+						transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+					}
 				}
 			}
 		`
