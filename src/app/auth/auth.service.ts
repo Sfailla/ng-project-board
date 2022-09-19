@@ -100,6 +100,6 @@ export class AuthService {
 		this.tokenService.destroySession()
 		this.currentUser$.next(null)
 		this.apollo.client.resetStore()
-		// this.router.navigate([Routes.Login])
+		this.router.navigate([Routes.Login])
 	}
 }
