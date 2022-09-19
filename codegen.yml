@@ -1,6 +1,8 @@
 overwrite: true
 schema: 'http://localhost:4000/graphql'
 documents: 'src/**/*.graphql'
+config:
+  addExplicitOverride: true
 generates:
   src/generated/types.graphql-gen.ts:
     plugins:
