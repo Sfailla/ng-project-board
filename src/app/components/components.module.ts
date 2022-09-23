@@ -6,10 +6,11 @@ import { IonicModule } from '@ionic/angular'
 import { RouterModule } from '@angular/router'
 import { LogoComponent } from './logo/logo.component'
 import { SharedModule } from '../shared/shared.module'
+import { SettingsMenuComponent } from './settings-menu/settings-menu.component'
 
 @NgModule({
-	declarations: [HeaderComponent, SideMenuComponent, LogoComponent],
+	declarations: [HeaderComponent, SideMenuComponent, LogoComponent, SettingsMenuComponent],
 	imports: [CommonModule, IonicModule, RouterModule, SharedModule],
-	exports: [HeaderComponent, SideMenuComponent]
+	exports: [HeaderComponent, SideMenuComponent, SettingsMenuComponent]
 })
 export class ComponentsModule {}
