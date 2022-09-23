@@ -206,12 +206,13 @@ const validateFormFields = () => {
 					margin-bottom: 1.5rem;
 				}
 
-				&::part(native) {
-					height: 4rem;
-				}
-
 				& ion-label {
 					font-size: 14px;
+				}
+
+				& ion-input {
+					--padding-start: 5px;
+					--padding-end: 5px;
 				}
 			}
 		`
@@ -239,10 +240,15 @@ export class LoginComponent {
 	}
 
 	navigateTo(route: string): void {
-		this.navController.navigateForward(route)
+		this.navController.navigateBack(route)
+	}
+
+	resetFormFields(): void {
+		this.loginForm.reset({ email: '', password: '' })
 	}
 
 	async onSubmit(email: string, password: string): Promise<void> {
 		await this.authService.login(email, password)
+		this.resetFormFields()
 	}
 }

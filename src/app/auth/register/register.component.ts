@@ -144,10 +144,6 @@ const validateFormFields = () => {
 						margin-bottom: 1.5rem;
 					}
 
-					&::part(native) {
-						height: 4rem;
-					}
-
 					& ion-label {
 						font-size: 14px;
 					}
@@ -179,10 +175,15 @@ export class RegisterComponent {
 	}
 
 	navigateTo(route: string): void {
-		this.navController.navigateForward(route)
+		this.navController.navigateBack(route)
+	}
+
+	resetFormFields(): void {
+		this.registerForm.reset({ username: '', email: '', password: '', confirmPassword: '' })
 	}
 
 	onSubmit(username: string, email: string, password: string, confirmPassword: string): void {
 		this.authService.register(username, email, password, confirmPassword)
+		this.resetFormFields()
 	}
 }
