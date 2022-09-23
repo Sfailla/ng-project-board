@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core'
 			<app-side-menu></app-side-menu>
 			<ion-content class="app-layout__content">
 				<app-header></app-header>
-				<ion-router-outlet class="router-outlet"></ion-router-outlet>
+				<app-settings-menu></app-settings-menu>
+				<ion-router-outlet id="main" class="router-outlet"></ion-router-outlet>
 			</ion-content>
 		</div>
 	`,
