@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { MenuController } from '@ionic/angular'
 
 @Component({
 	selector: 'app-header',
@@ -20,7 +21,7 @@ import { Component } from '@angular/core'
 					</div>
 				</div>
 				<div class="header__profile-settings">
-					<ion-icon name="settings-outline"></ion-icon>
+					<ion-icon (click)="toggleSideMenu()" name="settings-outline"></ion-icon>
 				</div>
 			</div>
 		</ion-header>
@@ -87,6 +88,7 @@ import { Component } from '@angular/core'
 					color: var(--ion-color-medium-shade);
 					border-left: $primary-border;
 					@include flex();
+					position: relative;
 
 					&:hover {
 						color: var(--ion-color-danger);
@@ -107,5 +109,14 @@ import { Component } from '@angular/core'
 	]
 })
 export class HeaderComponent {
-	constructor() {}
+	constructor(private menu: MenuController) {}
+
+	openSettingsMenu() {
+		const settingsMenu = document.querySelector('.header__settings-menu')
+		settingsMenu?.classList.toggle('header__settings-menu--active')
+	}
+
+	toggleSideMenu() {
+		this.menu.toggle('end')
+	}
 }
