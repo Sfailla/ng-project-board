@@ -1,0 +1,13 @@
+.app-layout {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: min-content 1fr;
+}
+
+.app-layout__content {
+	height: 100%;
+	display: grid;
+	grid-template-rows: var(--header-height) 1fr;
+	overflow: auto;
+}
