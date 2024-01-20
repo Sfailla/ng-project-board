@@ -1,2 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import './app/styles';
+
+// TODO: manually handle hidden attribute after Ionic 7 upgrade.  needs to move to global scss config
+[hidden] {
+  display: none !important;
+}
