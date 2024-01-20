@@ -39,6 +39,7 @@ export class AppComponent {
      * referenced by name anywhere in your application.
      */
     addIcons({
+      menu,
       'logo-apple': logoApple,
       'logo-google': logoGoogle,
       'logo-github': logoGithub,
@@ -49,8 +50,7 @@ export class AppComponent {
       'layers-outline': layersOutline,
       'list-outline': listOutline,
       'add-outline': addOutline,
-      'folder-outline': folderOutline,
-      menu: menu
+      'folder-outline': folderOutline
     })
   }
 }
