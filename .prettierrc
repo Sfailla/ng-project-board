@@ -1,0 +1,26 @@
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "semi": false,
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "trailingComma": "none",
+  "bracketSameLine": true,
+  "printWidth": 100,
+  "linebreak-style": [true, "LF"],
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "parser": "html"
+      }
+    },
+    {
+      "files": "*.component.ts",
+      "options": {
+        "htmlWhitespaceSensitivity": "ignore"
+      }
+    }
+  ]
+}
