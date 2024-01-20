@@ -2,6 +2,21 @@ import { Component } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterOutlet } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
+import { addIcons } from 'ionicons'
+import {
+  logoApple,
+  logoGoogle,
+  logoGithub,
+  settingsOutline,
+  optionsOutline,
+  logOutOutline,
+  homeOutline,
+  layersOutline,
+  listOutline,
+  addOutline,
+  folderOutline,
+  menu
+} from 'ionicons/icons'
 
 @Component({
   selector: 'app-root',
@@ -16,4 +31,26 @@ import { IonicModule } from '@ionic/angular'
 })
 export class AppComponent {
   title = 'Project Board'
+
+  constructor() {
+    /**
+     * Any icons you want to use in your application
+     * can be registered in app.component.ts and then
+     * referenced by name anywhere in your application.
+     */
+    addIcons({
+      'logo-apple': logoApple,
+      'logo-google': logoGoogle,
+      'logo-github': logoGithub,
+      'settings-outline': settingsOutline,
+      'options-outline': optionsOutline,
+      'log-out-outline': logOutOutline,
+      'home-outline': homeOutline,
+      'layers-outline': layersOutline,
+      'list-outline': listOutline,
+      'add-outline': addOutline,
+      'folder-outline': folderOutline,
+      menu: menu
+    })
+  }
 }
