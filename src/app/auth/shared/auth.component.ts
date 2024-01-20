@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core'
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
+import { AuthTitles } from '../types'
 
 @Component({
   selector: 'auth-component',
@@ -19,7 +20,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
               </ion-card-title>
               <ion-card-subtitle class="card__subtitle">
                 <ion-text class="card__subtitle--text">already have an account?</ion-text>
-                <a>{{ (isLogin | async) ? 'Sign Up' : 'Sign In' }}</a>
+                <a>{{ (isLogin | async) ? AuthTitles.REGISTER : AuthTitles.LOGIN }}</a>
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
@@ -55,7 +56,7 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
                   </ion-item>
                 </ion-list>
                 <ion-button type="submit" expand="block" color="primary">
-                  {{ isLogin ? 'Sign In' : 'Sign Up' }}
+                  {{ isLogin ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
                 </ion-button>
               </form>
 
@@ -83,16 +84,14 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent {
+export class AuthComponent implements OnInit {
   @Input()
   title!: string
 
   isLogin: BehaviorSubject<boolean> = new BehaviorSubject(false)
-
-  constructor() {}
+  AuthTitles: typeof AuthTitles = AuthTitles
 
   ngOnInit() {
-    this.isLogin.next(this.title === 'Sign Into')
-    console.log({ title: this.title, boolean: this.title === 'Sign Into' })
+    this.isLogin.next(this.title === AuthTitles.LOGIN)
   }
 }
