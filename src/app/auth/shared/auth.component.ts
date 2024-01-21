@@ -1,7 +1,14 @@
 import { CommonModule } from '@angular/common'
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core'
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+  WritableSignal,
+  effect,
+  signal
+} from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject'
 import { AuthTitles } from '../types'
 
 @Component({
@@ -20,13 +27,13 @@ import { AuthTitles } from '../types'
               </ion-card-title>
               <ion-card-subtitle class="card__subtitle">
                 <ion-text class="card__subtitle--text">already have an account?</ion-text>
-                <a>{{ (isLogin | async) ? AuthTitles.REGISTER : AuthTitles.LOGIN }}</a>
+                <a>{{ isLogin() ? AuthTitles.REGISTER : AuthTitles.LOGIN }}</a>
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
               <form>
                 <ion-list lines="none">
-                  <ion-item *ngIf="!(isLogin | async)" color="light">
+                  <ion-item *ngIf="!isLogin()" color="light">
                     <ion-input
                       label="Username"
                       labelPlacement="floating"
@@ -47,7 +54,7 @@ import { AuthTitles } from '../types'
                       type="password"
                       formControlName="password"></ion-input>
                   </ion-item>
-                  <ion-item *ngIf="!(isLogin | async)" color="light">
+                  <ion-item *ngIf="!isLogin()" color="light">
                     <ion-input
                       label="Confirm Password"
                       labelPlacement="floating"
@@ -56,7 +63,7 @@ import { AuthTitles } from '../types'
                   </ion-item>
                 </ion-list>
                 <ion-button type="submit" expand="block" color="primary">
-                  {{ isLogin ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
+                  {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
                 </ion-button>
               </form>
 
@@ -88,10 +95,17 @@ export class AuthComponent implements OnInit {
   @Input()
   title!: string
 
-  isLogin: BehaviorSubject<boolean> = new BehaviorSubject(false)
+  isLogin: WritableSignal<boolean> = signal(false)
   AuthTitles: typeof AuthTitles = AuthTitles
 
+  constructor() {
+    effect(() => {
+      console.count('isLogin')
+      console.log(this.isLogin())
+    })
+  }
+
   ngOnInit() {
-    this.isLogin.next(this.title === AuthTitles.LOGIN)
+    this.isLogin.set(this.title === AuthTitles.LOGIN)
   }
 }
