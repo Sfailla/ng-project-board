@@ -10,11 +10,12 @@ import {
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { AuthTitles } from '../types'
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 
 @Component({
   selector: 'auth-component',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonicModule, ReactiveFormsModule],
   template: `
     <ion-grid>
       <ion-row>
@@ -31,38 +32,38 @@ import { AuthTitles } from '../types'
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
-              <form>
+              <form [formGroup]="authForm">
                 <ion-list lines="none">
                   <ion-item *ngIf="!isLogin()" color="light">
                     <ion-input
+                      formControlName="username"
                       label="Username"
                       labelPlacement="floating"
-                      type="text"
-                      formControlName="username"></ion-input>
+                      type="text"></ion-input>
                   </ion-item>
                   <ion-item color="light">
                     <ion-input
+                      formControlName="email"
                       label="Email"
                       labelPlacement="floating"
-                      type="email"
-                      formControlName="email"></ion-input>
+                      type="email"></ion-input>
                   </ion-item>
                   <ion-item color="light">
                     <ion-input
+                      formControlName="password"
                       label="Password"
                       labelPlacement="floating"
-                      type="password"
-                      formControlName="password"></ion-input>
+                      type="password"></ion-input>
                   </ion-item>
                   <ion-item *ngIf="!isLogin()" color="light">
                     <ion-input
+                      formControlName="confirmPassword"
                       label="Confirm Password"
                       labelPlacement="floating"
-                      type="password"
-                      formControlName="confirmPassword"></ion-input>
+                      type="password"></ion-input>
                   </ion-item>
                 </ion-list>
-                <ion-button type="submit" expand="block" color="primary">
+                <ion-button type="submit" expand="block" color="primary" (click)="submit()">
                   {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
                 </ion-button>
               </form>
@@ -97,15 +98,18 @@ export class AuthComponent implements OnInit {
 
   isLogin: WritableSignal<boolean> = signal(false)
   AuthTitles: typeof AuthTitles = AuthTitles
-
-  constructor() {
-    effect(() => {
-      console.count('isLogin')
-      console.log(this.isLogin())
-    })
-  }
+  authForm = new FormGroup({
+    username: new FormControl('', Validators.min(4)),
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.min(4)]),
+    confirmPassword: new FormControl('', Validators.min(4))
+  })
 
   ngOnInit() {
     this.isLogin.set(this.title === AuthTitles.LOGIN)
+  }
+
+  submit() {
+    console.log(this.authForm.value)
   }
 }
