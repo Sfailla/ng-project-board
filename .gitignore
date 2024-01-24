@@ -15,6 +15,11 @@ yarn-error.log
 .nx
 .nx/*
 
+# Codegen
+generated
+generated/*
+graphql.schema.json
+
 # IDEs and editors
 .idea/
 .project
