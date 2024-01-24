@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { AuthComponent } from '../shared/auth.component'
+import { AuthComponent } from '../components/auth.component'
 
 @Component({
   selector: 'app-register',
@@ -8,7 +8,7 @@ import { AuthComponent } from '../shared/auth.component'
   imports: [IonicModule, AuthComponent],
   template: `
     <div class="page-container">
-      <auth-component title="Sign Up For"></auth-component>
+      <app-auth title="Sign Up For"></app-auth>
     </div>
   `,
   styles: [

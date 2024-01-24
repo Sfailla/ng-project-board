@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { AuthComponent } from '../shared/auth.component'
+import { AuthComponent } from '../components/auth.component'
 
 @Component({
   selector: 'app-login',
@@ -7,7 +7,7 @@ import { AuthComponent } from '../shared/auth.component'
   imports: [AuthComponent],
   template: `
     <div class="page-container">
-      <auth-component title="Sign Into"></auth-component>
+      <app-auth title="Sign Into"></app-auth>
     </div>
   `,
   styles: [
