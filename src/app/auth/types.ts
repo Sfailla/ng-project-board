@@ -3,6 +3,11 @@ export enum AuthTitles {
   REGISTER = 'Sign Up For'
 }
 
+export enum RedirectTitles {
+  SIGN_IN = 'Sign In',
+  SIGN_UP = 'Sign Up'
+}
+
 export interface AuthUserInput {
   username?: string
   email: string
