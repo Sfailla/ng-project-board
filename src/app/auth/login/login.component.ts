@@ -1,5 +1,6 @@
 import { Component } from '@angular/core'
-import { AuthComponent } from '../components/auth.component'
+import { AuthComponent } from '../components/auth/auth.component'
+import { AuthTitles } from '../types'
 
 @Component({
   selector: 'app-login',
@@ -7,7 +8,7 @@ import { AuthComponent } from '../components/auth.component'
   imports: [AuthComponent],
   template: `
     <div class="page-container">
-      <app-auth title="Sign Into"></app-auth>
+      <app-auth [title]="AuthTitles.LOGIN"></app-auth>
     </div>
   `,
   styles: [
@@ -22,5 +23,5 @@ import { AuthComponent } from '../components/auth.component'
   ]
 })
 export class LoginComponent {
-  // Your code here
+  AuthTitles: typeof AuthTitles = AuthTitles
 }

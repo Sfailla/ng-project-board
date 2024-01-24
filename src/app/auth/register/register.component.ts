@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { AuthComponent } from '../components/auth.component'
+import { AuthComponent } from '../components/auth/auth.component'
+import { AuthTitles } from '../types'
 
 @Component({
   selector: 'app-register',
@@ -8,7 +9,7 @@ import { AuthComponent } from '../components/auth.component'
   imports: [IonicModule, AuthComponent],
   template: `
     <div class="page-container">
-      <app-auth title="Sign Up For"></app-auth>
+      <app-auth [title]="AuthTitles.REGISTER"></app-auth>
     </div>
   `,
   styles: [
@@ -22,4 +23,6 @@ import { AuthComponent } from '../components/auth.component'
     `
   ]
 })
-export class RegisterComponent {}
+export class RegisterComponent {
+  AuthTitles: typeof AuthTitles = AuthTitles
+}
