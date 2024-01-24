@@ -9,14 +9,15 @@ import {
   signal
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { AuthTitles, AuthUserInput } from '../types'
+import { AuthTitles, AuthUserInput, RedirectTitles } from '../../types'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { AuthService } from '../services/auth.service'
+import { AuthService } from '../../services/auth.service'
+import { SocialsComponent } from '../socials/socials.component'
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule],
+  imports: [CommonModule, IonicModule, ReactiveFormsModule, SocialsComponent],
   template: `
     <ion-grid>
       <ion-row>
@@ -29,7 +30,7 @@ import { AuthService } from '../services/auth.service'
               </ion-card-title>
               <ion-card-subtitle class="card__subtitle">
                 <ion-text class="card__subtitle--text">already have an account?</ion-text>
-                <a>{{ isLogin() ? AuthTitles.REGISTER : AuthTitles.LOGIN }}</a>
+                <a>{{ isLogin() ? RedirectTitles.SIGN_IN : RedirectTitles.SIGN_UP }}</a>
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
@@ -68,20 +69,8 @@ import { AuthService } from '../services/auth.service'
                   {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
                 </ion-button>
               </form>
-
               <div class="login__content-break">or</div>
-
-              <div class="login__socials">
-                <a class="circle-link">
-                  <ion-icon name="logo-google"></ion-icon>
-                </a>
-                <a class="circle-link">
-                  <ion-icon name="logo-github"></ion-icon>
-                </a>
-                <a class="circle-link">
-                  <ion-icon name="logo-apple"></ion-icon>
-                </a>
-              </div>
+              <app-socials></app-socials>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -101,6 +90,7 @@ export class AuthComponent implements OnInit {
 
   isLogin: WritableSignal<boolean> = signal(false)
   AuthTitles: typeof AuthTitles = AuthTitles
+  RedirectTitles: typeof RedirectTitles = RedirectTitles
   authForm = new FormGroup({
     username: new FormControl('', Validators.min(4)),
     email: new FormControl('', [Validators.email, Validators.required]),
