@@ -37,6 +37,14 @@
           }
         }
       }
+    },
+    {
+      "type": "npm",
+      "script": "codegen",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: codegen",
+      "detail": "graphql-codegen --config codegen.ts --watch"
     }
   ]
 }
