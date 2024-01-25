@@ -85,10 +85,11 @@ import { SocialsComponent } from '../socials/socials.component'
 export class AuthComponent implements OnInit {
   @Input()
   title!: string
-
+  // services
   authService: AuthService = inject(AuthService)
-
+  // state
   isLogin: WritableSignal<boolean> = signal(false)
+  // variables
   AuthTitles: typeof AuthTitles = AuthTitles
   RedirectTitles: typeof RedirectTitles = RedirectTitles
   authForm = new FormGroup({
