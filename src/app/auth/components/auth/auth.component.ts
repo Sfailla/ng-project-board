@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnDestroy,
   OnInit,
   WritableSignal,
   inject,
@@ -13,6 +14,7 @@ import { AuthTitles, AuthUserInput, RedirectTitles } from '../../types'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
 import { SocialsComponent } from '../socials/socials.component'
+import { Subscription } from 'rxjs/internal/Subscription'
 
 @Component({
   selector: 'app-auth',
@@ -82,7 +84,7 @@ import { SocialsComponent } from '../socials/socials.component'
   styleUrl: './auth.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent implements OnInit, OnDestroy {
   @Input()
   title!: string
   // services
@@ -98,13 +100,21 @@ export class AuthComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.min(4)]),
     confirmPassword: new FormControl('', Validators.min(4))
   })
+  subSink: Subscription = new Subscription()
 
   ngOnInit(): void {
     this.isLogin.set(this.title === AuthTitles.LOGIN)
   }
 
-  submit(): void {
+  submit() {
     const credentials = this.authForm.value as AuthUserInput
-    this.isLogin() ? this.authService.login(credentials) : this.authService.register(credentials)
+    this.isLogin()
+      ? this.subSink.add(this.authService.login(credentials).subscribe())
+      : this.subSink.add(this.authService.register(credentials).subscribe())
+  }
+
+  ngOnDestroy(): void {
+    this.authForm.reset()
+    this.subSink.unsubscribe()
   }
 }
