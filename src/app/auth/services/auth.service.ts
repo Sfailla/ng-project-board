@@ -3,10 +3,15 @@ import { Apollo } from 'apollo-angular'
 import { CreateUserDocument, LoginDocument } from '../../../generated/mutations/index.graphql-gen'
 import { AuthUserInput } from '../types'
 import { map } from 'rxjs/internal/operators/map'
+import { TokenService } from './token.service'
+import { UserAndToken } from '../../../generated/types.graphql-gen'
+import { Router } from '@angular/router'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   apollo: Apollo = inject(Apollo)
+  tokenService: TokenService = inject(TokenService)
+  router: Router = inject(Router)
 
   register(authUserInput: AuthUserInput) {
     const { username, email, password, confirmPassword } = authUserInput
@@ -15,7 +20,7 @@ export class AuthService {
       throw new Error('⛔️🔐 Passwords do not match')
     }
 
-    this.apollo
+    return this.apollo
       .mutate({
         mutation: CreateUserDocument,
         variables: { username, email, password }
@@ -23,6 +28,7 @@ export class AuthService {
       .pipe(
         map(({ data }) => {
           console.log({ data })
+          return data
         })
       )
   }
@@ -30,18 +36,23 @@ export class AuthService {
   login(authUserInput: AuthUserInput) {
     const { email, password } = authUserInput
 
-    console.log({ email, password })
-
-    this.apollo
-      .mutate({
+    return this.apollo
+      .mutate<{ login: UserAndToken }>({
         mutation: LoginDocument,
-        variables: { email, password },
-        fetchPolicy: 'network-only'
+        variables: { email, password }
       })
       .pipe(
-        map(({ data }) => {
+        map(async ({ data }) => {
           console.log({ data })
+          if (!data) throw new Error('⛔️🔐 Login failed')
+
+          this.tokenService.saveUserAndToken(data.login.user, data.login.token)
+          await this.router.navigate(['dashboard'])
         })
       )
+  }
+
+  isAuthenticated() {
+    return !!this.tokenService.getToken()
   }
 }
