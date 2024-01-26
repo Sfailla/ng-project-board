@@ -1,3 +1,7 @@
+import { UrlTree } from '@angular/router'
+import { Observable } from 'rxjs/internal/Observable'
+import { User } from '../../generated/types.graphql-gen'
+
 export enum AuthTitles {
   LOGIN = 'Sign Into',
   REGISTER = 'Sign Up For'
@@ -14,3 +18,20 @@ export interface AuthUserInput {
   password: string
   confirmPassword?: string
 }
+
+export interface AuthUser {
+  token: string
+  user: User
+}
+
+export enum Routes {
+  Login = 'auth/login',
+  Register = 'auth/register',
+  Dashboard = 'dashboard'
+}
+
+export type CanActivateReturnType =
+  | Observable<boolean | UrlTree>
+  | Promise<boolean | UrlTree>
+  | boolean
+  | UrlTree
