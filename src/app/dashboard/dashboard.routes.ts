@@ -1,10 +1,11 @@
+import { authGuard } from '../auth/guards/auth.guard'
 import { DashboardComponent } from './dashboard.component'
 
 export const DASHBOARD_ROUTES = [
   {
     path: '',
     component: DashboardComponent,
-    canActivate: []
+    canActivate: [authGuard]
     // children: [
     //   {
     //     path: 'home',
