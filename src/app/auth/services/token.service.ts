@@ -26,11 +26,11 @@ export class TokenService {
     this.saveUser(user)
   }
 
-  public getToken(): string {
-    return window.sessionStorage.getItem(TOKEN_KEY) || ''
+  getToken(): string | null {
+    return window.sessionStorage.getItem(TOKEN_KEY) || null
   }
 
-  public getUser(): User | null {
+  getUser(): User | null {
     const user = window.sessionStorage.getItem(USER_KEY)
     return user ? JSON.parse(user) : null
   }
