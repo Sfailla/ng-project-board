@@ -50,8 +50,8 @@ import { CommonModule } from '@angular/common'
 
       .side-menu {
         height: 100%;
-        background-color: var(--ion-color-light);
-        border-right: 1px solid var(--form-border-color);
+        background-color: var(--dashboard-sub-background);
+        border-right: 1px solid var(--dashboard-border-color);
         transition: width 0.3s ease-in-out;
 
         &--expanded {
@@ -97,7 +97,7 @@ import { CommonModule } from '@angular/common'
           height: 60px;
           @include flex();
           position: relative;
-          border-bottom: 1px solid var(--form-border-color);
+          border-bottom: 1px solid var(--dashboard-border-color);
           background-color: var(--ion-color-primary);
 
           &::after {
@@ -116,7 +116,7 @@ import { CommonModule } from '@angular/common'
         &__content {
           height: calc(100% - var(--header-height));
           overflow-y: auto;
-          --background: var(--ion-color-light);
+          --background: var(--dashboard-sub-background);
         }
 
         &__nav {
