@@ -82,6 +82,10 @@
   // variables
   --form-border-color: #dcdcdc;
   --heading-color-primary: #5a5a5a;
+
+  --dashboard-main-background: #fff;
+  --dashboard-sub-background: #fbfbfb;
+  --dashboard-border-color: #dcdcdc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -194,6 +198,10 @@
     // variables
     --form-border-color: #807e7e;
     --heading-color-primary: #fff;
+
+    --dashboard-main-background: #1e1f21;
+    --dashboard-sub-background: #2e2e30;
+    --dashboard-border-color: #424244;
   }
 
   .ios ion-modal {
@@ -247,6 +255,10 @@
     // variables
     --form-border-color: #807e7e;
     --heading-color-primary: #fff;
+
+    --dashboard-main-background: #1e1f21;
+    --dashboard-sub-background: #2e2e30;
+    --dashboard-border-color: #424244;
   }
 }
 
