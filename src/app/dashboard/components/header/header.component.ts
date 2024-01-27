@@ -41,7 +41,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
       .header {
         width: 100%;
         height: var(--header-height);
-        background-color: var(--ion-color-light);
+        background-color: var(--dashboard-sub-background);
         border-bottom: 1px solid var(--form-border-color);
 
         &__toolbar {
@@ -57,7 +57,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
           &--text {
             font-size: 1.5rem;
             text-transform: uppercase;
-            color: var(--ion-color-medium-shade);
+            color: var(--heading-color-primary);
           }
         }
 
@@ -74,7 +74,6 @@ import { IonicModule, MenuController } from '@ionic/angular'
           width: 3rem;
           height: 3rem;
           border-radius: 50%;
-          background-color: #e5e5e5;
         }
 
         &__profile-info {
@@ -86,14 +85,14 @@ import { IonicModule, MenuController } from '@ionic/angular'
           font-size: 14px;
           font-weight: bold;
           letter-spacing: 0.5px;
-          color: var(--ion-color-medium-shade);
+          color: var(--heading-color-primary);
           text-transform: uppercase;
         }
 
         &__profile-settings {
           width: 6rem;
           height: 100%;
-          color: var(--ion-color-medium-shade);
+          color: var(--heading-color-primary);
           border-left: 1px solid var(--form-border-color);
           @include flex();
           position: relative;
