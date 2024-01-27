@@ -52,6 +52,11 @@ export class AuthService {
       )
   }
 
+  logout() {
+    this.tokenService.destroySession()
+    this.router.navigate(['login'])
+  }
+
   isAuthenticated() {
     return !!this.tokenService.getToken()
   }
