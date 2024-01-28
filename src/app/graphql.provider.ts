@@ -8,7 +8,9 @@ import { environment } from '../environments/environment.development'
 const uri = environment.graphqlURI
 export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
   const httpLink = inject(HttpLink)
-  const token = sessionStorage.getItem('token') || ''
+  const token = sessionStorage.getItem('auth-token') || ''
+  console.log({ token })
+
   return {
     link: httpLink.create({
       uri,
