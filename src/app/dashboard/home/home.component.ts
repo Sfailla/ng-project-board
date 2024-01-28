@@ -1,16 +1,27 @@
 import { Component } from '@angular/core'
+import { IonicModule } from '@ionic/angular'
+import { SelectProjectComponent } from '../projects/components'
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [IonicModule, SelectProjectComponent],
   template: `
     <div class="page-container home">
-      <h1>Home Page works!</h1>
-      <!-- <app-select-project></app-select-project> -->
+      <h1 class="home__title">Home</h1>
+      <app-select-project></app-select-project>
     </div>
   `,
-  styles: [``]
+  styles: [
+    `
+      .home {
+        &__title {
+          text-transform: uppercase;
+          margin: 2rem 0;
+        }
+      }
+    `
+  ]
 })
 export class HomeComponent {
   constructor() {}
