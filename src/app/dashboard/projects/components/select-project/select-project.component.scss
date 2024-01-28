@@ -1,0 +1,132 @@
+@import '../../../../styles/abstracts';
+
+.project-card {
+  border: 1px solid var(--dashboard-border-color);
+  border-radius: 5px;
+  --background: var(--dashboard-sub-background);
+  // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+
+  &__header {
+    padding: 1.6rem;
+
+    & ion-card-title {
+      & ion-text {
+        font-size: 1.6rem;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  &__content {
+    padding: 2rem 3rem;
+
+    & .create-project {
+      width: fit-content;
+      @include flex(flex-start);
+      color: #bcbcbc;
+
+      &:hover {
+        & span {
+          border: 1px dashed $primary-color;
+        }
+
+        & ion-icon,
+        & ion-label {
+          color: $primary-color;
+        }
+      }
+
+      & span {
+        width: 4.8rem;
+        height: 4.8rem;
+        border-radius: 1rem;
+        background-color: inherit;
+        border: 1px dashed var(--ion-color-medium-shade);
+        @include flex();
+        transition: border 0.3s ease-in-out;
+      }
+
+      & ion-icon {
+        font-size: 2rem;
+        color: var(--ion-color-medium-shade);
+        transition: color 0.3s ease-in-out;
+      }
+
+      & ion-label {
+        margin-left: 1.6rem;
+        font-size: 1.6rem;
+        color: #bcbcbc;
+        transition: color 0.3s ease-in-out;
+      }
+    }
+
+    & .available-projects {
+      & ion-label {
+        font-size: 1.6rem;
+        color: #bcbcbc;
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      & ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        row-gap: 8px;
+        margin-bottom: 1.2rem;
+
+        & li {
+          @include flex(flex-start);
+          padding: 1.6rem;
+          border-radius: 1rem;
+          background-color: inherit;
+          cursor: pointer;
+          transition: background-color 0.3s ease-in-out;
+
+          &:hover {
+            & .project-button {
+              color: var(--ion-color-primary);
+              border: 1px solid var(--ion-color-primary);
+              // color: #4c87ff;
+              // border: 1px solid #b0caff;
+              // background-color: #eff7ff;
+            }
+
+            & ion-label {
+              color: #4c87ff;
+            }
+          }
+
+          & .project-button {
+            width: 4.8rem;
+            height: 4.8rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            @include flex();
+            color: #bcbcbc;
+            border: 1px solid var(--ion-color-medium-shade);
+            background-color: transparent;
+            transition: all 0.3s ease-in-out;
+
+            & ion-icon {
+              font-size: 1.5rem;
+              color: inherit;
+            }
+          }
+
+          & ion-label {
+            font-size: 1.4rem;
+            font-weight: normal;
+            color: inherit;
+            margin-left: 1.6rem;
+            transition: all 0.3s ease-in-out;
+          }
+        }
+      }
+    }
+  }
+}
