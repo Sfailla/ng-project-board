@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { LogoComponent } from '../logo/logo.component'
 import { RouterLink } from '@angular/router'
 import { IonIconTitleDirective } from '../../../shared/directives/icon-title/icon-title.directive'
 import { CommonModule } from '@angular/common'
+import { LocalStorageService } from '../../../shared/services'
 
 @Component({
   selector: 'app-side-menu',
@@ -156,12 +157,14 @@ import { CommonModule } from '@angular/common'
 export class SideMenuComponent implements OnInit {
   isMenuExpanded = true
 
+  storageService: LocalStorageService = inject(LocalStorageService)
+
   ngOnInit(): void {
-    this.isMenuExpanded = JSON.parse(localStorage.getItem('isMenuExpanded') as string)
+    this.isMenuExpanded = JSON.parse(this.storageService.getItem('isMenuExpanded') as string)
   }
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded
-    localStorage.setItem('isMenuExpanded', JSON.stringify(this.isMenuExpanded))
+    this.storageService.setItem('isMenuExpanded', JSON.stringify(this.isMenuExpanded))
   }
 }
