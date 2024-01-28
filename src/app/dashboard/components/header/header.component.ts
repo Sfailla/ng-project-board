@@ -42,7 +42,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
         width: 100%;
         height: var(--header-height);
         background-color: var(--dashboard-sub-background);
-        border-bottom: 1px solid var(--form-border-color);
+        border-bottom: 1px solid var(--dashboard-border-color);
 
         &__toolbar {
           width: 100%;
@@ -93,7 +93,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
           width: 6rem;
           height: 100%;
           color: var(--heading-color-primary);
-          border-left: 1px solid var(--form-border-color);
+          border-left: 1px solid var(--dashboard-border-color);
           @include flex();
           position: relative;
 
