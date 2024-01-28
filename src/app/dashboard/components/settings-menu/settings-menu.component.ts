@@ -39,20 +39,36 @@ import { IonicModule } from '@ionic/angular'
           outline: none;
         }
 
+        & ion-header {
+          --background: var(--dashboard-sub-background);
+          height: 59px;
+        }
+
         & ion-content {
-          border-left: $primary-border;
+          --background: var(--dashboard-sub-background);
+          border-left: 1px solid var(--dashboard-border-color);
 
           & ion-list {
             padding: 0;
+            background: var(--dashboard-sub-background);
 
             & ion-item {
-              padding: 0.5rem 1rem;
+              --background: var(--dashboard-sub-background);
               font-size: 14px;
               font-weight: bold;
               letter-spacing: 0.5px;
               color: var(--ion-color-medium-shade);
               text-transform: uppercase;
               cursor: pointer;
+              border-bottom: 1px solid var(--dashboard-border-color);
+
+              &::part(native) {
+                height: 59px;
+              }
+
+              &:first-child {
+                border-top: 1px solid var(--dashboard-border-color);
+              }
 
               &:hover {
                 & ion-icon,
