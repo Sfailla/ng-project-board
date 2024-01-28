@@ -49,7 +49,9 @@ export class AuthService {
           if (!data) throw new Error('⛔️🔐 Login failed')
 
           this.tokenService.saveUserAndToken(data.login.user, data.login.token)
-          await this.navController.navigateRoot(['/dashboard'], { animationDirection: 'forward' })
+          await this.navController.navigateRoot(['/dashboard'], {
+            animationDirection: 'forward'
+          })
         })
       )
   }
