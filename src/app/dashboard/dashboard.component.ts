@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
-import { IonicModule } from '@ionic/angular'
+import { IonicModule, NavController } from '@ionic/angular'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
+import { ProjectService } from './projects/services/project.service'
+import { LocalStorageService } from '../shared/services'
 
 @Component({
   selector: 'app-dashboard',
@@ -22,8 +24,28 @@ import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './com
       ion-content {
         --background: var(--dashboard-main-background);
       }
+
+      ion-router-outlet {
+        margin-top: var(--header-height);
+      }
     `
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DashboardComponent {}
+export class DashboardComponent implements OnInit {
+  projectService: ProjectService = inject(ProjectService)
+  storageService: LocalStorageService = inject(LocalStorageService)
+  navController: NavController = inject(NavController)
+
+  ngOnInit(): void {
+    this.handleNavigation()
+  }
+
+  handleNavigation(): void {
+    const projectId = this.storageService.getItem('project-id')
+
+    projectId
+      ? this.navController.navigateForward(['dashboard', projectId, 'tasks'])
+      : this.navController.navigateForward(['dashboard', 'home'])
+  }
+}
