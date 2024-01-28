@@ -6,12 +6,14 @@ import { map } from 'rxjs/internal/operators/map'
 import { TokenService } from './token.service'
 import { UserAndToken } from '../../../generated/types.graphql-gen'
 import { Router } from '@angular/router'
+import { NavController } from '@ionic/angular'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   apollo: Apollo = inject(Apollo)
   tokenService: TokenService = inject(TokenService)
   router: Router = inject(Router)
+  navController: NavController = inject(NavController)
 
   register(authUserInput: AuthUserInput) {
     const { username, email, password, confirmPassword } = authUserInput
@@ -47,14 +49,14 @@ export class AuthService {
           if (!data) throw new Error('⛔️🔐 Login failed')
 
           this.tokenService.saveUserAndToken(data.login.user, data.login.token)
-          await this.router.navigate(['dashboard'])
+          await this.navController.navigateRoot(['/dashboard'], { animationDirection: 'forward' })
         })
       )
   }
 
-  logout() {
+  async logout() {
     this.tokenService.destroySession()
-    this.router.navigate(['login'])
+    await this.navController.navigateRoot(['/auth/login'], { animationDirection: 'back' })
   }
 
   isAuthenticated() {
