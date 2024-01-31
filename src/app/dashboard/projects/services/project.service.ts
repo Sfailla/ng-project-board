@@ -17,10 +17,6 @@ export class ProjectService {
   getProjects() {
     return this.apollo
       .watchQuery<{ getProjects: Project[] }>({ query: GetProjectsDocument })
-      .valueChanges.pipe(
-        map(({ data }) => {
-          return data.getProjects
-        })
-      )
+      .valueChanges.pipe(map(({ data }) => data.getProjects))
   }
 }
