@@ -86,6 +86,9 @@
   --dashboard-main-background: #fff;
   --dashboard-sub-background: #fbfbfb;
   --dashboard-border-color: #dcdcdc;
+
+  --select-project-card-color: var(--ion-color-medium-shade);
+  --select-project-card-border: 1px dashed $primary-border;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -202,6 +205,9 @@
     --dashboard-main-background: #1e1f21;
     --dashboard-sub-background: #2e2e30;
     --dashboard-border-color: #424244;
+
+    --select-project-card-color: #bcbcbc;
+    --select-project-card-border: 1px dashed $primary-border;
   }
 
   .ios ion-modal {
