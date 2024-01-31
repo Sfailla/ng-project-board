@@ -43,6 +43,7 @@ import { Project } from '../../../../../generated/types.graphql-gen'
             </ul>
           </div>
         </ion-card-content>
+        <div class="ion-card-footer"></div>
       </ion-card>
     </div>
   `,
@@ -61,15 +62,15 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   }
 
   getProjects() {
-    this.projectService.getProjects().subscribe(projects => {
-      console.log({ projects })
-
-      this.projects.set(projects)
-    })
+    this.subscription.add(
+      this.projectService.getProjects().subscribe(projects => {
+        this.projects.set(projects)
+      })
+    )
   }
 
   setCurrentProjectId(projectId: string) {
-    // this.projectService.setCurrentProjectId(projectId)
+    this.projectService.setProjectId(projectId)
     this.navController.navigateForward(['dashboard', projectId, 'tasks'])
   }
 

@@ -4,10 +4,12 @@
   border: 1px solid var(--dashboard-border-color);
   border-radius: 5px;
   --background: var(--dashboard-sub-background);
+  min-height: 30rem;
   // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
   &__header {
-    padding: 1.6rem;
+    height: 5rem;
+    padding: 1.6rem 2rem;
 
     & ion-card-title {
       & ion-text {
@@ -29,12 +31,12 @@
 
       &:hover {
         & span {
-          border: 1px dashed $primary-color;
+          border: 1px dashed var(--ion-color-primary);
         }
 
         & ion-icon,
         & ion-label {
-          color: $primary-color;
+          color: var(--ion-color-primary);
         }
       }
 
@@ -128,5 +130,9 @@
         }
       }
     }
+  }
+
+  .ion-card-footer {
+    height: 5rem;
   }
 }
