@@ -34,8 +34,8 @@ import { IonicModule, MenuController } from '@ionic/angular'
       @import '../../../styles/abstracts';
 
       ion-menu-button {
-        width: 40px;
-        height: 40px;
+        width: 4rem;
+        height: 4rem;
       }
 
       .header {
@@ -47,9 +47,9 @@ import { IonicModule, MenuController } from '@ionic/angular'
         &__toolbar {
           width: 100%;
           height: 100%;
-          padding: 0 1rem;
+          padding: 0 0 0 2rem;
           display: grid;
-          grid-template-columns: min-content 1fr 5rem;
+          grid-template-columns: min-content 1fr 6rem;
           align-items: center;
         }
 
