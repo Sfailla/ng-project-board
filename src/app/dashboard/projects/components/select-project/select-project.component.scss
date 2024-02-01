@@ -1,7 +1,7 @@
 @import '../../../../styles/abstracts';
 
 .project-card {
-  border: 1px solid var(--dashboard-border-color);
+  border: 1px solid var(--select-project-card-border-color);
   border-radius: 5px;
   --background: var(--dashboard-sub-background);
   min-height: 30rem;
@@ -14,7 +14,7 @@
     & ion-card-title {
       & ion-text {
         font-size: 1.6rem;
-        color: white;
+        color: var(--select-project-card-title-color);
         text-transform: uppercase;
         letter-spacing: 1px;
       }
@@ -27,7 +27,6 @@
     & .create-project {
       width: fit-content;
       @include flex(flex-start);
-      color: #bcbcbc;
 
       &:hover {
         & span {
@@ -55,19 +54,12 @@
         color: var(--ion-color-medium-shade);
         transition: color 0.3s ease-in-out;
       }
-
-      & ion-label {
-        margin-left: 1.6rem;
-        font-size: 1.6rem;
-        color: #bcbcbc;
-        transition: color 0.3s ease-in-out;
-      }
     }
 
     & .available-projects {
       & ion-label {
         font-size: 1.6rem;
-        color: #bcbcbc;
+        color: var(--select-project-card-color);
         font-weight: 500;
         text-transform: uppercase;
       }
@@ -109,8 +101,8 @@
             padding: 8px 12px;
             border-radius: 8px;
             @include flex();
-            color: #bcbcbc;
-            border: 1px solid var(--ion-color-medium-shade);
+            color: var(--select-project-card-color);
+            border: 1px solid var(--select-project-icon-border-color);
             background-color: transparent;
             transition: all 0.3s ease-in-out;
 
@@ -123,7 +115,7 @@
           & ion-label {
             font-size: 1.4rem;
             font-weight: normal;
-            color: inherit;
+            color: var(--select-project-card-color);
             margin-left: 1.6rem;
             transition: all 0.3s ease-in-out;
           }
