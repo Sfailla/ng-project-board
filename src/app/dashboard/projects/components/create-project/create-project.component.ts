@@ -18,13 +18,16 @@ import { IonicModule } from '@ionic/angular'
               <form action="">
                 <ion-card-content class="create-project__card-content">
                   <ion-item>
-                    <ion-label position="floating">Project Name</ion-label>
-                    <ion-input type="text"></ion-input>
+                    <ion-input
+                      label="Project Name"
+                      labelPlacement="floating"
+                      type="text"></ion-input>
                   </ion-item>
 
                   <ion-item>
-                    <ion-label position="floating">Project Description</ion-label>
-                    <ion-textarea></ion-textarea>
+                    <ion-textarea
+                      label="Project Description"
+                      labelPlacement="floating"></ion-textarea>
                   </ion-item>
                 </ion-card-content>
               </form>
@@ -47,7 +50,7 @@ import { IonicModule } from '@ionic/angular'
           padding: 1.6rem;
 
           & ion-card-title {
-            font-size: 3.2rem;
+            font-size: 2rem;
           }
         }
 
