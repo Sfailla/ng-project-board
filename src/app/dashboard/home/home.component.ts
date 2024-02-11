@@ -1,27 +1,18 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { SelectProjectComponent } from '../projects/components'
+import { PageWrapperComponent } from '../projects/components/page-wrapper/page-wrapper.component'
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [IonicModule, SelectProjectComponent],
+  imports: [IonicModule, SelectProjectComponent, PageWrapperComponent],
   template: `
-    <div class="page-container home">
-      <h1 class="home__title">Home</h1>
+    <app-page-wrapper title="Home">
       <app-select-project></app-select-project>
-    </div>
+    </app-page-wrapper>
   `,
-  styles: [
-    `
-      .home {
-        &__title {
-          text-transform: uppercase;
-          margin: 2rem 0;
-        }
-      }
-    `
-  ]
+  styles: [``]
 })
 export class HomeComponent {
   constructor() {}
