@@ -1,6 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { AuthComponent } from '../components/auth/auth.component'
 import { AuthTitles } from '../types'
+import { ActivatedRoute } from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,13 @@ import { AuthTitles } from '../types'
     `
   ]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   AuthTitles: typeof AuthTitles = AuthTitles
+  route = inject(ActivatedRoute)
+
+  ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      console.log({ message: params['message'], params })
+    })
+  }
 }
