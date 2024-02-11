@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { SelectProjectComponent } from '../projects/components'
-import { PageWrapperComponent } from '../projects/components/page-wrapper/page-wrapper.component'
+import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-wrapper.component'
 
 @Component({
   selector: 'app-home',

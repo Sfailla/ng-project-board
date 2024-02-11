@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { PageWrapperComponent } from '../projects/components/page-wrapper/page-wrapper.component'
+import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-wrapper.component'
 import { IonicModule } from '@ionic/angular'
 
 @Component({
