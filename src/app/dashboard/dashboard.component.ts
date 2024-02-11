@@ -4,6 +4,7 @@ import { IonicModule, NavController } from '@ionic/angular'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
 import { ProjectService } from './projects/services/project.service'
 import { LocalStorageService } from '../shared/services'
+import { LocalStorageKeys } from '../types'
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ import { LocalStorageService } from '../shared/services'
   template: `
     <div class="app-layout">
       <app-side-menu></app-side-menu>
-      <ion-content class="app-layout__content page-container">
+      <ion-content class="app-layout__content">
         <app-header></app-header>
         <app-settings-menu></app-settings-menu>
         <ion-router-outlet id="main" class="router-outlet"></ion-router-outlet>
@@ -42,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
 
   handleNavigation(): void {
-    const projectId = this.storageService.getItem('project-id')
+    const projectId = this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
 
     projectId
       ? this.navController.navigateForward(['dashboard', projectId, 'tasks'])
