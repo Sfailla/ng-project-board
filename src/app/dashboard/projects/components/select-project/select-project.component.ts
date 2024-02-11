@@ -34,7 +34,11 @@ import { Project } from '../../../../../generated/types.graphql-gen'
                   <ion-label class="create-project-title">Create Project</ion-label>
                 </a>
               </li>
-              <li *ngFor="let project of projects()">
+              <li
+                *ngFor="let project of projects(); let index"
+                (click)="setCurrentProjectId(project.id)"
+                (keyup)="handleKeyUp($event)"
+                [tabindex]="index">
                 <span class="project-button">
                   <ion-icon slot="start" name="folder-outline"></ion-icon>
                 </span>
@@ -72,6 +76,14 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
   setCurrentProjectId(projectId: string) {
     this.projectService.setProjectId(projectId)
     this.navController.navigateForward(['dashboard', projectId, 'tasks'])
+  }
+
+  handleKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      event.stopPropagation()
+      event.target?.dispatchEvent(new Event('click'))
+    }
   }
 
   ngOnDestroy() {
