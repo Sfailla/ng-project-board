@@ -16,7 +16,9 @@ export class ProjectService {
 
   getProjects() {
     return this.apollo
-      .watchQuery<{ getProjects: Project[] }>({ query: GetProjectsDocument })
+      .watchQuery<{
+        getProjects: Project[]
+      }>({ query: GetProjectsDocument, fetchPolicy: 'network-only' })
       .valueChanges.pipe(map(({ data }) => data.getProjects))
   }
 }
