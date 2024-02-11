@@ -7,24 +7,26 @@ import { TokenService } from './token.service'
 import { UserAndToken } from '../../../generated/types.graphql-gen'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular'
+import { ErrorMessages, Routes } from '../../types'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   apollo: Apollo = inject(Apollo)
-  tokenService: TokenService = inject(TokenService)
   router: Router = inject(Router)
+  tokenService: TokenService = inject(TokenService)
   navController: NavController = inject(NavController)
 
   register(authUserInput: AuthUserInput) {
     const { username, email, password, confirmPassword } = authUserInput
 
     if (password !== confirmPassword) {
-      throw new Error('⛔️🔐 Passwords do not match')
+      throw new Error(ErrorMessages.PASSWORDS_DO_NOT_MATCH)
     }
 
     return this.apollo
       .mutate({
         mutation: CreateUserDocument,
+        fetchPolicy: 'network-only',
         variables: { username, email, password }
       })
       .pipe(
@@ -41,15 +43,17 @@ export class AuthService {
     return this.apollo
       .mutate<{ login: UserAndToken }>({
         mutation: LoginDocument,
+        fetchPolicy: 'network-only',
         variables: { email, password }
       })
       .pipe(
         map(async ({ data }) => {
           console.log({ data })
-          if (!data) throw new Error('⛔️🔐 Login failed')
+          if (!data) throw new Error(ErrorMessages.LOGIN_FAILED)
 
+          this.apollo.client.resetStore()
           this.tokenService.saveUserAndToken(data.login.user, data.login.token)
-          await this.navController.navigateRoot(['/dashboard'], {
+          await this.navController.navigateRoot([Routes.DASHBOARD], {
             animationDirection: 'forward'
           })
         })
@@ -58,7 +62,7 @@ export class AuthService {
 
   async logout() {
     this.tokenService.destroySession()
-    await this.navController.navigateRoot(['/auth/login'], { animationDirection: 'back' })
+    await this.navController.navigateRoot([Routes.LOGIN], { animationDirection: 'back' })
   }
 
   isAuthenticated() {
