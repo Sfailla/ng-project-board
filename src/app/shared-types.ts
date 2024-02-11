@@ -21,3 +21,9 @@ export enum Routes {
   REGISTER = '/auth/register',
   DASHBOARD = '/dashboard'
 }
+
+export enum IonicRoutes {
+  DASHBOARD = 'dashboard',
+  HOME = 'home',
+  TASKS = 'tasks'
+}
