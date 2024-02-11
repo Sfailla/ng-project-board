@@ -5,6 +5,8 @@
   border-radius: 5px;
   --background: var(--dashboard-sub-background);
   min-height: 30rem;
+  display: grid;
+  grid-template-rows: 5rem 1fr 5rem;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
   &__header {
@@ -46,13 +48,13 @@
         background-color: inherit;
         border: 1px dashed var(--ion-color-medium-shade);
         @include flex();
-        transition: border 0.3s ease-in-out;
+        transition: border 0.5s ease-in-out;
       }
 
       & ion-icon {
         font-size: 2rem;
         color: var(--ion-color-medium-shade);
-        transition: color 0.3s ease-in-out;
+        transition: color 0.5s ease-in-out;
       }
     }
 
@@ -85,9 +87,6 @@
             & .project-button {
               color: var(--ion-color-primary);
               border: 1px solid var(--ion-color-primary);
-              // color: #4c87ff;
-              // border: 1px solid #b0caff;
-              // background-color: #eff7ff;
             }
 
             & ion-label {
@@ -104,7 +103,7 @@
             color: var(--select-project-card-color);
             border: 1px solid var(--select-project-icon-border-color);
             background-color: transparent;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.5s ease-in-out;
 
             & ion-icon {
               font-size: 1.5rem;
@@ -117,7 +116,7 @@
             font-weight: normal;
             color: var(--select-project-card-color);
             margin-left: 1.6rem;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.5s ease-in-out;
           }
         }
       }
