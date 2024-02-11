@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router'
 import { IonIconTitleDirective } from '../../../shared/directives/icon-title/icon-title.directive'
 import { CommonModule } from '@angular/common'
 import { LocalStorageService } from '../../../shared/services'
+import { LocalStorageKeys } from '../../../types'
 
 @Component({
   selector: 'app-side-menu',
@@ -160,11 +161,13 @@ export class SideMenuComponent implements OnInit {
   storageService: LocalStorageService = inject(LocalStorageService)
 
   ngOnInit(): void {
-    this.isMenuExpanded = JSON.parse(this.storageService.getItem('isMenuExpanded') as string)
+    this.isMenuExpanded = JSON.parse(
+      this.storageService.getItem(LocalStorageKeys.MENU_EXPANDED) as string
+    )
   }
 
   toggleMenu() {
     this.isMenuExpanded = !this.isMenuExpanded
-    this.storageService.setItem('isMenuExpanded', JSON.stringify(this.isMenuExpanded))
+    this.storageService.setItem(LocalStorageKeys.MENU_EXPANDED, JSON.stringify(this.isMenuExpanded))
   }
 }
