@@ -4,7 +4,7 @@ import { IonicModule, NavController } from '@ionic/angular'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
 import { ProjectService } from './projects/services/project.service'
 import { LocalStorageService } from '../shared/services'
-import { LocalStorageKeys } from '../types'
+import { LocalStorageKeys } from '../shared-types'
 
 @Component({
   selector: 'app-dashboard',

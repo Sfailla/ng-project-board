@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { AuthComponent } from '../components/auth/auth.component'
-import { AuthTitles } from '../types'
+import { AuthTitles } from '../auth-types'
 
 @Component({
   selector: 'app-register',

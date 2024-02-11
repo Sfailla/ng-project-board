@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { AuthComponent } from '../components/auth/auth.component'
-import { AuthTitles } from '../types'
+import { AuthTitles } from '../auth-types'
 import { ActivatedRoute } from '@angular/router'
 
 @Component({

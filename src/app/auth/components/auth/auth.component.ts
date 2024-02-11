@@ -10,7 +10,7 @@ import {
   signal
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { AuthTitles, AuthUserInput, RedirectTitles } from '../../types'
+import { AuthTitles, AuthUserInput, RedirectTitles } from '../../auth-types'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
 import { SocialsComponent } from '../socials/socials.component'

@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
 import { CreateUserDocument, LoginDocument } from '../../../generated/mutations/index.graphql-gen'
-import { AuthUserInput } from '../types'
+import { AuthUserInput } from '../auth-types'
 import { map } from 'rxjs/internal/operators/map'
 import { TokenService } from './token.service'
 import { UserAndToken } from '../../../generated/types.graphql-gen'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular'
-import { ErrorMessages, Routes } from '../../types'
+import { ErrorMessages, Routes } from '../../shared-types'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {

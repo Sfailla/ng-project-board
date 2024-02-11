@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router'
 import { IonIconTitleDirective } from '../../../shared/directives/icon-title/icon-title.directive'
 import { CommonModule } from '@angular/common'
 import { LocalStorageService } from '../../../shared/services'
-import { LocalStorageKeys } from '../../../types'
+import { LocalStorageKeys } from '../../../shared-types'
 
 @Component({
   selector: 'app-side-menu',

@@ -7,7 +7,7 @@ import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/c
 import { environment } from '../environments/environment.development'
 import { Router } from '@angular/router'
 import { DOCUMENT } from '@angular/common'
-import { LocalStorageKeys, Routes, Messages, ErrorMessages } from './types'
+import { LocalStorageKeys, Routes, Messages, ErrorMessages } from './shared-types'
 
 const uri = environment.graphqlURI
 
