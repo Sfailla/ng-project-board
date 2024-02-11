@@ -11,7 +11,5 @@ export const appConfig: ApplicationConfig = {
     provideIonicAngular({}),
     provideHttpClient(withFetch()),
     graphqlProvider
-    // provideClientHydration(),
-    // importProvidersFrom(HttpClientModule),
   ]
 }
