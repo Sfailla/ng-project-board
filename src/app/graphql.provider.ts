@@ -2,11 +2,9 @@ import { Apollo, APOLLO_OPTIONS } from 'apollo-angular'
 import { HttpLink } from 'apollo-angular/http'
 import { onError } from '@apollo/client/link/error'
 import { ApplicationConfig, inject } from '@angular/core'
-import { setContext } from '@apollo/client/link/context'
 import { ApolloClientOptions, ApolloLink, InMemoryCache } from '@apollo/client/core'
 import { environment } from '../environments/environment.development'
 import { Router } from '@angular/router'
-import { DOCUMENT } from '@angular/common'
 import { LocalStorageKeys, Routes, Messages, ErrorMessages } from './shared-types'
 
 const uri = environment.graphqlURI
@@ -17,26 +15,8 @@ const clearAuthUserAndToken = () => {
 }
 
 export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
-  const document = inject(DOCUMENT)
-  const localStorage = document.defaultView?.localStorage
-  const token = localStorage?.getItem(LocalStorageKeys.AUTH_TOKEN) || null
-
-  const authLink = setContext((_, { headers }) => {
-    console.log({ token })
-
-    if (!token) return {}
-    else
-      return {
-        headers: {
-          ...headers,
-          'x-auth-token': token
-        }
-      }
-  })
-
-  const router = inject(Router)
-
   const clearCredentialsAndNavigateToLogin = () => {
+    const router = inject(Router)
     clearAuthUserAndToken()
     router.navigate([Routes.LOGIN, { message: Messages.SESSION_EXPIRED }])
   }
@@ -52,8 +32,8 @@ export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
       const firstError = graphQLErrors[0]
 
       const errorMap: { [key: string]: () => void } = {
-        [ErrorMessages.JWT]: clearCredentialsAndNavigateToLogin,
-        [ErrorMessages.UNAUTHORIZED]: () => window.location.reload()
+        [ErrorMessages.JWT]: clearCredentialsAndNavigateToLogin
+        // [ErrorMessages.UNAUTHORIZED]: () => window.location.reload()
       }
 
       errorMap[firstError.message]?.()
@@ -67,7 +47,7 @@ export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
   })
 
   const httpLink = inject(HttpLink)
-  const link = ApolloLink.from([authLink, errorLink, httpLink.create({ uri })])
+  const link = ApolloLink.from([errorLink, httpLink.create({ uri })])
 
   return {
     link,
