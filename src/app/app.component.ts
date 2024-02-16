@@ -7,6 +7,7 @@ import {
   logoApple,
   logoGoogle,
   logoGithub,
+  closeCircle,
   settingsOutline,
   optionsOutline,
   logOutOutline,
@@ -15,7 +16,10 @@ import {
   listOutline,
   addOutline,
   folderOutline,
-  menu
+  closeCircleOutline,
+  checkmarkCircleOutline,
+  menu,
+  close
 } from 'ionicons/icons'
 
 @Component({
@@ -40,6 +44,7 @@ export class AppComponent {
      */
     addIcons({
       menu,
+      close,
       'logo-apple': logoApple,
       'logo-google': logoGoogle,
       'logo-github': logoGithub,
@@ -50,7 +55,10 @@ export class AppComponent {
       'layers-outline': layersOutline,
       'list-outline': listOutline,
       'add-outline': addOutline,
-      'folder-outline': folderOutline
+      'folder-outline': folderOutline,
+      'close-circle': closeCircle,
+      'close-circle-outline': closeCircleOutline,
+      'checkmark-circle-outline': checkmarkCircleOutline
     })
   }
 }
