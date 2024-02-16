@@ -1,6 +1,11 @@
 @import '../../../styles/abstracts/mixins.scss';
 @import '../../../styles/abstracts/variables.scss';
 
+:host {
+  height: 100%;
+  @include flex();
+}
+
 .card {
   width: 40rem;
   min-height: 50rem;
