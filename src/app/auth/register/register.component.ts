@@ -1,22 +1,22 @@
 import { Component } from '@angular/core'
-import { IonicModule } from '@ionic/angular'
 import { AuthComponent } from '../components/auth/auth.component'
 import { AuthTitles } from '../auth-types'
+import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-wrapper.component'
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [IonicModule, AuthComponent],
+  imports: [AuthComponent, PageWrapperComponent],
   template: `
-    <div class="page-container">
+    <app-page-wrapper class="register">
       <app-auth [title]="AuthTitles.REGISTER"></app-auth>
-    </div>
+    </app-page-wrapper>
   `,
   styles: [
     `
       @import '../../styles/abstracts';
 
-      .page-container {
+      .register {
         @include flex();
         background-color: var(--ion-color-primary);
       }
