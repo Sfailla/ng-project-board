@@ -5,7 +5,9 @@ import { Component, input } from '@angular/core'
   selector: 'app-page-wrapper',
   template: `
     <div class="page-wrapper page-container">
-      <h1 class="page-wrapper__title">{{ title() }}</h1>
+      @if (title()) {
+        <h1 class="page-wrapper__title">{{ title() }}</h1>
+      }
       <ng-content></ng-content>
     </div>
   `,
@@ -30,5 +32,5 @@ import { Component, input } from '@angular/core'
   ]
 })
 export class PageWrapperComponent {
-  title = input.required<string>()
+  title = input<string>()
 }
