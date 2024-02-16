@@ -15,11 +15,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { AuthService } from '../../services/auth.service'
 import { SocialsComponent } from '../socials/socials.component'
 import { Subscription } from 'rxjs/internal/Subscription'
+import { RouterLink } from '@angular/router'
+import { Routes } from '../../../shared-types'
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, IonicModule, ReactiveFormsModule, SocialsComponent],
+  imports: [CommonModule, RouterLink, IonicModule, ReactiveFormsModule, SocialsComponent],
   template: `
     <ion-grid>
       <ion-row>
@@ -32,7 +34,9 @@ import { Subscription } from 'rxjs/internal/Subscription'
               </ion-card-title>
               <ion-card-subtitle class="card__subtitle">
                 <ion-text class="card__subtitle--text">already have an account?</ion-text>
-                <a>{{ isLogin() ? RedirectTitles.SIGN_IN : RedirectTitles.SIGN_UP }}</a>
+                <a [routerLink]="isLogin() ? Routes.REGISTER : Routes.LOGIN">
+                  {{ isLogin() ? RedirectTitles.SIGN_UP : RedirectTitles.SIGN_IN }}
+                </a>
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
@@ -94,6 +98,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   // variables
   AuthTitles: typeof AuthTitles = AuthTitles
   RedirectTitles: typeof RedirectTitles = RedirectTitles
+  Routes: typeof Routes = Routes
   authForm = new FormGroup({
     username: new FormControl('', Validators.min(4)),
     email: new FormControl('', [Validators.email, Validators.required]),
