@@ -1,19 +1,15 @@
-import { Injectable, inject } from '@angular/core'
+import { Injectable } from '@angular/core'
 import { environment } from '../../../environments/environment.development'
 import { User } from '../../../generated/types.graphql-gen'
-import { Apollo } from 'apollo-angular'
 
 const TOKEN_KEY = environment.authTokenKey
 const USER_KEY = environment.authUserKey
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
-  apollo = inject(Apollo)
-
   destroySession(): void {
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
-    this.apollo.client.resetStore()
   }
 
   saveToken(token: string): void {
@@ -26,9 +22,16 @@ export class TokenService {
     localStorage.setItem(USER_KEY, JSON.stringify(user))
   }
 
-  saveUserAndToken(user: User, token: string): void {
-    this.saveToken(token)
-    this.saveUser(user)
+  saveUserAndToken(user: User, token: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      try {
+        this.saveToken(token)
+        this.saveUser(user)
+        resolve()
+      } catch (error) {
+        reject(error)
+      }
+    })
   }
 
   getToken(): string | null {
