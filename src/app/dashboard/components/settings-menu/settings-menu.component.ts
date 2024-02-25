@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core'
+import { Component, DestroyRef, inject } from '@angular/core'
 import { AuthService } from '../../../auth/services/auth.service'
 import { IonicModule } from '@ionic/angular'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-settings-menu',
@@ -93,8 +94,9 @@ import { IonicModule } from '@ionic/angular'
 })
 export class SettingsMenuComponent {
   authService: AuthService = inject(AuthService)
+  destroyRef: DestroyRef = inject(DestroyRef)
 
   logout() {
-    this.authService.logout()
+    this.authService.logout().pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
   }
 }
