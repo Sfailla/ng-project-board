@@ -1,5 +1,24 @@
 @import '../../../styles/abstracts';
 
+$variants: (
+  success: var(--ion-color-success),
+  error: var(--ion-color-danger),
+  warning: var(--ion-color-warning),
+  info: var(--ion-color-info)
+);
+
+$positions: (
+  top: 5rem,
+  bottom: 5rem
+);
+
+$animations: (
+  // slideUp: slideUp 0.5s ease-in-out forwards,
+  // slideDown: slideDown 0.5s ease-in-out forwards,
+  slide-out-right: slideOutRight 0.5s ease-in-out forwards,
+  slide-out-left: slideOutLeft 0.5s ease-in-out forwards
+);
+
 .toast {
   width: 100%;
   max-width: 40rem;
@@ -10,7 +29,6 @@
   padding: 1rem;
   border-radius: 0.5rem;
   z-index: 2;
-  animation: slideOutRight 0.5s ease-in-out forwards;
 
   &::before {
     content: '';
@@ -21,59 +39,31 @@
     top: 0;
   }
 
-  &--success {
-    &::before {
-      background-color: var(--ion-color-success);
-    }
+  @each $variant, $color in $variants {
+    &-variant--#{$variant} {
+      &::before {
+        background-color: $color;
+      }
 
-    ion-icon {
-      color: var(--ion-color-success);
-    }
+      ion-icon {
+        color: $color;
+      }
 
-    ion-button {
-      --background: var(--ion-color-success);
-    }
-  }
-
-  &--error {
-    &::before {
-      background-color: var(--ion-color-danger);
-    }
-
-    ion-icon {
-      color: var(--ion-color-danger);
-    }
-
-    ion-button {
-      --background: var(--ion-color-danger);
+      ion-button {
+        #{--background}: $color;
+      }
     }
   }
 
-  &--warning {
-    &::before {
-      background-color: var(--ion-color-warning);
-    }
-
-    ion-icon {
-      color: var(--ion-color-warning);
-    }
-
-    ion-button {
-      --background: var(--ion-color-warning);
+  @each $position, $value in $positions {
+    &-position--#{$position} {
+      #{$position}: $value;
     }
   }
 
-  &--info {
-    &::before {
-      background-color: var(--ion-color-info);
-    }
-
-    ion-icon {
-      color: var(--ion-color-info);
-    }
-
-    ion-button {
-      --background: var(--ion-color-info);
+  @each $animation, $value in $animations {
+    &-animation--#{$animation} {
+      animation: $value;
     }
   }
 
@@ -121,26 +111,43 @@
 
 @keyframes slideUp {
   from {
-    bottom: -2rem;
-    opacity: 0;
+    top: auto;
+    bottom: -100%;
   }
 
   to {
+    top: auto;
     bottom: 2rem;
-    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    bottom: auto;
+    top: -100%;
+  }
+  to {
+    bottom: auto;
+    top: 5rem;
   }
 }
 
 @keyframes slideOutRight {
   from {
-    top: 5rem;
     right: -100%;
-    // opacity: 0;
   }
 
   to {
-    top: 5rem;
     right: 1rem;
-    // opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    left: -100%;
+  }
+
+  to {
+    left: 1rem;
   }
 }
