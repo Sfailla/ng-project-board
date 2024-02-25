@@ -21,17 +21,26 @@ import {
   menu,
   close
 } from 'ionicons/icons'
+import { ToastMessageComponent } from './shared/components'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, IonicModule],
+  imports: [CommonModule, RouterOutlet, IonicModule, ToastMessageComponent],
   template: `
     <ion-app>
-      <ion-router-outlet></ion-router-outlet>
+      <app-toast-message />
+      <ion-router-outlet />
     </ion-app>
   `,
-  styles: ``
+  styles: `
+    ion-app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+    }
+  `
 })
 export class AppComponent {
   title = 'Project Board'
