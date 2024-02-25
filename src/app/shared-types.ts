@@ -2,7 +2,8 @@ export enum ErrorMessages {
   JWT = 'jwt expired',
   UNAUTHORIZED = 'Not authenticated',
   PASSWORDS_DO_NOT_MATCH = '⛔️🔐 Passwords do not match',
-  LOGIN_FAILED = '⛔️🔐 Login failed'
+  LOGIN_FAILED = '⛔️🔐 Login failed',
+  REGISTRATION_FAILED = '⛔️🔐 Registration failed'
 }
 
 export enum Messages {
@@ -27,3 +28,16 @@ export enum IonicRoutes {
   HOME = 'home',
   TASKS = 'tasks'
 }
+
+export enum ToastTypes {
+  ERROR = 'error',
+  SUCCESS = 'success',
+  INFO = 'info',
+  WARNING = 'warning'
+}
+
+export type ToastPosition = 'top' | 'bottom'
+export type ToastVariant = 'error' | 'success' | 'info' | 'warning'
+export type ToastAnimation = 'slide-out-right' | 'slide-out-left' | 'slide-up' | 'slide-down'
+export type ToastConfig = { duration: number; position: ToastPosition; animation: ToastAnimation }
+export type ToastInput = { variant: ToastVariant; message: string; config?: ToastConfig }
