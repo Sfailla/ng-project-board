@@ -16,9 +16,19 @@ export class ProjectService {
 
   getProjects() {
     return this.apollo
-      .watchQuery<{
+      .query<{
         getProjects: Project[]
-      }>({ query: GetProjectsDocument, fetchPolicy: 'network-only' })
-      .valueChanges.pipe(map(({ data }) => data.getProjects))
+      }>({ query: GetProjectsDocument })
+      .pipe(
+        map(({ data, errors }) => {
+          console.log({ data, errors })
+
+          if (errors) {
+            console.log('Error fetching projects', errors)
+          }
+
+          return data?.getProjects || []
+        })
+      )
   }
 }
