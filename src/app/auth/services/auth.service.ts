@@ -8,6 +8,8 @@ import { UserAndToken } from '../../../generated/types.graphql-gen'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular'
 import { ErrorMessages, Routes } from '../../shared-types'
+import { LogoutDocument } from '../../../generated/queries/index.graphql-gen'
+import { ToastService } from '../../shared/services/toast/toast.service'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -15,6 +17,7 @@ export class AuthService {
   router: Router = inject(Router)
   tokenService: TokenService = inject(TokenService)
   navController: NavController = inject(NavController)
+  toastService: ToastService = inject(ToastService)
 
   register(authUserInput: AuthUserInput) {
     const { username, email, password, confirmPassword } = authUserInput
@@ -24,14 +27,29 @@ export class AuthService {
     }
 
     return this.apollo
-      .mutate({
+      .mutate<{ createUser: UserAndToken }>({
         mutation: CreateUserDocument,
-        fetchPolicy: 'network-only',
         variables: { username, email, password }
       })
       .pipe(
-        map(({ data }) => {
-          console.log({ data })
+        map(async ({ data, errors }) => {
+          console.log({ data, errors })
+
+          if (errors) {
+            this.toastService.setToastMessage({ variant: 'error', message: errors[0].message })
+            await this.navController.navigateRoot([Routes.REGISTER], {
+              animationDirection: 'back'
+            })
+          }
+
+          if (!data) throw new Error(ErrorMessages.REGISTRATION_FAILED)
+
+          await this.apollo.client.resetStore()
+          await this.tokenService.saveUserAndToken(data?.createUser.user, data?.createUser.token)
+          await this.navController.navigateRoot([Routes.DASHBOARD], {
+            animationDirection: 'forward'
+          })
+
           return data
         })
       )
@@ -43,26 +61,45 @@ export class AuthService {
     return this.apollo
       .mutate<{ login: UserAndToken }>({
         mutation: LoginDocument,
-        fetchPolicy: 'network-only',
+        errorPolicy: 'all',
         variables: { email, password }
       })
       .pipe(
-        map(async ({ data }) => {
-          console.log({ data })
+        map(async ({ data, errors }) => {
+          console.log({ data, errors })
+          if (errors) {
+            this.toastService.setToastMessage({ variant: 'error', message: errors[0].message })
+            await this.navController.navigateRoot([Routes.LOGIN], {
+              animationDirection: 'back'
+            })
+          }
+
           if (!data) throw new Error(ErrorMessages.LOGIN_FAILED)
 
-          this.apollo.client.resetStore()
-          this.tokenService.saveUserAndToken(data.login.user, data.login.token)
+          await this.apollo.client.resetStore()
+          await this.tokenService.saveUserAndToken(data.login.user, data.login.token)
           await this.navController.navigateRoot([Routes.DASHBOARD], {
             animationDirection: 'forward'
           })
+
+          return data
         })
       )
   }
 
-  async logout() {
-    this.tokenService.destroySession()
-    await this.navController.navigateRoot([Routes.LOGIN], { animationDirection: 'back' })
+  logout() {
+    return this.apollo.query({ query: LogoutDocument }).pipe(
+      map(async ({ data, error }) => {
+        if (error) console.error({ error })
+        if (!data) throw new Error('Logout failed')
+
+        this.tokenService.destroySession()
+        await this.apollo.client.resetStore()
+        await this.navController.navigateRoot([Routes.LOGIN], {
+          animationDirection: 'back'
+        })
+      })
+    )
   }
 
   isAuthenticated() {
