@@ -1,25 +1,22 @@
 import { Injectable } from '@angular/core'
-import { environment } from '../../../environments/environment.development'
 import { User } from '../../../generated/types.graphql-gen'
-
-const TOKEN_KEY = environment.authTokenKey
-const USER_KEY = environment.authUserKey
+import { LocalStorageKeys } from '../../shared-types'
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
   destroySession(): void {
-    localStorage.removeItem(TOKEN_KEY)
-    localStorage.removeItem(USER_KEY)
+    localStorage.removeItem(LocalStorageKeys.AUTH_TOKEN)
+    localStorage.removeItem(LocalStorageKeys.AUTH_USER)
   }
 
   saveToken(token: string): void {
-    localStorage.removeItem(TOKEN_KEY)
-    localStorage.setItem(TOKEN_KEY, token)
+    localStorage.removeItem(LocalStorageKeys.AUTH_TOKEN)
+    localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, token)
   }
 
   saveUser(user: User): void {
-    localStorage.removeItem(USER_KEY)
-    localStorage.setItem(USER_KEY, JSON.stringify(user))
+    localStorage.removeItem(LocalStorageKeys.AUTH_USER)
+    localStorage.setItem(LocalStorageKeys.AUTH_USER, JSON.stringify(user))
   }
 
   saveUserAndToken(user: User, token: string): Promise<void> {
@@ -35,11 +32,11 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(TOKEN_KEY) || null
+    return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN) || null
   }
 
   getUser(): User | null {
-    const user = localStorage.getItem(USER_KEY)
+    const user = localStorage.getItem(LocalStorageKeys.AUTH_USER)
     return user ? JSON.parse(user) : null
   }
 }
