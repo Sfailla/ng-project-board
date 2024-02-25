@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { AuthComponent } from '../components/auth/auth.component'
 import { AuthTitles } from '../auth-types'
-import { ActivatedRoute } from '@angular/router'
 import { PageWrapperComponent, ToastMessageComponent } from '../../shared/components'
-import { ToastService } from '../../shared/services/toast/toast.service'
 
 @Component({
   selector: 'app-login',
@@ -28,6 +26,4 @@ import { ToastService } from '../../shared/services/toast/toast.service'
 })
 export class LoginComponent {
   AuthTitles: typeof AuthTitles = AuthTitles
-  route = inject(ActivatedRoute)
-  toastService: ToastService = inject(ToastService)
 }
