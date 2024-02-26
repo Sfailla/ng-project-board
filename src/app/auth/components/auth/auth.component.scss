@@ -1,5 +1,4 @@
-@import '../../../styles/abstracts/mixins.scss';
-@import '../../../styles/abstracts/variables.scss';
+@use '../../../styles/abstracts' as *;
 
 :host {
   height: 100%;

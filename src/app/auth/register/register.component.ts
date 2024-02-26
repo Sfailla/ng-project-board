@@ -14,7 +14,7 @@ import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-
   `,
   styles: [
     `
-      @import '../../styles/abstracts';
+      @use '../../styles/abstracts' as *;
 
       .register {
         @include flex();

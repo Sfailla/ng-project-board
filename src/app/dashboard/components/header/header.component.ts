@@ -31,7 +31,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
   `,
   styles: [
     `
-      @import '../../../styles/abstracts';
+      @use '../../../styles/abstracts' as *;
 
       ion-menu-button {
         width: 4rem;

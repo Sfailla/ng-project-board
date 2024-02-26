@@ -30,7 +30,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
   `,
   styles: [
     `
-      @import '../../../styles/abstracts';
+      @use '../../../styles/abstracts' as *;
 
       .settings-menu {
         --width: 20rem;

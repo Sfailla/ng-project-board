@@ -1,4 +1,4 @@
-@import '../../../../styles/abstracts';
+@use '../../../../styles/abstracts' as *;
 
 .project-card {
   border: 1px solid var(--select-project-card-border-color);

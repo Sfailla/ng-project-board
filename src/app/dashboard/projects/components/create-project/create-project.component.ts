@@ -40,7 +40,7 @@ import { IonicModule } from '@ionic/angular'
   `,
   styles: [
     `
-      @import '../../../../styles/abstracts';
+      @use '../../../../styles/abstracts' as *;
 
       .create-project {
         &__card {

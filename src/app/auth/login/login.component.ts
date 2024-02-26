@@ -14,7 +14,7 @@ import { PageWrapperComponent, ToastMessageComponent } from '../../shared/compon
   `,
   styles: [
     `
-      @import '../../styles/abstracts';
+      @use '../../styles/abstracts' as *;
 
       .login {
         @include flex();

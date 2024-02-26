@@ -48,7 +48,7 @@ import { LocalStorageKeys } from '../../../shared-types'
   `,
   styles: [
     `
-      @import '../../../styles/abstracts';
+      @use '../../../styles/abstracts' as *;
 
       .side-menu {
         height: 100%;

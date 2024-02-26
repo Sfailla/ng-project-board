@@ -1,4 +1,4 @@
-@import "header";
-@import "footer";
-@import "nav";
-@import "sidebar";
+@forward 'header';
+@forward 'footer';
+@forward 'nav';
+@forward 'sidebar';

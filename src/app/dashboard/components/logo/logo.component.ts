@@ -10,7 +10,7 @@ import { Component } from '@angular/core'
   `,
   styles: [
     `
-      @import '../../../styles/abstracts';
+      @use '../../../styles/abstracts' as *;
 
       .logo {
         width: 2.5rem;
