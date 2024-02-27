@@ -14,6 +14,10 @@ export class ProjectService {
     this.storageService.setItem('project-id', projectId)
   }
 
+  getProjectId(): string | null {
+    return this.storageService.getItem('project-id')
+  }
+
   getProjects() {
     return this.apollo
       .query<{
