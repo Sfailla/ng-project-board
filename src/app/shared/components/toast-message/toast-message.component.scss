@@ -9,13 +9,11 @@ $variants: (
 );
 
 $positions: (
-  top: 5rem,
+  top: 7.5rem,
   bottom: 5rem
 );
 
 $animations: (
-  // slideUp: slideUp 0.5s ease-in-out forwards,
-  // slideDown: slideDown 0.5s ease-in-out forwards,
   slide-out-right: slideOutRight 0.5s ease-in-out forwards,
   slide-out-left: slideOutLeft 0.5s ease-in-out forwards
 );
