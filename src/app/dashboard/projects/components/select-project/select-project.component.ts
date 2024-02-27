@@ -73,9 +73,9 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
     )
   }
 
-  setCurrentProjectId(projectId: string) {
+  async setCurrentProjectId(projectId: string) {
     this.projectService.setProjectId(projectId)
-    this.navController.navigateForward(['dashboard', projectId, 'tasks'])
+    await this.navController.navigateForward(['dashboard', projectId, 'tasks'])
   }
 
   handleKeyUp(event: KeyboardEvent) {
