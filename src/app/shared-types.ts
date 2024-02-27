@@ -3,11 +3,14 @@ export enum ErrorMessages {
   UNAUTHORIZED = 'Not authenticated',
   PASSWORDS_DO_NOT_MATCH = '⛔️🔐 Passwords do not match',
   LOGIN_FAILED = '⛔️🔐 Login failed',
-  REGISTRATION_FAILED = '⛔️🔐 Registration failed'
+  REGISTRATION_FAILED = '⛔️🔐 Registration failed',
+  SESSION_EXPIRED = 'Your session has expired. Please login again'
 }
 
 export enum Messages {
-  SESSION_EXPIRED = 'Your session has expired. Please login again'
+  LOGIN_SUCCESSFUL = '🎉🔐 Login successful',
+  REGISTRATION_SUCCESSFUL = '🎉🔐 Registration successful',
+  LOGOUT_SUCCESSFUL = '🎉🔐 Logout successful'
 }
 
 export enum LocalStorageKeys {
