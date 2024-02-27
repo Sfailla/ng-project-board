@@ -98,7 +98,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
           position: relative;
 
           &:hover {
-            color: var(--ion-color-danger);
+            color: var(--ion-color-primary);
 
             & ion-icon {
               transform: rotate(-60deg);

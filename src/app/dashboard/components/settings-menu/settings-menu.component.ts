@@ -17,11 +17,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
       <ion-content>
         <ion-list>
           <ion-item lines="full">
-            <ion-icon slot="start" name="options-outline"></ion-icon>
+            <ion-icon slot="start" name="options-outline" />
             <ion-label>Settings</ion-label>
           </ion-item>
           <ion-item (click)="logout()" lines="full">
-            <ion-icon slot="start" name="log-out-outline"></ion-icon>
+            <ion-icon slot="start" name="log-out-outline" />
             <ion-label>Logout</ion-label>
           </ion-item>
         </ion-list>
@@ -74,7 +74,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
               &:hover {
                 & ion-icon,
                 & ion-label {
-                  color: var(--ion-color-danger);
+                  color: var(--ion-color-primary);
                 }
               }
 
