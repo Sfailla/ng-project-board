@@ -5,7 +5,7 @@ import { ToastConfig, ToastInput, ToastTypes, ToastVariant } from '../../../shar
 export class ToastService {
   variant = signal<ToastVariant>(ToastTypes.SUCCESS)
   message = signal<string>('')
-  config = signal<ToastConfig>({ duration: 5000, position: 'top', animation: 'slide-out-right' })
+  config = signal<ToastConfig>({ duration: 6000, position: 'top', animation: 'slide-out-right' })
   showToastMessage = signal<boolean>(false)
 
   setToastMessage(toastInput: ToastInput): void {
