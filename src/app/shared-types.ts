@@ -20,7 +20,10 @@ export enum LocalStorageKeys {
 export enum Routes {
   LOGIN = '/auth/login',
   REGISTER = '/auth/register',
-  DASHBOARD = '/dashboard'
+  DASHBOARD = '/dashboard',
+  HOME = '/dashboard/home',
+  PROJECTS = '/dashboard/projects',
+  TASKS = '/dashboard/:id/tasks'
 }
 
 export enum IonicRoutes {
