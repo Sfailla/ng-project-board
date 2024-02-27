@@ -7,7 +7,7 @@ import { TokenService } from './token.service'
 import { UserAndToken } from '../../../generated/types.graphql-gen'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular'
-import { ErrorMessages, Routes } from '../../shared-types'
+import { ErrorMessages, Messages, Routes } from '../../shared-types'
 import { LogoutDocument } from '../../../generated/queries/index.graphql-gen'
 import { ToastService } from '../../shared/services/toast/toast.service'
 
@@ -44,6 +44,11 @@ export class AuthService {
 
           if (!data) throw new Error(ErrorMessages.REGISTRATION_FAILED)
 
+          this.toastService.setToastMessage({
+            variant: 'success',
+            message: Messages.REGISTRATION_SUCCESSFUL
+          })
+
           await this.apollo.client.resetStore()
           await this.tokenService.saveUserAndToken(data?.createUser.user, data?.createUser.token)
           await this.navController.navigateRoot([Routes.DASHBOARD], {
@@ -75,6 +80,11 @@ export class AuthService {
           }
 
           if (!data) throw new Error(ErrorMessages.LOGIN_FAILED)
+
+          this.toastService.setToastMessage({
+            variant: 'success',
+            message: Messages.LOGIN_SUCCESSFUL
+          })
 
           await this.apollo.client.resetStore()
           await this.tokenService.saveUserAndToken(data.login.user, data.login.token)
