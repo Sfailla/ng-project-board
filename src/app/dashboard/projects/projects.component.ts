@@ -1,36 +1,17 @@
-import {
-  Component
-  // OnInit,
-  // effect,
-  // inject,
-  // signal
-} from '@angular/core'
+import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SelectProjectComponent } from './components/select-project/select-project.component'
-// import { Project } from '../../../generated/types.graphql-gen'
-// import { ProjectService } from './services/project.service'
+import { PageWrapperComponent } from '../../shared/components'
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [SelectProjectComponent],
+  imports: [SelectProjectComponent, PageWrapperComponent],
   template: `
-    <div class="page-container">
+    <app-page-wrapper title="Projects">
       <app-select-project></app-select-project>
-    </div>
+    </app-page-wrapper>
   `,
-  styles: [``]
+  styles: [``],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProjectsComponent {
-  // projectService: ProjectService = inject(ProjectService)
-  // projects = signal<Project[]>([])
-  // constructor() {
-  //   effect(() => {
-  //     console.log({ projects: this.projects() })
-  //   })
-  // }
-  // ngOnInit(): void {
-  //   this.projectService.getProjects().subscribe(projects => {
-  //     this.projects.set(projects)
-  //   })
-  // }
-}
+export class ProjectsComponent {}
