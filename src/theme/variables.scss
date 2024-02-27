@@ -91,6 +91,8 @@
   --select-project-card-title-color: var(--ion-color-step-850, #262626);
   --select-project-card-border-color: #e5e5e5;
   --select-project-icon-border-color: #afafaf;
+
+  --nav-link-border-color: #e1dcdc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -212,6 +214,8 @@
     --select-project-card-title-color: #fff;
     --select-project-card-border-color: #424244;
     --select-project-icon-border-color: #808289;
+
+    --nav-link-border-color: #323232;
   }
 
   .ios ion-modal {
@@ -274,6 +278,8 @@
     --select-project-card-title-color: #fff;
     --select-project-card-border-color: #424244;
     --select-project-icon-border-color: #808289;
+
+    --nav-link-border-color: #323232;
   }
 }
 
