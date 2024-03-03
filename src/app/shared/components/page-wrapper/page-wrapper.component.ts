@@ -25,7 +25,7 @@ import { Component, input } from '@angular/core'
 
         &__title {
           text-transform: uppercase;
-          margin: 2rem 0;
+          margin: 2rem 0 3.6rem 0;
         }
       }
     `
