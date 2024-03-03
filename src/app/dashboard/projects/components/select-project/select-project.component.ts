@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core'
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core'
 import { IonicModule, NavController } from '@ionic/angular'
 import { ProjectService } from '../../services/project.service'
 import { CommonModule } from '@angular/common'
@@ -6,6 +6,8 @@ import { RouterLink } from '@angular/router'
 import { TokenService } from '../../../../auth/services'
 import { Subscription } from 'rxjs/internal/Subscription'
 import { Project } from '../../../../../generated/types.graphql-gen'
+import { Routes } from '../../../../shared-types'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-select-project',
@@ -26,24 +28,25 @@ import { Project } from '../../../../../generated/types.graphql-gen'
               <li>
                 <a
                   class="create-project"
-                  routerLink="/dashboard/projects/create"
+                  [routerLink]="Routes.CREATE_PROJECT"
                   routerDirection="forward">
                   <span>
-                    <ion-icon name="add-outline"></ion-icon>
+                    <ion-icon name="add-outline" />
                   </span>
                   <ion-label class="create-project-title">Create Project</ion-label>
                 </a>
               </li>
-              <li
-                *ngFor="let project of projects(); let index"
-                (click)="setCurrentProjectId(project.id)"
-                (keyup)="handleKeyUp($event)"
-                [tabindex]="index">
-                <span class="project-button">
-                  <ion-icon slot="start" name="folder-outline"></ion-icon>
-                </span>
-                <ion-label slot="end">{{ project.name }}</ion-label>
-              </li>
+              @for (project of projects(); track project.id; let idx = $index) {
+                <li
+                  (click)="setCurrentProjectId(project.id)"
+                  (keyup)="handleKeyUp($event)"
+                  [tabindex]="idx">
+                  <span class="project-button">
+                    <ion-icon slot="start" name="folder-outline" />
+                  </span>
+                  <ion-label slot="end">{{ project.name }}</ion-label>
+                </li>
+              }
             </ul>
           </div>
         </ion-card-content>
@@ -53,11 +56,13 @@ import { Project } from '../../../../../generated/types.graphql-gen'
   `,
   styleUrls: ['select-project.component.scss']
 })
-export class SelectProjectComponent implements OnInit, OnDestroy {
+export class SelectProjectComponent implements OnInit {
   navController: NavController = inject(NavController)
   projectService: ProjectService = inject(ProjectService)
   tokenService: TokenService = inject(TokenService)
+  destroyRef: DestroyRef = inject(DestroyRef)
 
+  Routes: typeof Routes = Routes
   subscription: Subscription = new Subscription()
   projects = signal<Project[]>([])
 
@@ -65,28 +70,25 @@ export class SelectProjectComponent implements OnInit, OnDestroy {
     this.getProjects()
   }
 
-  getProjects() {
-    this.subscription.add(
-      this.projectService.getProjects().subscribe(projects => {
+  getProjects(): void {
+    this.projectService
+      .getProjects()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(projects => {
         this.projects.set(projects)
       })
-    )
   }
 
-  async setCurrentProjectId(projectId: string) {
+  async setCurrentProjectId(projectId: string): Promise<void> {
     this.projectService.setProjectId(projectId)
     await this.navController.navigateForward(['dashboard', projectId, 'tasks'])
   }
 
-  handleKeyUp(event: KeyboardEvent) {
+  handleKeyUp(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       event.preventDefault()
       event.stopPropagation()
       event.target?.dispatchEvent(new Event('click'))
     }
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe()
   }
 }
