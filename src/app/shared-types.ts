@@ -26,6 +26,7 @@ export enum Routes {
   DASHBOARD = '/dashboard',
   HOME = '/dashboard/home',
   PROJECTS = '/dashboard/projects',
+  CREATE_PROJECT = '/dashboard/projects/create',
   TASKS = '/dashboard/:id/tasks'
 }
 
