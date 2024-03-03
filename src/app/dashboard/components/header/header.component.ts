@@ -23,7 +23,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
         </div>
         <div class="header__profile-settings">
           <ion-menu-button menu="settings" autoHide="false">
-            <ion-icon name="settings-outline"></ion-icon>
+            <ion-icon name="settings-outline" />
           </ion-menu-button>
         </div>
       </div>
@@ -56,6 +56,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
         &__logo {
           &--text {
             font-size: 1.5rem;
+            font-family: montserrat;
             text-transform: uppercase;
             color: var(--heading-color-primary);
           }
@@ -120,14 +121,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
 export class HeaderComponent {
   menu: MenuController = inject(MenuController)
 
-  openSettingsMenu() {
-    const settingsMenu = document.querySelector('.header__settings-menu')
-    settingsMenu?.classList.toggle('header__settings-menu--active')
-  }
-
   async toggleSideMenu() {
-    console.log('clicked')
-
     await this.menu.toggle('settings')
   }
 }
