@@ -93,6 +93,8 @@
   --select-project-icon-border-color: #afafaf;
 
   --nav-link-border-color: #e1dcdc;
+
+  --create-project-card-border-color: #5e5e5e;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -216,6 +218,8 @@
     --select-project-icon-border-color: #808289;
 
     --nav-link-border-color: #323232;
+
+    --create-project-card-border-color: #5e5e5e;
   }
 
   .ios ion-modal {
@@ -280,6 +284,8 @@
     --select-project-icon-border-color: #808289;
 
     --nav-link-border-color: #323232;
+
+    --create-project-card-border-color: #5e5e5e;
   }
 }
 
