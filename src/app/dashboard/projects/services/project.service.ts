@@ -4,6 +4,7 @@ import { GetProjectsDocument } from '../../../../generated/queries/index.graphql
 import { map } from 'rxjs/internal/operators/map'
 import { Project } from '../../../../generated/types.graphql-gen'
 import { LocalStorageService } from '../../../shared/services'
+import { LocalStorageKeys } from '../../../shared-types'
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -11,11 +12,11 @@ export class ProjectService {
   storageService: LocalStorageService = inject(LocalStorageService)
 
   setProjectId(projectId: string): void {
-    this.storageService.setItem('project-id', projectId)
+    this.storageService.setItem(LocalStorageKeys.PROJECT_ID, projectId)
   }
 
   getProjectId(): string | null {
-    return this.storageService.getItem('project-id')
+    return this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
   }
 
   getProjects() {
