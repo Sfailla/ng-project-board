@@ -102,10 +102,9 @@
   & ion-label {
     font-size: 1.4rem;
     font-weight: 500;
-    font-family: montserrat;
     padding-left: 1rem;
-    visibility: visible;
     opacity: 1;
+    transition: width 1s ease-in-out;
 
     &.hide-label {
       padding-left: 0;
