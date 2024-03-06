@@ -11,17 +11,18 @@ import {
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { AuthTitles, AuthUserInput, RedirectTitles } from '../../auth-types'
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
 import { SocialsComponent } from '../socials/socials.component'
 import { RouterLink } from '@angular/router'
 import { Routes } from '../../../shared-types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { AuthFormComponent } from '../../../shared/components'
 
 @Component({
   selector: 'app-auth',
   standalone: true,
-  imports: [CommonModule, RouterLink, IonicModule, ReactiveFormsModule, SocialsComponent],
+  imports: [CommonModule, RouterLink, IonicModule, SocialsComponent, AuthFormComponent],
   template: `
     <ion-grid>
       <ion-row>
@@ -40,41 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
-              <form [formGroup]="authForm">
-                <ion-list lines="none">
-                  <ion-item *ngIf="!isLogin()" color="light">
-                    <ion-input
-                      formControlName="username"
-                      label="Username"
-                      labelPlacement="floating"
-                      type="text" />
-                  </ion-item>
-                  <ion-item color="light">
-                    <ion-input
-                      formControlName="email"
-                      label="Email"
-                      labelPlacement="floating"
-                      type="email" />
-                  </ion-item>
-                  <ion-item color="light">
-                    <ion-input
-                      formControlName="password"
-                      label="Password"
-                      labelPlacement="floating"
-                      type="password" />
-                  </ion-item>
-                  <ion-item *ngIf="!isLogin()" color="light">
-                    <ion-input
-                      formControlName="confirmPassword"
-                      label="Confirm Password"
-                      labelPlacement="floating"
-                      type="password" />
-                  </ion-item>
-                </ion-list>
-                <ion-button type="submit" expand="block" color="primary" (click)="submit()">
-                  {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
-                </ion-button>
-              </form>
+              <app-auth-form [isLogin]="isLogin()" [form]="authForm" [submit]="submit" />
               <div class="login__content-break">or</div>
               <app-socials />
             </ion-card-content>
@@ -111,7 +78,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.isLogin.set(this.title() === AuthTitles.LOGIN)
   }
 
-  submit() {
+  submit = () => {
     const credentials = this.authForm.value as AuthUserInput
     this.isLogin()
       ? this.authService.login(credentials).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
