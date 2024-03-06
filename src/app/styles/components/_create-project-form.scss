@@ -1,0 +1,11 @@
+.form {
+  margin: 4rem 0 6rem 0;
+  ion-item {
+    --background: var(--dashboard-sub-background);
+    --border-color: var(--create-project-card-border-color);
+    --border-radius: 5px;
+    --padding-start: 0;
+    --padding-end: 0;
+    --padding-bottom: 1.6rem;
+  }
+}
