@@ -42,44 +42,6 @@
   }
 
   &__content {
-    & form {
-      & ion-list {
-        background-color: var(--ion-color-light);
-      }
-
-      & ion-item {
-        border: 1px solid var(--form-border-color);
-        border-radius: 5px;
-
-        &::part(native) {
-          border-style: none;
-          padding-left: 16px;
-
-          & .item-inner {
-            border: none;
-          }
-        }
-
-        &:not(:last-of-type) {
-          margin-bottom: 1.5rem;
-        }
-      }
-
-      & ion-button {
-        height: 5rem;
-        margin-top: 30px;
-        font-size: 1.4rem;
-
-        &:disabled {
-          opacity: 0.5;
-
-          &::after {
-            display: none;
-          }
-        }
-      }
-    }
-
     .login {
       &__content-break {
         width: 100%;
