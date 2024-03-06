@@ -1,0 +1,42 @@
+@use '../../../../styles/abstracts' as *;
+
+.create-project {
+  &__card {
+    border: 1px solid var(--select-project-card-border-color);
+    border-radius: 5px;
+    --background: var(--dashboard-sub-background);
+    min-height: 30rem;
+    display: grid;
+    grid-template-columns: 2fr 3fr;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__left-side {
+    & .content-container {
+      max-width: 35rem;
+    }
+  }
+
+  &__right-side {
+    overflow: hidden;
+
+    & .background-image {
+      width: 105%;
+      height: 105%;
+      transform: translate(-2.5%, -2.5%);
+      background-image: url('/assets/abstract-lines-background-fixed.svg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+    }
+  }
+
+  &__card-header {
+    padding: 1.6rem;
+
+    & ion-card-title {
+      font-size: 2rem;
+    }
+  }
+}
