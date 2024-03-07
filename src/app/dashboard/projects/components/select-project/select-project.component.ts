@@ -63,7 +63,6 @@ export class SelectProjectComponent implements OnInit {
   destroyRef: DestroyRef = inject(DestroyRef)
 
   Routes: typeof Routes = Routes
-  subscription: Subscription = new Subscription()
   projects = signal<Project[] | null>(null)
 
   ngOnInit(): void {
