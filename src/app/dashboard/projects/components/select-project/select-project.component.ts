@@ -64,7 +64,7 @@ export class SelectProjectComponent implements OnInit {
 
   Routes: typeof Routes = Routes
   subscription: Subscription = new Subscription()
-  projects = signal<Project[]>([])
+  projects = signal<Project[] | null>(null)
 
   ngOnInit(): void {
     this.getProjects()
@@ -74,9 +74,7 @@ export class SelectProjectComponent implements OnInit {
     this.projectService
       .getProjects()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(projects => {
-        this.projects.set(projects)
-      })
+      .subscribe(projects => this.projects.set(projects))
   }
 
   async setCurrentProjectId(projectId: string): Promise<void> {
