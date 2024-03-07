@@ -1,10 +1,16 @@
 import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
-import { GetProjectsDocument } from '../../../../generated/queries/index.graphql-gen'
 import { map } from 'rxjs/internal/operators/map'
-import { Project } from '../../../../generated/types.graphql-gen'
 import { LocalStorageService } from '../../../shared/services'
 import { LocalStorageKeys } from '../../../shared-types'
+import {
+  GetProjectsDocument,
+  GetProjectsQuery
+} from '../../../../generated/queries/index.graphql-gen'
+import {
+  CreateProjectDocument,
+  CreateProjectMutation
+} from '../../../../generated/mutations/index.graphql-gen'
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -20,20 +26,22 @@ export class ProjectService {
   }
 
   getProjects() {
-    return this.apollo
-      .query<{
-        getProjects: Project[]
-      }>({ query: GetProjectsDocument })
-      .pipe(
-        map(({ data, errors }) => {
-          console.log({ data, errors })
+    return this.apollo.query<GetProjectsQuery>({ query: GetProjectsDocument }).pipe(
+      map(({ data, errors }) => {
+        if (errors) console.log('Error fetching projects', errors)
+        if (data) return data.getProjects
+        return null
+      })
+    )
+  }
 
-          if (errors) {
-            console.log('Error fetching projects', errors)
-          }
-
-          return data?.getProjects || []
-        })
-      )
+  createProject() {
+    return this.apollo.mutate<CreateProjectMutation>({ mutation: CreateProjectDocument }).pipe(
+      map(({ data, errors }) => {
+        if (errors) console.log('Error creating project', errors)
+        if (data) return data.createProject
+        return null
+      })
+    )
   }
 }
