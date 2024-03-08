@@ -30,7 +30,14 @@ import { IonicModule } from '@ionic/angular'
           </button>
         </div>
       </div>
-      <ion-button type="submit" expand="block" color="primary">Create Project</ion-button>
+      <ion-button
+        type="submit"
+        expand="block"
+        color="primary"
+        [disabled]="!form().valid"
+        (click)="createProject()()">
+        Create Project
+      </ion-button>
     </form>
   `,
   styles: [
@@ -95,4 +102,5 @@ import { IonicModule } from '@ionic/angular'
 })
 export class CreateProjectFormComponent {
   form = input.required<FormGroup>()
+  createProject = input.required<() => void>()
 }
