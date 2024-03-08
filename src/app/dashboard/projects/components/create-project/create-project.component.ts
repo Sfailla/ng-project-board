@@ -1,8 +1,10 @@
-import { Component } from '@angular/core'
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { CreateProjectFormComponent, PageWrapperComponent } from '../../../../shared/components'
 import { DesktopPreviewComponent } from '../desktop-preview/desktop-preview.component'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { ProjectService } from '../../services/project.service'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-create-project',
@@ -18,7 +20,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
                 <ion-card-title>New Project</ion-card-title>
               </ion-card-header>
               <ion-card-content class="create-project__card-content">
-                <app-create-project-form [form]="form" />
+                <app-create-project-form [form]="form" [createProject]="createProject" />
               </ion-card-content>
             </div>
           </div>
@@ -26,16 +28,30 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
             <div class="background-image"></div>
           </div>
 
-          <app-desktop-preview></app-desktop-preview>
+          <app-desktop-preview />
         </ion-card>
       </div>
     </app-page-wrapper>
   `,
-  styleUrls: ['./create-project.component.scss']
+  styleUrls: ['./create-project.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateProjectComponent {
+  projectService: ProjectService = inject(ProjectService)
+  destroyRef: DestroyRef = inject(DestroyRef)
+
   form = new FormGroup({
     projectName: new FormControl('', Validators.required),
-    projectDescription: new FormControl('')
+    projectDescription: new FormControl('', Validators.required)
   })
+
+  createProject = () => {
+    const { projectName, projectDescription } = this.form.value
+
+    if (projectName && projectDescription)
+      this.projectService
+        .createProject(projectName, projectDescription)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe()
+  }
 }
