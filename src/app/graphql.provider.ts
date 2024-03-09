@@ -17,7 +17,7 @@ export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
 
   const clearCredentialsAndNavigateToLogin = () => {
     tokenService.destroySession()
-    toastService.setToastMessage({ variant: 'error', message: ErrorMessages.SESSION_EXPIRED })
+    toastService.present({ variant: 'error', message: ErrorMessages.SESSION_EXPIRED })
     navController.navigateRoot(Routes.LOGIN, { animationDirection: 'back' })
   }
 
@@ -33,8 +33,6 @@ export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
   })
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
-    console.log('errorLink called')
-
     if (networkError) {
       console.log(networkError)
       // setup route to error page with message
