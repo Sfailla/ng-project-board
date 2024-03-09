@@ -5,18 +5,29 @@ import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './com
 import { ProjectService } from './projects/services/project.service'
 import { LocalStorageService } from '../shared/services'
 import { IonicRoutes, LocalStorageKeys } from '../shared-types'
+import { ConfirmationComponent, OverlayComponent } from '../shared/components'
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [IonicModule, RouterOutlet, SideMenuComponent, HeaderComponent, SettingsMenuComponent],
+  imports: [
+    IonicModule,
+    RouterOutlet,
+    SideMenuComponent,
+    HeaderComponent,
+    SettingsMenuComponent,
+    ConfirmationComponent,
+    OverlayComponent
+  ],
   template: `
     <div class="app-layout">
-      <app-side-menu></app-side-menu>
+      <app-side-menu />
       <ion-content class="app-layout__content">
-        <app-header></app-header>
-        <app-settings-menu></app-settings-menu>
-        <ion-router-outlet id="main" class="router-outlet"></ion-router-outlet>
+        <app-header />
+        <app-overlay />
+        <app-confirmation />
+        <app-settings-menu />
+        <ion-router-outlet id="main" class="router-outlet" />
       </ion-content>
     </div>
   `,
@@ -28,6 +39,12 @@ import { IonicRoutes, LocalStorageKeys } from '../shared-types'
 
       ion-router-outlet {
         margin-top: var(--header-height);
+      }
+
+      .app-layout {
+        &__content {
+          postiion: relative;
+        }
       }
     `
   ],
