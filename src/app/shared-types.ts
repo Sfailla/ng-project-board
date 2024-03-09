@@ -13,6 +13,16 @@ export enum Messages {
   LOGOUT_SUCCESSFUL = '🎉🔐 Logout successful'
 }
 
+export enum ConfirmationHeader {
+  DELETE_PROJECT = 'Delete Project',
+  DELETE_TASK = 'Delete Task'
+}
+
+export enum ConfirmationMessage {
+  DELETE_PROJECT = 'Are you sure you want to delete this project? Deleting this project will remove all associated tasks',
+  DELETE_TASK = 'Are you sure you want to delete this task?'
+}
+
 export enum LocalStorageKeys {
   AUTH_TOKEN = 'auth-token',
   AUTH_USER = 'auth-user',
@@ -36,7 +46,7 @@ export enum IonicRoutes {
   TASKS = 'tasks'
 }
 
-export enum ToastTypes {
+export enum ToastType {
   ERROR = 'error',
   SUCCESS = 'success',
   INFO = 'info',
