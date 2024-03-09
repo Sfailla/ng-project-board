@@ -25,7 +25,7 @@ import { ToastService } from '../../services/toast/toast.service'
               </div>
             </div>
             <div class="toast__close">
-              <ion-button slot="icon-only" size="small" (click)="closeToastMessage()">
+              <ion-button slot="icon-only" size="small" (click)="dismissToast()">
                 <ion-icon name="close" size="medium" />
               </ion-button>
             </div>
@@ -40,7 +40,7 @@ import { ToastService } from '../../services/toast/toast.service'
 export class ToastMessageComponent {
   toastService: ToastService = inject(ToastService)
 
-  closeToastMessage(): void {
-    this.toastService.clearToastMessages()
+  dismissToast(): void {
+    this.toastService.dismiss()
   }
 }

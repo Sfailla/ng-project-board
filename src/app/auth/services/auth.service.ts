@@ -36,7 +36,7 @@ export class AuthService {
           console.log({ data, errors })
 
           if (errors) {
-            this.toastService.setToastMessage({ variant: 'error', message: errors[0].message })
+            this.toastService.present({ variant: 'error', message: errors[0].message })
             await this.navController.navigateRoot([Routes.REGISTER], {
               animationDirection: 'back'
             })
@@ -44,7 +44,7 @@ export class AuthService {
 
           if (!data) throw new Error(ErrorMessages.REGISTRATION_FAILED)
 
-          this.toastService.setToastMessage({
+          this.toastService.present({
             variant: 'success',
             message: Messages.REGISTRATION_SUCCESSFUL
           })
@@ -73,7 +73,7 @@ export class AuthService {
         map(async ({ data, errors }) => {
           console.log({ data, errors })
           if (errors) {
-            this.toastService.setToastMessage({ variant: 'error', message: errors[0].message })
+            this.toastService.present({ variant: 'error', message: errors[0].message })
             await this.navController.navigateRoot([Routes.LOGIN], {
               animationDirection: 'back'
             })
@@ -81,7 +81,7 @@ export class AuthService {
 
           if (!data) throw new Error(ErrorMessages.LOGIN_FAILED)
 
-          this.toastService.setToastMessage({
+          this.toastService.present({
             variant: 'success',
             message: Messages.LOGIN_SUCCESSFUL
           })
