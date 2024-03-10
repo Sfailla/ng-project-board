@@ -1,19 +1,20 @@
-import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core'
+import { Component, DestroyRef, ElementRef, OnInit, inject, signal } from '@angular/core'
 import { IonicModule, NavController } from '@ionic/angular'
 import { ProjectService } from '../../services/project.service'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { TokenService } from '../../../../auth/services'
 import { Project } from '../../../../../generated/types.graphql-gen'
-import { Routes } from '../../../../shared-types'
+import { ConfirmationHeader, ConfirmationMessage, Routes } from '../../../../shared-types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { ConfirmationService } from '../../../../shared/services/confirmation/confirmation.service'
 
 @Component({
   selector: 'app-select-project',
   standalone: true,
   imports: [CommonModule, IonicModule, RouterLink],
   template: `
-    <div class="">
+    <div>
       <ion-card class="project-card">
         <ion-card-header class="project-card__header">
           <ion-card-title>
@@ -22,13 +23,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
         </ion-card-header>
 
         <ion-card-content class="project-card__content">
-          <div class="available-projects">
+          <div class="project-card__projects-container">
             <ul>
-              <li>
-                <a
-                  class="create-project"
-                  [routerLink]="Routes.CREATE_PROJECT"
-                  routerDirection="forward">
+              <li class="create-project">
+                <a [routerLink]="Routes.CREATE_PROJECT" routerDirection="forward">
                   <span>
                     <ion-icon name="add-outline" />
                   </span>
@@ -36,14 +34,23 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
                 </a>
               </li>
               @for (project of projects(); track project.id; let idx = $index) {
-                <li
-                  (click)="setCurrentProjectId(project.id)"
-                  (keyup)="handleKeyUp($event)"
-                  [tabindex]="idx">
-                  <span class="project-button">
-                    <ion-icon slot="start" name="folder-outline" />
-                  </span>
-                  <ion-label slot="end">{{ project.name }}</ion-label>
+                <li class="select-project" (click)="setCurrentProjectId(project.id)">
+                  <div class="left-side">
+                    <span class="project-button">
+                      <ion-icon slot="start" name="folder-outline" />
+                    </span>
+                    <ion-label slot="end">{{ project.name }}</ion-label>
+                  </div>
+                  <div class="right-side">
+                    <div class="project-icon-container">
+                      <span role="button">
+                        <ion-icon src="assets/pencil.svg" />
+                      </span>
+                      <span role="button" (click)="deleteProject($event, project.id)">
+                        <ion-icon src="assets/trash.svg" />
+                      </span>
+                    </div>
+                  </div>
                 </li>
               }
             </ul>
@@ -56,12 +63,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
   styleUrls: ['select-project.component.scss']
 })
 export class SelectProjectComponent implements OnInit {
-  navController: NavController = inject(NavController)
+  confirmationService: ConfirmationService = inject(ConfirmationService)
   projectService: ProjectService = inject(ProjectService)
+  navController: NavController = inject(NavController)
   tokenService: TokenService = inject(TokenService)
   destroyRef: DestroyRef = inject(DestroyRef)
+  elementRef: ElementRef = inject(ElementRef)
 
   Routes: typeof Routes = Routes
+  ConfirmationHeader: typeof ConfirmationHeader = ConfirmationHeader
+  ConfirmationMessage: typeof ConfirmationMessage = ConfirmationMessage
+
   projects = signal<Project[] | null>(null)
 
   ngOnInit(): void {
@@ -75,16 +87,29 @@ export class SelectProjectComponent implements OnInit {
       .subscribe(projects => this.projects.set(projects))
   }
 
+  deleteProject(event: Event, projectId: string) {
+    event.stopPropagation()
+
+    this.confirmationService.create({
+      header: ConfirmationHeader.DELETE_PROJECT,
+      message: ConfirmationMessage.DELETE_PROJECT,
+      onSuccess: () => {
+        this.handleDeleteOnConfirmation(projectId)
+      }
+    })
+
+    this.confirmationService.present()
+  }
+
+  handleDeleteOnConfirmation = (projectId: string) => {
+    this.projectService
+      .deleteProject(projectId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
+  }
+
   async setCurrentProjectId(projectId: string): Promise<void> {
     this.projectService.setProjectId(projectId)
     await this.navController.navigateForward(['dashboard', projectId, 'tasks'])
-  }
-
-  handleKeyUp(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      event.stopPropagation()
-      event.target?.dispatchEvent(new Event('click'))
-    }
   }
 }
