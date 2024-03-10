@@ -21,12 +21,12 @@ import {
   menu,
   close
 } from 'ionicons/icons'
-import { ToastMessageComponent } from './shared/components'
+import { ToastComponent } from './shared/components'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, IonicModule, ToastMessageComponent],
+  imports: [CommonModule, RouterOutlet, IonicModule, ToastComponent],
   template: `
     <ion-app>
       <app-toast-message />

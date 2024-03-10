@@ -12,16 +12,16 @@ import { ToastService } from '../../services/toast/toast.service'
         <ion-card
           class="
             toast
-            toast-variant--{{ toastService.variant() }}
-            toast-position--{{ toastService.config().position }}
-            toast-animation--{{ toastService.config().animation }}
+            toast-variant--{{ toastService.toast().variant }}
+            toast-position--{{ toastService.toast().config?.position }}
+            toast-animation--{{ toastService.toast().config?.animation }}
           ">
           <div class="toast__container">
             <div class="toast__content">
               <ion-icon name="checkmark-circle-outline" />
               <div class="toast__text-container">
-                <h3>{{ toastService.variant() }}</h3>
-                <p>{{ toastService.message() }}</p>
+                <h3>{{ toastService.toast().variant }}</h3>
+                <p>{{ toastService.toast().message }}</p>
               </div>
             </div>
             <div class="toast__close">
@@ -34,10 +34,10 @@ import { ToastService } from '../../services/toast/toast.service'
       }
     </ng-container>
   `,
-  styleUrl: './toast-message.component.scss',
+  styleUrl: './toast.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ToastMessageComponent {
+export class ToastComponent {
   toastService: ToastService = inject(ToastService)
 
   dismissToast(): void {
