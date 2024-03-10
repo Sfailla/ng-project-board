@@ -1,32 +1,32 @@
 import { Injectable, signal } from '@angular/core'
-import { ToastConfig, ToastInput, ToastType, ToastVariant } from '../../../shared-types'
+import { ToastInput, ToastType } from '../../../shared-types'
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  variant = signal<ToastVariant>(ToastType.SUCCESS)
-  message = signal<string>('')
-  config = signal<ToastConfig>({ duration: 6000, position: 'top', animation: 'slide-out-right' })
   showToastMessage = signal<boolean>(false)
+  toast = signal<ToastInput>({
+    variant: ToastType.SUCCESS,
+    message: '',
+    config: { duration: 10000, position: 'top', animation: 'slide-out-right' }
+  })
 
   present(toastInput: ToastInput): void {
-    if (toastInput.config) this.config.set(toastInput.config)
-    this.setToastSignals(toastInput.variant, toastInput.message, true)
-    if (this.config().duration > 0) this.handleToastDuration()
+    this.toast.update(state => ({ ...state, ...toastInput }))
+    this.showToastMessage.set(true)
+
+    const duration = this.toast().config?.duration || 0
+
+    if (duration > 0) this.handleToastDuration(duration)
   }
 
-  private handleToastDuration(): void {
+  private handleToastDuration(duration: number): void {
     setTimeout(() => {
       this.dismiss()
-    }, this.config().duration)
-  }
-
-  private setToastSignals(variant: ToastVariant, message: string, showToast: boolean): void {
-    this.variant.set(variant)
-    this.message.set(message)
-    this.showToastMessage.set(showToast)
+    }, duration)
   }
 
   dismiss(): void {
-    this.setToastSignals(ToastType.SUCCESS, '', false)
+    this.toast.update(state => ({ ...state, variant: ToastType.SUCCESS, message: '' }))
+    this.showToastMessage.set(false)
   }
 }
