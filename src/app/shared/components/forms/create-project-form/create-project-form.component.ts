@@ -71,7 +71,7 @@ import { IonicModule } from '@ionic/angular'
               width: 15rem;
               height: 8rem;
               font-size: 1.6rem;
-              color: white;
+              color: var(--heading-color-primary);
               @include flex();
               border: 1px solid var(--create-project-card-border-color);
               border-radius: 5px;
