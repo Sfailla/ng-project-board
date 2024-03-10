@@ -15,7 +15,7 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
   `,
   styles: [
     `
-      @use '../../../../../styles/abstracts' as *;
+      @use '../../../../../../styles/abstracts' as *;
 
       .card {
         width: 100%;
