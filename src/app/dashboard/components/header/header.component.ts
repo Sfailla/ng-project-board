@@ -43,6 +43,7 @@ import { IonicModule, MenuController } from '@ionic/angular'
         height: var(--header-height);
         background-color: var(--dashboard-sub-background);
         border-bottom: 1px solid var(--dashboard-border-color);
+        z-index: 1;
 
         &__toolbar {
           width: 100%;
