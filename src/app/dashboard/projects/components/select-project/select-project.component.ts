@@ -46,7 +46,7 @@ import { ProjectDetailsComponent } from '../project-details/project-details.comp
                   <div class="right-side">
                     <div class="project-icon-container">
                       <span role="button">
-                        <ion-icon src="assets/pencil.svg" (click)="projectDetails()" />
+                        <ion-icon src="assets/pencil.svg" (click)="projectDetails($event)" />
                       </span>
                       <span role="button" (click)="deleteProject($event, project.id)">
                         <ion-icon src="assets/trash.svg" />
@@ -111,8 +111,11 @@ export class SelectProjectComponent implements OnInit {
       .subscribe()
   }
 
-  projectDetails() {
-    this.modalService.openModal({ title: 'Project Details', component: ProjectDetailsComponent })
+  projectDetails(event: Event) {
+    event.stopPropagation()
+
+    this.modalService.create({ title: 'Project Details', component: ProjectDetailsComponent })
+    this.modalService.present()
   }
 
   async setCurrentProjectId(projectId: string): Promise<void> {
