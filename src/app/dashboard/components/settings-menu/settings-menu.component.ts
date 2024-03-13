@@ -11,7 +11,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
     <ion-menu class="settings-menu" side="end" type="overlay" menuId="settings" contentId="main">
       <ion-header>
         <ion-toolbar color="danger">
-          <ion-title>End Menu</ion-title>
+          <ion-title>Settings Menu</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -33,7 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
       @use '../../../styles/abstracts' as *;
 
       .settings-menu {
-        --width: 20rem;
+        --width: 25rem;
         z-index: 1;
 
         &:focus-visible {
@@ -42,7 +42,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
         & ion-header {
           --background: var(--dashboard-sub-background);
-          height: 59px;
+          height: 60px;
+
+          & ion-toolbar {
+            height: 60px;
+          }
         }
 
         & ion-content {
