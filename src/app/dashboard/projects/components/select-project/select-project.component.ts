@@ -8,6 +8,8 @@ import { Project } from '../../../../../generated/types.graphql-gen'
 import { ConfirmationHeader, ConfirmationMessage, Routes } from '../../../../shared-types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ConfirmationService } from '../../../../shared/services/confirmation/confirmation.service'
+import { ModalService } from '../../../../shared/services'
+import { ProjectDetailsComponent } from '../project-details/project-details.component'
 
 @Component({
   selector: 'app-select-project',
@@ -44,7 +46,7 @@ import { ConfirmationService } from '../../../../shared/services/confirmation/co
                   <div class="right-side">
                     <div class="project-icon-container">
                       <span role="button">
-                        <ion-icon src="assets/pencil.svg" />
+                        <ion-icon src="assets/pencil.svg" (click)="projectDetails()" />
                       </span>
                       <span role="button" (click)="deleteProject($event, project.id)">
                         <ion-icon src="assets/trash.svg" />
@@ -67,6 +69,7 @@ export class SelectProjectComponent implements OnInit {
   projectService: ProjectService = inject(ProjectService)
   navController: NavController = inject(NavController)
   tokenService: TokenService = inject(TokenService)
+  modalService: ModalService = inject(ModalService)
   destroyRef: DestroyRef = inject(DestroyRef)
   elementRef: ElementRef = inject(ElementRef)
 
@@ -106,6 +109,10 @@ export class SelectProjectComponent implements OnInit {
       .deleteProject(projectId)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe()
+  }
+
+  projectDetails() {
+    this.modalService.openModal({ title: 'Project Details', component: ProjectDetailsComponent })
   }
 
   async setCurrentProjectId(projectId: string): Promise<void> {
