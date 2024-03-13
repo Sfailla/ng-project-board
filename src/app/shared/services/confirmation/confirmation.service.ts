@@ -30,7 +30,6 @@ export class ConfirmationService {
         text: 'Cancel',
         role: 'cancel',
         handler: () => {
-          console.log('cancel')
           this.isOpen.set(false)
           this.overlayService.dismiss()
         }
@@ -39,7 +38,6 @@ export class ConfirmationService {
         text: 'Confirm',
         role: 'submit',
         handler: () => {
-          console.log('confirm')
           if (onSuccess) onSuccess()
           this.isOpen.set(false)
           this.overlayService.dismiss()
