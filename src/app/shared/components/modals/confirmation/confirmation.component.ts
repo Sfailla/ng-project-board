@@ -36,6 +36,7 @@ import { ConfirmationService } from '../../../services/confirmation/confirmation
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 3;
+        border: 1px solid #323232;
 
         &__header {
           & h2 {
