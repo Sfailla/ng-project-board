@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { AuthComponent } from '../components/auth/auth.component'
-import { AuthTitles } from '../auth-types'
-import { PageWrapperComponent, ToastComponent } from '../../shared/components'
+import { AuthComponent } from '../auth/auth.component'
+import { AuthTitles } from '../../auth-types'
+import { PageWrapperComponent, ToastComponent } from '../../../shared/components'
 
 @Component({
   selector: 'app-login',
@@ -14,7 +14,7 @@ import { PageWrapperComponent, ToastComponent } from '../../shared/components'
   `,
   styles: [
     `
-      @use '../../styles/abstracts' as *;
+      @use '../../../styles/abstracts' as *;
 
       .login {
         @include flex();

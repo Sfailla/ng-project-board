@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
-import { AuthComponent } from '../components/auth/auth.component'
-import { AuthTitles } from '../auth-types'
-import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-wrapper.component'
+import { AuthComponent } from '../auth/auth.component'
+import { AuthTitles } from '../../auth-types'
+import { PageWrapperComponent } from '../../../shared/components/page-wrapper/page-wrapper.component'
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ import { PageWrapperComponent } from '../../shared/components/page-wrapper/page-
   `,
   styles: [
     `
-      @use '../../styles/abstracts' as *;
+      @use '../../../styles/abstracts' as *;
 
       .register {
         @include flex();
