@@ -5,7 +5,7 @@ import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './com
 import { ProjectService } from './projects/services/project.service'
 import { LocalStorageService } from '../shared/services'
 import { IonicRoutes, LocalStorageKeys } from '../shared-types'
-import { ConfirmationComponent, OverlayComponent } from '../shared/components'
+import { ConfirmationComponent, ModalComponent, OverlayComponent } from '../shared/components'
 
 @Component({
   selector: 'app-dashboard',
@@ -17,7 +17,8 @@ import { ConfirmationComponent, OverlayComponent } from '../shared/components'
     HeaderComponent,
     SettingsMenuComponent,
     ConfirmationComponent,
-    OverlayComponent
+    OverlayComponent,
+    ModalComponent
   ],
   template: `
     <div class="app-layout">
@@ -25,6 +26,7 @@ import { ConfirmationComponent, OverlayComponent } from '../shared/components'
       <ion-content class="app-layout__content">
         <app-header />
         <app-overlay />
+        <app-modal />
         <app-confirmation />
         <app-settings-menu />
         <ion-router-outlet id="main" class="router-outlet" />
@@ -43,7 +45,7 @@ import { ConfirmationComponent, OverlayComponent } from '../shared/components'
 
       .app-layout {
         &__content {
-          postiion: relative;
+          position: relative;
         }
       }
     `
