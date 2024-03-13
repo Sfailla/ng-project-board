@@ -24,17 +24,11 @@
     --background: transparent;
     --color: #ffffff;
     --border-radius: 50%;
-
     --background-hover: #ffffff;
     --color-hover: #ffffff;
 
     &::part(native) {
       transition: background 0.25s ease-in-out;
-    }
-
-    &:hover {
-      --background: rgba(255, 255, 255, 0.1);
-      --color: #ffffff;
     }
 
     & ion-icon {
@@ -52,6 +46,7 @@
     position: relative;
     border-bottom: 1px solid var(--dashboard-border-color);
     background-color: var(--ion-color-primary);
+    z-index: 0;
 
     &::after {
       height: 0;
@@ -80,6 +75,7 @@
   &__nav-item {
     width: 100%;
     cursor: pointer;
+    --background: black;
     --color-hover: inherit;
 
     &::part(native) {
