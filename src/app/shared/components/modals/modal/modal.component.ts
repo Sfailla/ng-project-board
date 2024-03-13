@@ -12,9 +12,9 @@ import { CommonModule } from '@angular/common'
       @if (modalService.showModal()) {
         <ion-card class="modal">
           <ion-card-header class="modal__header">
-            <h2 class="modal__title">{{ modalService.modalTitle() }}</h2>
-            <ion-button size="small" class="modal__close-button">
-              <ion-icon slot="icon-only" size="large" name="close" />
+            <h2 class="modal__title">{{ modalService.title() }}</h2>
+            <ion-button size="small" class="modal__close-button" (click)="modalService.dismiss()">
+              <ion-icon slot="icon-only" size="small" name="close" />
             </ion-button>
           </ion-card-header>
           <ion-card-content class="modal__content">
@@ -26,21 +26,24 @@ import { CommonModule } from '@angular/common'
   `,
   styles: [
     `
+      @use '../../../../styles/abstracts' as *;
+
       .modal {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: #1e1f21;
-        width: 560px;
-        height: 518px;
-        border-radius: 12px;
+        width: rem(560px);
+        height: rem(518px);
+        border-radius: rem(12px);
+        border: 1px solid #323232;
         z-index: 3;
       }
 
       ion-card-header {
-        padding: 0 24px;
-        height: 64px;
+        padding: 0 rem(24px);
+        height: rem(64px);
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -48,14 +51,18 @@ import { CommonModule } from '@angular/common'
         border-bottom: 1px solid #424244;
 
         & h2 {
-          font-size: 2rem;
+          font-size: rem(20px);
           color: var(--heading-color-primary);
         }
       }
 
       ion-button {
-        width: 25px;
-        height: 25px;
+        width: rem(30px);
+        height: rem(25px);
+
+        &::part(native) {
+          padding: rem(6px);
+        }
       }
     `
   ],

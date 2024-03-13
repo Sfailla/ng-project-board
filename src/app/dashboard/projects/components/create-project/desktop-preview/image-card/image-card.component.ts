@@ -24,8 +24,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
 
       .card {
         width: 100%;
-        height: 18.4rem;
-        border-radius: 8px;
+        height: rem(184px);
+        border-radius: rem(8px);
         border: 1px solid #c9c9c9;
         overflow: hidden;
         display: grid;
@@ -38,44 +38,44 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
           @include flex();
 
           & img {
-            height: 9rem;
+            height: rem(90px);
           }
         }
 
         .bottom {
           width: 100%;
           background-color: white;
-          padding: 0.5rem 1rem 0 1rem;
+          padding: rem(5px) rem(10px) 0 rem(10px);
           @include flex(space-evenly, flex-start, column);
 
           & .oval {
             width: 100%;
-            height: 0.8rem;
+            height: rem(8px);
             border-radius: 20px;
             background-color: #ebebeb;
           }
 
           & .color-oval {
-            width: 5.5rem;
-            height: 1.4rem;
-            border-radius: 20px;
+            width: rem(55px);
+            height: rem(14px);
+            border-radius: rem(20px);
           }
 
           .markup-container {
             @include flex(flex-start, center);
-            column-gap: 5px;
+            column-gap: rem(5px);
 
             & .circle {
-              width: 2.5rem;
-              height: 2.5rem;
+              width: rem(25px);
+              height: rem(25px);
               border-radius: 50%;
               background-color: #ebebeb;
             }
 
             & .short-oval {
-              width: 5rem;
-              height: 0.8rem;
-              border-radius: 20px;
+              width: rem(50px);
+              height: rem(8px);
+              border-radius: rem(20px);
               background-color: #ebebeb;
             }
           }

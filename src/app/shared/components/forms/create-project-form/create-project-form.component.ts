@@ -42,17 +42,17 @@ import { IonicModule } from '@ionic/angular'
   `,
   styles: [
     `
-      @use '../../../../styles/abstracts/mixins' as *;
+      @use '../../../../styles/abstracts' as *;
 
       .form {
-        margin: 4rem 0 6rem 0;
+        margin: rem(40px) 0 rem(60px) 0;
         ion-item {
           --background: var(--dashboard-sub-background);
           --border-color: var(--create-project-card-border-color);
-          --border-radius: 5px;
+          --border-radius: rem(5px);
           --padding-start: 0;
           --padding-end: 0;
-          --padding-bottom: 1.6rem;
+          --padding-bottom: rem(16px);
         }
 
         &__select-view {
@@ -60,22 +60,22 @@ import { IonicModule } from '@ionic/angular'
 
           & h3 {
             color: white;
-            font-size: 1.5rem;
-            margin-bottom: 1.6rem;
+            font-size: rem(15px);
+            margin-bottom: rem(16px);
           }
 
           & .toggle-button-container {
             @include flex(space-between);
 
             & button {
-              width: 15rem;
-              height: 8rem;
-              font-size: 1.6rem;
+              width: rem(150px);
+              height: rem(80px);
+              font-size: rem(16px);
               color: var(--heading-color-primary);
               @include flex();
               border: 1px solid var(--create-project-card-border-color);
-              border-radius: 5px;
-              margin-bottom: 1.6rem;
+              border-radius: rem(5px);
+              margin-bottom: rem(16px);
               background-color: transparent;
 
               &.selected {
@@ -84,11 +84,11 @@ import { IonicModule } from '@ionic/angular'
               }
 
               & ion-icon {
-                font-size: 2.5rem;
-                margin-right: 1rem;
+                font-size: rem(25px);
+                margin-right: rem(10px);
 
                 &[name='list-outline'] {
-                  font-size: 3rem;
+                  font-size: rem(30px);
                   color: var(--ion-color-danger);
                 }
               }

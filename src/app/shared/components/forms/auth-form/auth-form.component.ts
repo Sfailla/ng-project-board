@@ -51,6 +51,8 @@ import { AuthTitles } from '../../../../auth/auth-types'
   `,
   styles: [
     `
+      @use '../../../../styles/abstracts' as *;
+
       form {
         & ion-list {
           background-color: var(--ion-color-light);
@@ -58,11 +60,12 @@ import { AuthTitles } from '../../../../auth/auth-types'
 
         & ion-item {
           border: 1px solid var(--form-border-color);
-          border-radius: 5px;
+          border-radius: rem(5px);
+          height: rem(55px);
 
           &::part(native) {
             border-style: none;
-            padding-left: 16px;
+            padding-left: rem(16px);
 
             & .item-inner {
               border: none;
@@ -70,14 +73,22 @@ import { AuthTitles } from '../../../../auth/auth-types'
           }
 
           &:not(:last-of-type) {
-            margin-bottom: 1.5rem;
+            margin-bottom: rem(15px);
+          }
+
+          & ion-input {
+            font-size: rem(14px);
+
+            & input {
+              padding-bottom: rem(6px);
+            }
           }
         }
 
         & ion-button {
-          height: 5rem;
-          margin-top: 30px;
-          font-size: 1.4rem;
+          height: rem(50px);
+          margin-top: rem(30px);
+          font-size: rem(14px);
 
           &:disabled {
             opacity: 0.5;

@@ -3,9 +3,9 @@
 .create-project {
   &__card {
     border: 1px solid var(--select-project-card-border-color);
-    border-radius: 5px;
+    border-radius: rem(5px);
     --background: var(--dashboard-sub-background);
-    min-height: 30rem;
+    min-height: rem(300px);
     display: grid;
     grid-template-columns: 2fr 3fr;
     position: relative;
@@ -14,7 +14,7 @@
 
   &__left-side {
     & .content-container {
-      max-width: 35rem;
+      max-width: rem(350px);
     }
   }
 
@@ -33,10 +33,10 @@
   }
 
   &__card-header {
-    padding: 1.6rem;
+    padding: rem(16px);
 
     & ion-card-title {
-      font-size: 2rem;
+      font-size: rem(20px);
     }
   }
 }

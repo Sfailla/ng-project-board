@@ -2,20 +2,20 @@
 
 .project-card {
   border: 1px solid var(--select-project-card-border-color);
-  border-radius: 5px;
+  border-radius: rem(5px);
   --background: var(--dashboard-sub-background);
-  min-height: 30rem;
+  min-height: rem(300px);
   display: grid;
-  grid-template-rows: 5rem 1fr 5rem;
+  grid-template-rows: rem(50px) rem(10px) rem(50px);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
   &__header {
-    height: 5rem;
-    padding: 1.6rem 2rem;
+    height: rem(50px);
+    padding: rem(16px) rem(20px);
 
     & ion-card-title {
       & ion-text {
-        font-size: 1.6rem;
+        font-size: rem(16px);
         color: var(--select-project-card-title-color);
         text-transform: uppercase;
         letter-spacing: 1px;
@@ -24,7 +24,7 @@
   }
 
   &__content {
-    padding: 2rem 3rem;
+    padding: rem(20px) rem(30px);
   }
 
   &__projects-container {
@@ -34,27 +34,28 @@
       margin: 0;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      row-gap: 8px;
-      column-gap: 8px;
-      margin-bottom: 1.2rem;
+      row-gap: rem(8px);
+      column-gap: rem(8px);
+      margin-bottom: rem(12px);
 
       & .create-project,
       & .select-project {
         & ion-label {
-          font-size: 1.4rem;
+          font-size: rem(14px);
           font-weight: normal;
           color: var(--select-project-card-color);
-          margin-left: 1.6rem;
+          margin-left: rem(16px);
           transition: all 0.5s ease-in-out;
         }
       }
 
       & .create-project {
-        width: fit-content;
+        width: 100%;
         @include flex(flex-start);
-        padding: 1.6rem;
+        padding: rem(16px);
 
         & a {
+          width: 100%;
           @include flex(flex-start);
         }
 
@@ -70,9 +71,9 @@
         }
 
         & span {
-          width: 4.8rem;
-          height: 4.8rem;
-          border-radius: 1rem;
+          width: rem(48px);
+          height: rem(48px);
+          border-radius: rem(10px);
           border: 1px dashed var(--ion-color-medium-shade);
           @include flex();
           transition: border 0.5s ease-in-out;
@@ -87,8 +88,8 @@
 
       & .select-project {
         @include flex(space-between);
-        padding: 1.6rem;
-        border-radius: 1rem;
+        padding: rem(16px);
+        border-radius: rem(10px);
         cursor: pointer;
         transition: background-color 0.5s ease-in-out;
 
@@ -121,8 +122,8 @@
           @include flex(flex-end);
 
           & .project-icon-container {
-            width: 55px;
-            height: 25px;
+            width: rem(55px);
+            height: rem(25px);
             @include flex(space-between);
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
@@ -130,11 +131,11 @@
             & span {
               display: block;
               height: 100%;
-              width: 25px;
+              width: rem(25px);
               @include flex();
               border: 1px solid #5e5d5d;
-              border-radius: 5px;
-              transition: border 0.5s ease-in-out;
+              border-radius: rem(5px);
+              transition: border 0.3s ease-in-out;
 
               &:hover {
                 border: 1px solid var(--ion-color-primary);
@@ -144,18 +145,18 @@
               }
 
               & ion-icon {
-                font-size: 10px;
-                transition: color 0.5s ease-in-out;
+                font-size: rem(10px);
+                transition: color 0.3s ease-in-out;
               }
             }
           }
         }
 
         & .project-button {
-          width: 4.8rem;
-          height: 4.8rem;
-          padding: 8px 12px;
-          border-radius: 8px;
+          width: rem(48px);
+          height: rem(48px);
+          padding: rem(8px) rem(12px);
+          border-radius: rem(8px);
           @include flex();
           color: var(--select-project-card-color);
           border: 1px solid var(--select-project-icon-border-color);
@@ -163,7 +164,7 @@
           transition: all 0.5s ease-in-out;
 
           & ion-icon {
-            font-size: 1.5rem;
+            font-size: rem(15px);
             color: inherit;
           }
         }

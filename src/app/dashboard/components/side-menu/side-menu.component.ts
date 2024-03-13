@@ -43,7 +43,7 @@ import { ProjectService } from '../../projects/services/project.service'
             [routerLink]="Routes.HOME"
             routerDirection="root"
             routerLinkActive="is-active">
-            <ion-icon [style.width]="isMenuExpanded() ? '15px' : '100%'" name="home-outline" />
+            <ion-icon name="home-outline" ionIconRemoveTitle [iconTitle]="'Home'" />
             @if (isMenuExpanded()) {
               <ion-label [ngClass]="isMenuExpanded() ? 'show-label' : 'hide-label'">Home</ion-label>
             }
@@ -53,11 +53,7 @@ import { ProjectService } from '../../projects/services/project.service'
             [routerLink]="Routes.PROJECTS"
             routerLinkActive="is-active"
             routerDirection="root">
-            <ion-icon
-              [style.width]="isMenuExpanded() ? '15px' : '100%'"
-              name="layers-outline"
-              ionIconRemoveTitle
-              [iconTitle]="'Projects'" />
+            <ion-icon name="layers-outline" ionIconRemoveTitle [iconTitle]="'Projects'" />
             @if (isMenuExpanded()) {
               <ion-label [ngClass]="isMenuExpanded() ? 'show-label' : 'hide-label'">
                 Projects
@@ -70,11 +66,7 @@ import { ProjectService } from '../../projects/services/project.service'
               [routerLink]="['/', 'dashboard', projectService.getProjectId(), 'tasks']"
               routerLinkActive="is-active"
               routerDirection="root">
-              <ion-icon
-                [style.width]="isMenuExpanded() ? '15px' : '100%'"
-                name="list-outline"
-                ionIconRemoveTitle
-                [iconTitle]="'Tasks'" />
+              <ion-icon name="list-outline" ionIconRemoveTitle [iconTitle]="'Tasks'" />
               @if (isMenuExpanded()) {
                 <ion-label [ngClass]="isMenuExpanded() ? 'show-label' : 'hide-label'">
                   Tasks

@@ -1,12 +1,14 @@
+@use '../abstracts' as *;
+
 .sidebar {
-  width: 17.5rem;
+  width: rem(175px);
   height: 100%;
   position: fixed;
   background-color: black;
 
   &-logo {
     width: 100%;
-    padding: 2rem 0.5rem;
+    padding: rem(20px) rem(5px);
 
     img {
       max-width: 100%;

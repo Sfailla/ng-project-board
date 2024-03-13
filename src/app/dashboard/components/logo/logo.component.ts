@@ -13,8 +13,8 @@ import { Component } from '@angular/core'
       @use '../../../styles/abstracts' as *;
 
       .logo {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: rem(25px);
+        height: rem(25px);
         position: relative;
         display: block;
         @include flex();
@@ -25,8 +25,8 @@ import { Component } from '@angular/core'
         &::before {
           content: '';
           display: block;
-          height: 2.2rem;
-          width: 2.2rem;
+          height: rem(22px);
+          width: rem(22px);
           background-color: white;
           -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
           clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -34,8 +34,8 @@ import { Component } from '@angular/core'
 
         &::after {
           content: '';
-          width: 1.5rem;
-          height: 1.5rem;
+          width: rem(15px);
+          height: rem(15px);
           display: block;
           position: absolute;
           top: 50%;
@@ -48,8 +48,8 @@ import { Component } from '@angular/core'
       }
 
       .logo-inner {
-        width: 1.2rem;
-        height: 1.2rem;
+        width: rem(12px);
+        height: rem(12px);
         position: absolute;
         top: 50%;
         left: 50%;
@@ -61,8 +61,8 @@ import { Component } from '@angular/core'
 
         &::after {
           content: '';
-          width: 0.5rem;
-          height: 0.5rem;
+          width: rem(5px);
+          height: rem(5px);
           position: absolute;
           top: 50%;
           left: 50%;

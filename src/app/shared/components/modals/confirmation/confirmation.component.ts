@@ -29,8 +29,10 @@ import { ConfirmationService } from '../../../services/confirmation/confirmation
   `,
   styles: [
     `
+      @use '../../../../styles/abstracts' as *;
+
       .confirmation {
-        padding: 1.6rem;
+        padding: rem(16px);
         position: absolute;
         top: 50%;
         left: 50%;
@@ -41,13 +43,14 @@ import { ConfirmationService } from '../../../services/confirmation/confirmation
         &__header {
           & h2 {
             color: var(--ion-color-primary);
-            font-size: 1.6rem;
+            font-size: rem(16px);
+            margin-bottom: rem(18px);
           }
         }
 
         &__content {
           & p {
-            font-size: 1.4rem;
+            font-size: rem(14px);
           }
         }
 

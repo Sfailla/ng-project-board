@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+@use './app/styles/abstracts' as *;
 @use './app/styles' as *;
 
 :root {
-  --header-height: 6rem;
-  --menu-width-expanded: 15rem;
-  --menu-width-collapsed: 6rem;
+  --header-height: 60px;
+  --menu-width-expanded: 150px;
+  --menu-width-collapsed: 60px;
 }
 
 // TODO: manually handle hidden attribute after Ionic 7 upgrade.  needs to move to global scss config

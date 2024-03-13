@@ -6,13 +6,15 @@ import { Component, input } from '@angular/core'
   template: `
     <div class="page-wrapper page-container">
       @if (title()) {
-        <h1 class="page-wrapper__title">{{ title() }}</h1>
+        <h2 class="page-wrapper__title">{{ title() }}</h2>
       }
       <ng-content></ng-content>
     </div>
   `,
   styles: [
     `
+      @use '../../../styles/abstracts' as *;
+
       :host {
         display: block;
         width: 100%;
@@ -24,8 +26,9 @@ import { Component, input } from '@angular/core'
         height: 100%;
 
         &__title {
+          font-size: rem(20.4px);
           text-transform: uppercase;
-          margin: 2rem 0 3.6rem 0;
+          margin: rem(20px) 0 rem(36px) 0;
         }
       }
     `

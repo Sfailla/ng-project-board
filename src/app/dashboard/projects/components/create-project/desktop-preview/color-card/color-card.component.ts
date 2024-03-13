@@ -19,42 +19,42 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core'
 
       .card {
         width: 100%;
-        height: 8.7rem;
+        height: rem(87px);
         background-color: white;
-        border-radius: 8px;
+        border-radius: rem(8px);
         border: 1px solid #c9c9c9;
-        padding: 0.5rem 1rem 0 1rem;
-        margin-bottom: 1rem;
+        padding: rem(5px) rem(10px) 0 rem(10px);
+        margin-bottom: rem(10px);
         @include flex(space-evenly, flex-start, column);
 
         & .oval {
           width: 100%;
-          height: 0.8rem;
-          border-radius: 20px;
+          height: rem(8px);
+          border-radius: rem(20px);
           background-color: #ebebeb;
         }
 
         & .color-oval {
-          width: 5.5rem;
-          height: 1.4rem;
-          border-radius: 20px;
+          width: rem(55px);
+          height: rem(14px);
+          border-radius: rem(20px);
         }
 
         .markup-container {
           @include flex(flex-start, center);
-          column-gap: 5px;
+          column-gap: rem(5px);
 
           & .circle {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: rem(25px);
+            height: rem(25px);
             border-radius: 50%;
             background-color: #ebebeb;
           }
 
           & .short-oval {
-            width: 5rem;
-            height: 0.8rem;
-            border-radius: 20px;
+            width: rem(50px);
+            height: rem(8px);
+            border-radius: rem(20px);
             background-color: #ebebeb;
           }
         }

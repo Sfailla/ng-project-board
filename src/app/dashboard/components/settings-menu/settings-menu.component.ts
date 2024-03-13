@@ -33,7 +33,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
       @use '../../../styles/abstracts' as *;
 
       .settings-menu {
-        --width: 25rem;
+        --width: rem(250px);
         z-index: 1;
 
         &:focus-visible {
@@ -42,10 +42,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
         & ion-header {
           --background: var(--dashboard-sub-background);
-          height: 60px;
+          height: rem(60px);
 
           & ion-toolbar {
-            height: 60px;
+            height: rem(60px);
           }
         }
 
@@ -59,16 +59,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
             & ion-item {
               --background: var(--dashboard-sub-background);
-              font-size: 14px;
+              font-size: rem(14px);
               font-weight: bold;
-              letter-spacing: 0.5px;
+              letter-spacing: rem(0.5px);
               color: var(--ion-color-medium-shade);
               text-transform: uppercase;
               cursor: pointer;
               border-bottom: 1px solid var(--dashboard-border-color);
 
               &::part(native) {
-                height: 59px;
+                height: rem(59px);
               }
 
               &:first-child {
@@ -83,11 +83,11 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
               }
 
               & ion-label {
-                margin-left: 0.5rem;
+                margin-left: rem(5px);
               }
 
               & ion-icon {
-                font-size: 2.4rem;
+                font-size: rem(24px);
               }
             }
           }

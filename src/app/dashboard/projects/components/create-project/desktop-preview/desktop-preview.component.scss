@@ -1,9 +1,9 @@
 @use '../../../../../styles/abstracts' as *;
 
 .preview-screen {
-  width: 70rem;
-  height: 46rem;
-  border-radius: 10px;
+  width: rem(700px);
+  height: rem(460px);
+  border-radius: rem(10px);
   position: absolute;
   top: 50%;
   left: 35%;
@@ -12,80 +12,80 @@
   background-color: white;
   z-index: 2;
 
-  @media (max-width: 1375px) {
-    width: 65rem;
+  @media (max-width: 85.9375em) {
+    width: rem(650px);
   }
 
-  @media (max-width: 1300px) {
-    width: 60rem;
+  @media (max-width: 81.25em) {
+    width: rem(600px);
     left: 38%;
   }
 
   &__header {
     width: 100%;
-    height: 6rem;
-    padding: 0 1rem;
+    height: rem(60px);
+    padding: 0 rem(10px);
     background-color: white;
     border-bottom: 1px solid #eceaea;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: rem(10px);
+    border-top-right-radius: rem(10px);
     @include flex(space-between);
 
     & .square-block {
-      width: 3.3rem;
-      height: 3.3rem;
+      width: rem(33px);
+      height: rem(33px);
       background-color: #ebebeb;
-      margin: 1rem;
-      border-radius: 4px;
+      margin: rem(10px);
+      border-radius: rem(4px);
     }
 
     & .container {
       display: flex;
       align-items: center;
-      column-gap: 2rem;
+      column-gap: rem(20px);
 
       & .searchbar {
-        width: 15rem;
-        height: 2.5rem;
+        width: rem(150px);
+        height: rem(25px);
         border: 1px solid #ebebeb;
-        margin: 1rem;
-        border-radius: 20px;
+        margin: rem(10px);
+        border-radius: rem(20px);
         position: relative;
 
         &::before {
           content: '';
-          width: 1.5rem;
-          height: 1.5rem;
+          width: rem(15px);
+          height: rem(15px);
           background-color: #ebebeb;
           position: absolute;
           top: 50%;
-          left: 1rem;
+          left: rem(10px);
           transform: translateY(-50%);
           border-radius: 50%;
         }
 
         &::after {
           content: '';
-          width: 4.6rem;
-          height: 0.8rem;
+          width: rem(46px);
+          height: rem(8px);
           background-color: #ebebeb;
           position: absolute;
           top: 50%;
-          right: 7rem;
+          right: rem(70px);
           transform: translateY(-50%);
-          border-radius: 20px;
+          border-radius: rem(20px);
         }
       }
 
       & .window-controls {
-        width: 7rem;
-        height: 1.7rem;
-        margin: 1rem;
+        width: rem(70px);
+        height: rem(17px);
+        margin: rem(10px);
         position: relative;
 
         & .circle {
-          width: 1.7rem;
-          height: 1.7rem;
+          width: rem(17px);
+          height: rem(17px);
           background-color: #ebebeb;
           border-radius: 50%;
           position: absolute;
@@ -93,11 +93,11 @@
           transform: translate(-50%);
 
           &::before {
-            left: 2.5rem;
+            left: rem(25px);
           }
 
           &::after {
-            right: 2.5rem;
+            right: rem(25px);
           }
 
           &::before,
@@ -105,8 +105,8 @@
             content: '';
             position: absolute;
             display: block;
-            width: 1.7rem;
-            height: 1.7rem;
+            width: rem(17px);
+            height: rem(17px);
             background-color: #ebebeb;
             border-radius: 50%;
           }
@@ -117,18 +117,18 @@
 
   &__content {
     width: 100%;
-    height: 39.8rem;
-    padding: 2rem;
+    height: rem(398px);
+    padding: rem(20px);
     background-color: #f9f8f8;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: rem(10px);
+    border-bottom-right-radius: rem(10px);
 
     & .grid-view {
       width: 100%;
       height: 100%;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: rem(10px);
 
       & .section {
         width: 100%;
@@ -137,7 +137,8 @@
         border-radius: 5px;
 
         &__title {
-          margin: 1rem 0 1.9rem 0;
+          font-size: rem(17px);
+          margin: rem(10px) 0 rem(19px) 0;
           color: black;
         }
       }

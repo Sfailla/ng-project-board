@@ -2,15 +2,15 @@
 
 .nav {
   &-links {
-    padding: 2rem 0;
+    padding: rem(20px) 0;
   }
 
   &-link {
     cursor: pointer;
-    padding: 0.5rem 1rem;
+    padding: rem(5px) rem(10px);
     color: white;
     list-style: none;
-    height: 3.5rem;
+    height: rem(35px);
     &:hover {
       background-color: var(--blue-700);
     }
@@ -22,8 +22,8 @@
       @include flex(flex-start);
 
       i {
-        font-size: 1.5rem;
-        margin-right: 5px;
+        font-size: rem(15px);
+        margin-right: rem(5px);
       }
     }
   }
