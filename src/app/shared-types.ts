@@ -52,9 +52,3 @@ export enum ToastType {
   INFO = 'info',
   WARNING = 'warning'
 }
-
-export type ToastPosition = 'top' | 'bottom' | 'left' | 'right'
-export type ToastVariant = 'error' | 'success' | 'info' | 'warning'
-export type ToastAnimation = 'slide-out-right' | 'slide-out-left' | 'slide-up' | 'slide-down'
-export type ToastConfig = { duration: number; position: ToastPosition; animation: ToastAnimation }
-export type ToastInput = { variant: ToastVariant; message: string; config?: ToastConfig }
