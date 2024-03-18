@@ -1,5 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core'
-import { OverlayService } from '../overlay/overlay.service'
+import { Injectable, signal } from '@angular/core'
 
 export interface ConfirmationOptions {
   header: string
@@ -17,48 +16,34 @@ export interface Button {
 
 @Injectable({ providedIn: 'root' })
 export class ConfirmationService {
-  overlayService: OverlayService = inject(OverlayService)
-
   isOpen = signal<boolean>(false)
-  buttons = signal<Button[]>([])
-  header = signal<string>('')
-  message = signal<string>('')
+
+  confirmation = signal<ConfirmationOptions>({
+    buttons: [],
+    header: '',
+    message: ''
+  })
 
   create({ header, message, buttons, onSuccess }: ConfirmationOptions) {
-    const defaultButtons = [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          this.isOpen.set(false)
-          this.overlayService.dismiss()
-        }
-      },
-      {
-        text: 'Confirm',
-        role: 'submit',
-        handler: () => {
-          if (onSuccess) onSuccess()
-          this.isOpen.set(false)
-          this.overlayService.dismiss()
-        }
+    const cancelButton = { text: 'Cancel', role: 'cancel', handler: () => this.isOpen.set(false) }
+    const confirmButton = {
+      text: 'Confirm',
+      role: 'submit',
+      handler: () => {
+        if (onSuccess) onSuccess()
+        this.isOpen.set(false)
       }
-    ]
-
-    this.header.set(header)
-    this.message.set(message)
-    this.buttons.set(buttons || defaultButtons)
+    }
+    const defaultButtons = [cancelButton, confirmButton]
+    this.confirmation.set({ header, message, buttons: buttons || defaultButtons })
   }
 
   present() {
     this.isOpen.set(true)
-    this.overlayService.present()
   }
 
   dismiss() {
-    this.header.set('')
-    this.message.set('')
-    this.buttons.set([])
+    this.confirmation.set({ buttons: [], header: '', message: '' })
     this.isOpen.set(false)
   }
 }
