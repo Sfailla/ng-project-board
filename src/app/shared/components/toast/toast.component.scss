@@ -97,13 +97,19 @@ $animations: (
 
   &__close {
     ion-button {
-      height: rem(30px);
+      height: rem(25px);
+      width: rem(25px);
+      min-height: 0px;
+
+      &::part(native) {
+        padding: 0;
+      }
     }
 
     ion-icon {
-      font-size: rem(15px);
       color: black;
       cursor: pointer;
+      width: rem(15px);
     }
   }
 }
