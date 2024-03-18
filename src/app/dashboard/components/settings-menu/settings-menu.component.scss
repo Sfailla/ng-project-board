@@ -1,0 +1,72 @@
+@use '../../../styles/abstracts' as *;
+
+.settings-menu {
+  --width: 250px;
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  & ion-header {
+    --background: var(--dashboard-sub-background);
+    width: 100%;
+    height: rem(60px);
+
+    & ion-toolbar {
+      height: rem(60px);
+      padding-left: rem(16px);
+      padding-left: 16px;
+      @include flex();
+
+      & ion-title {
+        font-size: rem(18px);
+        font-weight: bold;
+        color: white;
+      }
+    }
+  }
+
+  & ion-content {
+    --background: var(--dashboard-sub-background);
+    border-left: 1px solid var(--dashboard-border-color);
+
+    & ion-list {
+      padding: 0;
+      background: var(--dashboard-sub-background);
+
+      & ion-item {
+        --background: var(--dashboard-sub-background);
+        font-size: rem(14px);
+        font-weight: bold;
+        letter-spacing: rem(0.5px);
+        color: var(--ion-color-medium-shade);
+        text-transform: uppercase;
+        cursor: pointer;
+        border-bottom: 1px solid var(--dashboard-border-color);
+
+        &::part(native) {
+          height: rem(59px);
+        }
+
+        &:first-child {
+          border-top: 1px solid var(--dashboard-border-color);
+        }
+
+        &:hover {
+          & ion-icon,
+          & ion-label {
+            color: var(--ion-color-primary);
+          }
+        }
+
+        & ion-label {
+          margin-left: rem(5px);
+        }
+
+        & ion-icon {
+          font-size: rem(24px);
+        }
+      }
+    }
+  }
+}
