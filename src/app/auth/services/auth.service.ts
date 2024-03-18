@@ -71,7 +71,6 @@ export class AuthService {
       })
       .pipe(
         map(async ({ data, errors }) => {
-          console.log({ data, errors })
           if (errors) {
             this.toastService.present({ variant: 'error', message: errors[0].message })
             await this.navController.navigateRoot([Routes.LOGIN], {
