@@ -6,7 +6,7 @@
   --background: var(--dashboard-sub-background);
   min-height: rem(300px);
   display: grid;
-  grid-template-rows: rem(50px) rem(10px) rem(50px);
+  grid-template-rows: rem(50px) 1fr rem(50px);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
 
   &__header {
