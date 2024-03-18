@@ -1,5 +1,15 @@
 import { Injectable, signal } from '@angular/core'
-import { ToastInput, ToastType } from '../../../shared-types'
+import { ToastType } from '../../../shared-types'
+
+export type ToastPosition = 'top' | 'bottom' | 'left' | 'right'
+export type ToastVariant = 'error' | 'success' | 'info' | 'warning'
+export type ToastAnimation = 'slide-out-right' | 'slide-out-left' | 'slide-up' | 'slide-down'
+export type ToastInput = { variant: ToastVariant; message: string; config?: ToastConfig }
+export type ToastConfig = {
+  duration?: number
+  position?: ToastPosition
+  animation?: ToastAnimation
+}
 
 @Injectable({ providedIn: 'root' })
 export class ToastService {
@@ -10,7 +20,7 @@ export class ToastService {
     config: { duration: 10000, position: 'top', animation: 'slide-out-right' }
   })
 
-  present(toastInput: ToastInput): void {
+  public present(toastInput: ToastInput): void {
     this.toast.update(state => ({ ...state, ...toastInput }))
     this.showToastMessage.set(true)
 
@@ -20,12 +30,10 @@ export class ToastService {
   }
 
   private handleToastDuration(duration: number): void {
-    setTimeout(() => {
-      this.dismiss()
-    }, duration)
+    setTimeout(() => this.dismiss(), duration)
   }
 
-  dismiss(): void {
+  public dismiss(): void {
     this.toast.update(state => ({ ...state, variant: ToastType.SUCCESS, message: '' }))
     this.showToastMessage.set(false)
   }
