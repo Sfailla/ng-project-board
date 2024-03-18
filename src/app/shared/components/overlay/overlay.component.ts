@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { OverlayService } from '../../services/overlay/overlay.service'
-import { ConfirmationService } from '../../services/confirmation/confirmation.service'
+import { ConfirmationService, ModalService } from '../../services'
 
 @Component({
   selector: 'app-overlay',
   standalone: true,
   template: `
     <ng-container>
-      @if (overlayService.showOverlay()) {
+      @if (modalService.showModal() || confirmationService.isOpen()) {
         <div class="overlay" (click)="dismissAll()"></div>
       }
     </ng-container>
@@ -30,9 +30,11 @@ import { ConfirmationService } from '../../services/confirmation/confirmation.se
 export class OverlayComponent {
   overlayService: OverlayService = inject(OverlayService)
   confirmationService: ConfirmationService = inject(ConfirmationService)
+  modalService: ModalService = inject(ModalService)
 
   dismissAll() {
-    this.overlayService.dismiss()
     this.confirmationService.dismiss()
+    this.modalService.dismiss()
+    this.overlayService.dismiss()
   }
 }
