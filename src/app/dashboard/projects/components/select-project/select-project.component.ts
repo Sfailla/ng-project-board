@@ -45,8 +45,8 @@ import { ProjectDetailsComponent } from '../project-details/project-details.comp
                   </div>
                   <div class="right-side">
                     <div class="project-icon-container">
-                      <span role="button">
-                        <ion-icon src="assets/pencil.svg" (click)="projectDetails($event)" />
+                      <span role="button" (click)="projectDetails($event)">
+                        <ion-icon src="assets/pencil.svg" />
                       </span>
                       <span role="button" (click)="deleteProject($event, project.id)">
                         <ion-icon src="assets/trash.svg" />
