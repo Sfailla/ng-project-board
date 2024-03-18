@@ -11,13 +11,13 @@ import { ConfirmationService } from '../../../services/confirmation/confirmation
       @if (confirmationService.isOpen()) {
         <ion-card class="confirmation">
           <ion-card-header class="confirmation__header">
-            <h2>{{ confirmationService.header() }}</h2>
+            <h2>{{ confirmationService.confirmation().header }}</h2>
           </ion-card-header>
           <ion-card-content class="confirmation__content">
-            <p>{{ confirmationService.message() }}</p>
+            <p>{{ confirmationService.confirmation().message }}</p>
           </ion-card-content>
           <ion-buttons class="confirmation__buttons">
-            @for (button of confirmationService.buttons(); track button.text) {
+            @for (button of confirmationService.confirmation().buttons; track button.text) {
               <ion-button (click)="button?.handler()">
                 {{ button.text }}
               </ion-button>
