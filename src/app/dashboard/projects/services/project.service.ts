@@ -1,18 +1,15 @@
 import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
 import { map } from 'rxjs/internal/operators/map'
-import { LocalStorageService, ToastService } from '../../../shared/services'
-import { LocalStorageKeys, ToastType } from '../../../shared-types'
-import {
-  GetProjectsDocument,
-  GetProjectsQuery
-} from '../../../../generated/queries/index.graphql-gen'
+import { LocalStorageService, ToastService } from '@shared/services'
+import { LocalStorageKeys, ToastType } from '@shared/types'
+import { GetProjectsDocument, GetProjectsQuery } from '@generated/queries'
 import {
   CreateProjectDocument,
   CreateProjectMutation,
   DeleteProjectDocument,
   DeleteProjectMutation
-} from '../../../../generated/mutations/index.graphql-gen'
+} from '@generated/mutations'
 import { NavController } from '@ionic/angular'
 import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
 
@@ -38,74 +35,83 @@ export class ProjectService {
     if (currProjectId === projectId) this.storageService.removeItem(LocalStorageKeys.PROJECT_ID)
   }
 
+  getProjectsQuery() {
+    return this.apollo.watchQuery<GetProjectsQuery>({
+      query: GetProjectsDocument,
+      errorPolicy: 'all'
+    }).valueChanges
+  }
+
   getProjects() {
-    return this.apollo
-      .watchQuery<GetProjectsQuery>({ query: GetProjectsDocument, errorPolicy: 'all' })
-      .valueChanges.pipe(
-        map(({ data: { getProjects }, errors }) => {
-          if (errors)
-            this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-          if (getProjects) return getProjects
-          return null
+    return this.getProjectsQuery().pipe(
+      map(({ data: { getProjects }, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (getProjects) return getProjects
+        return null
+      })
+    )
+  }
+
+  createProjectMutation(name: string, description: string) {
+    return this.apollo.mutate<CreateProjectMutation>({
+      mutation: CreateProjectDocument,
+      errorPolicy: 'all',
+      variables: { name, description },
+      update: this.updateApolloCache(GetProjectsDocument, (store, storeData, data) => {
+        const { getProjects } = storeData
+        store.writeQuery<GetProjectsQuery>({
+          query: GetProjectsDocument,
+          data: { getProjects: [...getProjects, data.createProject] }
         })
-      )
+      })
+    })
   }
 
   createProject(name: string, description: string) {
-    return this.apollo
-      .mutate<CreateProjectMutation>({
-        mutation: CreateProjectDocument,
-        errorPolicy: 'all',
-        variables: { name, description },
-        update: this.updateApolloCache(GetProjectsDocument, (store, storeData, data) => {
+    return this.createProjectMutation(name, description).pipe(
+      map(async ({ data, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data) {
+          await this.navController.navigateBack('/dashboard/home')
+          return data.createProject
+        }
+        return null
+      })
+    )
+  }
+
+  deleteProjectMutation(projectId: string) {
+    return this.apollo.mutate<DeleteProjectMutation>({
+      mutation: DeleteProjectDocument,
+      errorPolicy: 'all',
+      variables: { deleteProjectId: projectId },
+      update: this.updateApolloCache<GetProjectsQuery, DeleteProjectMutation>(
+        GetProjectsDocument,
+        (store, storeData) => {
           const { getProjects } = storeData
+          const updatedProjects = getProjects.filter(project => project.id !== projectId)
           store.writeQuery<GetProjectsQuery>({
             query: GetProjectsDocument,
-            data: { getProjects: [...getProjects, data.createProject] }
+            data: { getProjects: updatedProjects }
           })
-        })
-      })
-      .pipe(
-        map(async ({ data, errors }) => {
-          if (errors)
-            this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-          if (data) {
-            await this.navController.navigateBack('/dashboard/home')
-            return data.createProject
-          }
-          return null
-        })
+
+          this.removeProjectId(projectId)
+        }
       )
+    })
   }
 
   deleteProject(projectId: string) {
-    return this.apollo
-      .mutate<DeleteProjectMutation>({
-        mutation: DeleteProjectDocument,
-        errorPolicy: 'all',
-        variables: { deleteProjectId: projectId },
-        update: this.updateApolloCache<GetProjectsQuery, DeleteProjectMutation>(
-          GetProjectsDocument,
-          (store, storeData) => {
-            const { getProjects } = storeData
-            const updatedProjects = getProjects.filter(project => project.id !== projectId)
-            store.writeQuery<GetProjectsQuery>({
-              query: GetProjectsDocument,
-              data: { getProjects: updatedProjects }
-            })
-
-            this.removeProjectId(projectId)
-          }
-        )
+    return this.deleteProjectMutation(projectId).pipe(
+      map(({ data, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data) return data.deleteProject
+        return null
       })
-      .pipe(
-        map(({ data, errors }) => {
-          if (errors)
-            this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-          if (data) return data.deleteProject
-          return null
-        })
-      )
+    )
   }
 
   updateApolloCache<T, D>(
