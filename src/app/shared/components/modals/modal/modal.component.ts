@@ -34,8 +34,9 @@ import { CommonModule } from '@angular/common'
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: #1e1f21;
-        width: rem(560px);
-        height: rem(518px);
+        width: auto;
+        min-width: rem(560px);
+        height: auto;
         border-radius: rem(12px);
         border: 1px solid #323232;
         z-index: 3;
