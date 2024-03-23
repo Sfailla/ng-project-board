@@ -1,14 +1,16 @@
-import { Component, DestroyRef, ElementRef, OnInit, inject, signal } from '@angular/core'
+import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core'
 import { IonicModule, NavController } from '@ionic/angular'
 import { ProjectService } from '../../services/project.service'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'
-import { TokenService } from '../../../../auth/services'
-import { Project } from '../../../../../generated/types.graphql-gen'
-import { ConfirmationHeader, ConfirmationMessage, Routes } from '../../../../shared-types'
+import { Project } from '@generated/types'
+import {
+  ConfirmationHeader,
+  ConfirmationMessage,
+  Routes
+} from '../../../../shared/types/shared-types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { ConfirmationService } from '../../../../shared/services/confirmation/confirmation.service'
-import { ModalService } from '../../../../shared/services'
+import { ConfirmationService, ModalService } from '@shared/services'
 import { ProjectDetailsComponent } from '../project-details/project-details.component'
 
 @Component({
@@ -68,10 +70,8 @@ export class SelectProjectComponent implements OnInit {
   confirmationService: ConfirmationService = inject(ConfirmationService)
   projectService: ProjectService = inject(ProjectService)
   navController: NavController = inject(NavController)
-  tokenService: TokenService = inject(TokenService)
   modalService: ModalService = inject(ModalService)
   destroyRef: DestroyRef = inject(DestroyRef)
-  elementRef: ElementRef = inject(ElementRef)
 
   Routes: typeof Routes = Routes
   ConfirmationHeader: typeof ConfirmationHeader = ConfirmationHeader

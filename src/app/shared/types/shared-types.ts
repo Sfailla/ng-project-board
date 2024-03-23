@@ -3,6 +3,7 @@ export enum ErrorMessages {
   UNAUTHORIZED = 'Not authenticated',
   PASSWORDS_DO_NOT_MATCH = '⛔️🔐 Passwords do not match',
   LOGIN_FAILED = '⛔️🔐 Login failed',
+  LOGOUT_FAILED = '⛔️🔐 Logout failed',
   REGISTRATION_FAILED = '⛔️🔐 Registration failed',
   SESSION_EXPIRED = 'Your session has expired. Please login again'
 }

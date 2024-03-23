@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core'
-import { ToastType } from '../../../shared-types'
+import { ToastType } from '../../types/shared-types'
 
 export type ToastPosition = 'top' | 'bottom' | 'left' | 'right'
 export type ToastVariant = 'error' | 'success' | 'info' | 'warning'

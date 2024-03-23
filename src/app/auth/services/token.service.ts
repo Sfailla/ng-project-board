@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { User } from '../../../generated/types.graphql-gen'
-import { LocalStorageKeys } from '../../shared-types'
+import { User } from '@generated/types'
+import { LocalStorageKeys } from '@shared/types'
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {

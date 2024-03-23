@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { CreateProjectFormComponent, PageWrapperComponent } from '../../../../shared/components'
+import { CreateProjectFormComponent, PageWrapperComponent } from '@shared/components'
 import { DesktopPreviewComponent } from './desktop-preview/desktop-preview.component'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { ProjectService } from '../../services/project.service'

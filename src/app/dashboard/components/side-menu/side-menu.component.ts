@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } 
 import { IonicModule } from '@ionic/angular'
 import { LogoComponent } from '../logo/logo.component'
 import { RouterLink, RouterLinkActive } from '@angular/router'
-import { IonIconTitleDirective } from '../../../shared/directives/icon-title/icon-title.directive'
+import { IonIconTitleDirective } from '@shared/directives'
 import { CommonModule } from '@angular/common'
-import { LocalStorageService } from '../../../shared/services'
-import { LocalStorageKeys, Routes } from '../../../shared-types'
+import { LocalStorageService } from '@shared/services'
+import { LocalStorageKeys, Routes } from '@shared/types'
 import { ProjectService } from '../../projects/services/project.service'
 
 @Component({

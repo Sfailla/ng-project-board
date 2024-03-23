@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common'
             </ion-button>
           </ion-card-header>
           <ion-card-content class="modal__content">
-            <ng-container *ngComponentOutlet="Component()" />
+            <ng-container *ngComponentOutlet="Component(); inputs: componentProps()" />
           </ion-card-content>
         </ion-card>
       }
@@ -72,4 +72,5 @@ export class ModalComponent {
   modalService: ModalService = inject(ModalService)
 
   Component = this.modalService.component
+  componentProps = this.modalService.componentProps
 }

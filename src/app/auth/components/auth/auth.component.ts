@@ -15,7 +15,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../services/auth.service'
 import { SocialsComponent } from '../socials/socials.component'
 import { RouterLink } from '@angular/router'
-import { Routes } from '../../../shared-types'
+import { Routes } from '../../../shared/types/shared-types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { AuthFormComponent } from '../../../shared/components'
 
