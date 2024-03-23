@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { ToastService } from '../../services/toast/toast.service'
+import { ToastService } from '@shared/services'
 
 @Component({
   selector: 'app-toast-message',
