@@ -61,23 +61,15 @@ import { AuthTitles } from '../../../../auth/auth-types'
         & ion-item {
           border: 1px solid var(--form-border-color);
           border-radius: rem(5px);
-          height: rem(55px);
-
-          &::part(native) {
-            border-style: none;
-            padding-left: rem(16px);
-
-            & .item-inner {
-              border: none;
-            }
-          }
+          height: rem(50px);
 
           &:not(:last-of-type) {
             margin-bottom: rem(15px);
           }
 
           & ion-input {
-            font-size: rem(14px);
+            font-size: rem(13px);
+            transform: translateY(-2px) scaleY(0.9);
 
             & input {
               padding-bottom: rem(6px);
