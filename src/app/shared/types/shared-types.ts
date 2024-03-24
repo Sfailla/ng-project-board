@@ -13,7 +13,8 @@ export enum Messages {
   REGISTRATION_SUCCESSFUL = '🚀 Registration successful',
   LOGOUT_SUCCESSFUL = '🚀 Logout successful',
   PROJECT_CREATED = '🚀 Project created',
-  PROJECT_DELETED = '🚀 Project deleted'
+  PROJECT_DELETED = '🚀 Project deleted',
+  PROJECT_UPDATED = '🚀 Project updated'
 }
 
 export enum ConfirmationHeader {
