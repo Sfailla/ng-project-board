@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common'
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: #1e1f21;
+        background-color: var(--ion-color-light);
         width: auto;
         min-width: rem(560px);
         height: auto;
