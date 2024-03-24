@@ -29,7 +29,7 @@
       "@shared/types": ["src/app/shared/types/index.ts"],
       "@shared/components": ["src/app/shared/components/index.ts"],
       "@shared/directives": ["src/app/shared/directives/index.ts"],
-      "@auth/service": ["src/app/auth/services/index.ts"]
+      "@auth/services": ["src/app/auth/services/index.ts"]
     }
   },
   "angularCompilerOptions": {
