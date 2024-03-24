@@ -1,14 +1,19 @@
-import { Injectable, inject } from '@angular/core'
+import { Injectable, effect, inject, signal } from '@angular/core'
 import { Apollo } from 'apollo-angular'
-import { CreateUserDocument, LoginDocument } from '@generated/mutations'
+import {
+  CreateUserDocument,
+  CreateUserMutation,
+  LoginDocument,
+  LoginMutation
+} from '@generated/mutations'
 import { AuthUserInput } from '../auth-types'
 import { map } from 'rxjs/internal/operators/map'
 import { TokenService } from './token.service'
-import { UserAndToken } from '@generated/types'
+import { User } from '@generated/types'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular'
 import { ErrorMessages, Messages, Routes } from '@shared/types'
-import { LogoutDocument } from '@generated/queries'
+import { LogoutDocument, LogoutQuery } from '@generated/queries'
 import { ToastService } from '@shared/services'
 
 @Injectable({ providedIn: 'root' })
@@ -19,10 +24,18 @@ export class AuthService {
   navController: NavController = inject(NavController)
   toastService: ToastService = inject(ToastService)
 
+  currentUser = signal<User | null>(null)
+
+  constructor() {
+    effect(() => {
+      console.log('Current User:', { user: this.currentUser() })
+    })
+  }
+
   registerMutation(authUserInput: AuthUserInput) {
     const { username, email, password } = authUserInput
 
-    return this.apollo.mutate<{ createUser: UserAndToken }>({
+    return this.apollo.mutate<CreateUserMutation>({
       mutation: CreateUserDocument,
       errorPolicy: 'all',
       variables: { username, email, password }
@@ -39,33 +52,22 @@ export class AuthService {
 
     return this.registerMutation(authUserInput).pipe(
       map(async ({ data, errors }) => {
-        if (errors) {
-          this.toastService.present({ variant: 'error', message: errors[0].message })
-          await this.navController.navigateRoot([Routes.REGISTER], {
-            animationDirection: 'back'
-          })
-        }
+        if (errors) this.toastService.present({ variant: 'error', message: errors[0].message })
 
-        if (!data) {
+        if (data?.createUser) {
           this.toastService.present({
-            variant: 'error',
-            message: ErrorMessages.REGISTRATION_FAILED
+            variant: 'success',
+            message: Messages.REGISTRATION_SUCCESSFUL
           })
-          throw new Error(ErrorMessages.REGISTRATION_FAILED)
+
+          this.currentUser.set(data.createUser.user)
+
+          await this.apollo.client.resetStore()
+          await this.tokenService.saveUserAndToken(data?.createUser.user, data?.createUser.token)
+          await this.navController.navigateRoot([Routes.DASHBOARD], {
+            animationDirection: 'forward'
+          })
         }
-
-        this.toastService.present({
-          variant: 'success',
-          message: Messages.REGISTRATION_SUCCESSFUL
-        })
-
-        await this.apollo.client.resetStore()
-        await this.tokenService.saveUserAndToken(data?.createUser.user, data?.createUser.token)
-        await this.navController.navigateRoot([Routes.DASHBOARD], {
-          animationDirection: 'forward'
-        })
-
-        return data
       })
     )
   }
@@ -73,7 +75,7 @@ export class AuthService {
   loginMutation(authUserInput: AuthUserInput) {
     const { email, password } = authUserInput
 
-    return this.apollo.mutate<{ login: UserAndToken }>({
+    return this.apollo.mutate<LoginMutation>({
       mutation: LoginDocument,
       errorPolicy: 'all',
       variables: { email, password }
@@ -83,62 +85,52 @@ export class AuthService {
   login(authUserInput: AuthUserInput) {
     return this.loginMutation(authUserInput).pipe(
       map(async ({ data, errors }) => {
-        if (errors) {
-          this.toastService.present({ variant: 'error', message: errors[0].message })
-          await this.navController.navigateRoot([Routes.LOGIN], {
-            animationDirection: 'back'
-          })
-        }
+        if (errors) this.toastService.present({ variant: 'error', message: errors[0].message })
 
-        if (!data) {
+        if (data?.login) {
           this.toastService.present({
-            variant: 'error',
-            message: ErrorMessages.LOGIN_FAILED
+            variant: 'success',
+            message: Messages.LOGIN_SUCCESSFUL
           })
-          throw new Error(ErrorMessages.LOGIN_FAILED)
+
+          this.currentUser.set(data.login.user)
+
+          await this.apollo.client.resetStore()
+          await this.tokenService.saveUserAndToken(data.login.user, data.login.token)
+          await this.navController.navigateRoot([Routes.DASHBOARD], {
+            animationDirection: 'forward'
+          })
         }
-
-        this.toastService.present({
-          variant: 'success',
-          message: Messages.LOGIN_SUCCESSFUL
-        })
-
-        await this.apollo.client.resetStore()
-        await this.tokenService.saveUserAndToken(data.login.user, data.login.token)
-        await this.navController.navigateRoot([Routes.DASHBOARD], {
-          animationDirection: 'forward'
-        })
-
-        return data
       })
     )
   }
 
   logoutQuery() {
-    return this.apollo.query({ query: LogoutDocument })
+    return this.apollo.query<LogoutQuery>({ query: LogoutDocument })
   }
 
   logout() {
     return this.logoutQuery().pipe(
-      map(async ({ data, error }) => {
-        if (error) {
-          this.toastService.present({ variant: 'error', message: error.message })
-          throw new Error(error.message)
-        }
-        if (!data) {
-          this.toastService.present({ variant: 'error', message: ErrorMessages.LOGOUT_FAILED })
-          throw new Error(ErrorMessages.LOGOUT_FAILED)
-        }
+      map(async ({ data: { logout }, error }) => {
+        if (error) this.toastService.present({ variant: 'error', message: error.message })
 
-        this.tokenService.destroySession()
-        await this.navController.navigateRoot([Routes.LOGIN], {
-          animationDirection: 'back'
-        })
+        if (logout) {
+          this.tokenService.destroySession()
+          this.currentUser.set(null)
+          await this.navController.navigateRoot([Routes.LOGIN], {
+            animationDirection: 'back'
+          })
+        }
       })
     )
   }
 
   isAuthenticated() {
     return !!this.tokenService.getToken()
+  }
+
+  setCurrentUser() {
+    const user = this.tokenService.getUser()
+    this.currentUser.set(user)
   }
 }
