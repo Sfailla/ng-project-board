@@ -37,6 +37,7 @@ import { ProjectDetailsComponent } from '../project-details/project-details.comp
                   <ion-label class="create-project-title">Create Project</ion-label>
                 </a>
               </li>
+
               @for (project of projects(); track project.id; let idx = $index) {
                 <li class="select-project" (click)="setCurrentProjectId(project.id)">
                   <div class="left-side">
@@ -45,9 +46,10 @@ import { ProjectDetailsComponent } from '../project-details/project-details.comp
                     </span>
                     <ion-label slot="end">{{ project.name }}</ion-label>
                   </div>
+
                   <div class="right-side">
                     <div class="project-icon-container">
-                      <span role="button" (click)="projectDetails($event)">
+                      <span role="button" (click)="projectDetails($event, project.id)">
                         <ion-icon src="assets/pencil.svg" />
                       </span>
                       <span role="button" (click)="deleteProject($event, project.id)">
@@ -111,10 +113,15 @@ export class SelectProjectComponent implements OnInit {
       .subscribe()
   }
 
-  projectDetails(event: Event) {
+  projectDetails(event: Event, projectId: string) {
     event.stopPropagation()
 
-    this.modalService.create({ title: 'Project Details', component: ProjectDetailsComponent })
+    this.modalService.create({
+      title: 'Project Details',
+      component: ProjectDetailsComponent,
+      componentProps: { projectId }
+    })
+
     this.modalService.present()
   }
 
