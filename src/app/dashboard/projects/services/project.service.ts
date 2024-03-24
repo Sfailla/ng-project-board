@@ -31,10 +31,10 @@ export class ProjectService {
   }
 
   removeProjectId(projectId: string) {
-    const currProjectId = this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
+    const currProjectId = this.getProjectId()
     if (currProjectId !== projectId) return
     this.storageService.removeItem(LocalStorageKeys.PROJECT_ID)
-    window.location.reload()
+    this.navController.navigateBack(Routes.HOME)
   }
 
   getProjectsQuery() {
@@ -55,19 +55,23 @@ export class ProjectService {
     )
   }
 
-  createProjectMutation(name: string, description: string) {
-    return this.apollo.mutate<CreateProjectMutation>({
-      mutation: CreateProjectDocument,
+  getProjectByIdQuery(projectId: string) {
+    return this.apollo.query<GetProjectsQuery>({
+      query: GetProjectsDocument,
       errorPolicy: 'all',
-      variables: { name, description },
-      update: this.updateApolloCache(GetProjectsDocument, (store, storeData, data) => {
-        const { getProjects } = storeData
-        store.writeQuery<GetProjectsQuery>({
-          query: GetProjectsDocument,
-          data: { getProjects: [...getProjects, data.createProject] }
-        })
-      })
+      variables: { projectId }
     })
+  }
+
+  getProjectById(projectId: string) {
+    return this.getProjectByIdQuery(projectId).pipe(
+      map(({ data: { getProjects }, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (getProjects) return getProjects
+        return null
+      })
+    )
   }
 
   createProject(name: string, description: string) {
@@ -82,25 +86,27 @@ export class ProjectService {
     )
   }
 
-  deleteProjectMutation(projectId: string) {
-    return this.apollo.mutate<DeleteProjectMutation>({
-      mutation: DeleteProjectDocument,
+  createProjectMutation(name: string, description: string) {
+    return this.apollo.mutate<CreateProjectMutation>({
+      mutation: CreateProjectDocument,
       errorPolicy: 'all',
-      variables: { deleteProjectId: projectId },
-      update: this.updateApolloCache<GetProjectsQuery, DeleteProjectMutation>(
+      variables: { name, description },
+      update: this.updateApolloCache<GetProjectsQuery, CreateProjectMutation>(
         GetProjectsDocument,
-        (store, storeData) => {
-          const { getProjects } = storeData
-          const updatedProjects = getProjects.filter(project => project.id !== projectId)
-          store.writeQuery<GetProjectsQuery>({
-            query: GetProjectsDocument,
-            data: { getProjects: updatedProjects }
-          })
-
-          this.removeProjectId(projectId)
-        }
+        this.updateCreateProjectCache()
       )
     })
+  }
+
+  updateCreateProjectCache<T extends GetProjectsQuery, D extends CreateProjectMutation>() {
+    return (store: ApolloCache<T>, storeData: T, data: D) => {
+      const { getProjects } = storeData
+
+      store.writeQuery<GetProjectsQuery>({
+        query: GetProjectsDocument,
+        data: { getProjects: [...getProjects, data.createProject] }
+      })
+    }
   }
 
   deleteProject(projectId: string) {
@@ -115,6 +121,32 @@ export class ProjectService {
           })
       })
     )
+  }
+
+  updateDeleteProjectCache<T extends GetProjectsQuery>(projectId: string) {
+    return (store: ApolloCache<T>, storeData: T) => {
+      const { getProjects } = storeData
+      const updatedProjects = getProjects.filter(project => project.id !== projectId)
+
+      store.writeQuery<GetProjectsQuery>({
+        query: GetProjectsDocument,
+        data: { getProjects: updatedProjects }
+      })
+
+      this.removeProjectId(projectId)
+    }
+  }
+
+  deleteProjectMutation(projectId: string) {
+    return this.apollo.mutate<DeleteProjectMutation>({
+      mutation: DeleteProjectDocument,
+      errorPolicy: 'all',
+      variables: { deleteProjectId: projectId },
+      update: this.updateApolloCache<GetProjectsQuery, DeleteProjectMutation>(
+        GetProjectsDocument,
+        this.updateDeleteProjectCache(projectId)
+      )
+    })
   }
 
   updateApolloCache<T, D>(
