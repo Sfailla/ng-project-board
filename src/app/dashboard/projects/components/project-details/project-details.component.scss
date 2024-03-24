@@ -1,0 +1,86 @@
+@use '../../../../styles/abstracts' as *;
+
+.project-details {
+  padding: rem(24px) rem(8px) rem(11px) rem(8px);
+
+  &__project-name-container {
+    margin-bottom: rem(16px);
+    @include flex(flex-start, flex-start, column);
+
+    & h2 {
+      color: var(--color-text-weak);
+      font-weight: 500;
+      font-size: rem(14px);
+      line-height: rem(18px);
+      margin-top: 0;
+      margin-bottom: rem(8px);
+      @include flex(flex-start);
+    }
+    & ion-item {
+      width: 100%;
+      height: rem(36px);
+      border: 1px solid #565557;
+      border-radius: rem(6px);
+      --background: var(--ion-color-light);
+    }
+
+    & ion-input {
+      height: rem(36px);
+      min-height: rem(36px);
+      font-size: rem(14px);
+      line-height: rem(22px);
+      transform: translateY(rem(-7px));
+    }
+  }
+
+  &__project-info {
+    margin-bottom: rem(16px);
+    column-gap: rem(16px);
+    @include flex(space-between);
+
+    & .section {
+      width: 100%;
+
+      & h3 {
+        font-size: rem(14px);
+        line-height: rem(18px);
+        margin-top: 0;
+        margin-bottom: rem(8px);
+      }
+
+      & span {
+        width: auto;
+        height: rem(36px);
+        background-color: rgba(255, 255, 255, 0.06);
+        padding-left: rem(8px);
+        border-radius: rem(6px);
+        @include flex(flex-start);
+      }
+    }
+  }
+
+  &__description-container {
+    border-top: 1px solid #424244;
+    padding-top: rem(24px);
+    padding-bottom: rem(24px);
+    height: rem(250px);
+
+    & h2 {
+      padding-bottom: rem(8px);
+      font-size: rem(14px);
+      font-weight: 500;
+      line-height: rem(20px);
+    }
+
+    & ion-item {
+      --background: var(--ion-color-light);
+      border: rem(1px) solid #565557;
+      border-radius: rem(6px);
+    }
+
+    & ion-textarea {
+      background-color: inherit;
+      min-height: rem(150px);
+    }
+  }
+}
