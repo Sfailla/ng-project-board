@@ -1,8 +1,10 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { RouterOutlet } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
 import { addIcons } from 'ionicons'
+import { ToastComponent } from '@shared/components'
+import { AuthService } from '@auth/service'
 import {
   logoApple,
   logoGoogle,
@@ -21,7 +23,6 @@ import {
   menu,
   close
 } from 'ionicons/icons'
-import { ToastComponent } from './shared/components'
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,9 @@ import { ToastComponent } from './shared/components'
     }
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  authService: AuthService = inject(AuthService)
+
   title = 'Project Board'
 
   constructor() {
@@ -69,5 +72,11 @@ export class AppComponent {
       'close-circle-outline': closeCircleOutline,
       'checkmark-circle-outline': checkmarkCircleOutline
     })
+  }
+
+  ngOnInit(): void {
+    if (this.authService.isAuthenticated()) {
+      this.authService.setCurrentUser()
+    }
   }
 }
