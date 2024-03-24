@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
 import { map } from 'rxjs/internal/operators/map'
 import { LocalStorageService, ToastService } from '@shared/services'
-import { LocalStorageKeys, ToastType } from '@shared/types'
+import { LocalStorageKeys, Messages, Routes, ToastType } from '@shared/types'
 import { GetProjectsDocument, GetProjectsQuery } from '@generated/queries'
 import {
   CreateProjectDocument,
@@ -32,7 +32,9 @@ export class ProjectService {
 
   removeProjectId(projectId: string) {
     const currProjectId = this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
-    if (currProjectId === projectId) this.storageService.removeItem(LocalStorageKeys.PROJECT_ID)
+    if (currProjectId !== projectId) return
+    this.storageService.removeItem(LocalStorageKeys.PROJECT_ID)
+    window.location.reload()
   }
 
   getProjectsQuery() {
@@ -74,10 +76,8 @@ export class ProjectService {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
         if (data) {
-          await this.navController.navigateBack('/dashboard/home')
-          return data.createProject
+          await this.navController.navigateBack(Routes.HOME)
         }
-        return null
       })
     )
   }
@@ -108,8 +108,11 @@ export class ProjectService {
       map(({ data, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-        if (data) return data.deleteProject
-        return null
+        if (data?.deleteProject)
+          this.toastService.present({
+            variant: ToastType.SUCCESS,
+            message: Messages.PROJECT_DELETED
+          })
       })
     )
   }
