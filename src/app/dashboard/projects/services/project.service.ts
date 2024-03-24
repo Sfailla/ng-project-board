@@ -12,6 +12,7 @@ import {
 } from '@generated/mutations'
 import { NavController } from '@ionic/angular'
 import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
+import { ProjectInput } from '@generated/types'
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -37,6 +38,17 @@ export class ProjectService {
     this.navController.navigateBack(Routes.HOME)
   }
 
+  getProjects() {
+    return this.getProjectsQuery().pipe(
+      map(({ data: { getProjects }, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (getProjects) return getProjects
+        return null
+      })
+    )
+  }
+
   getProjectsQuery() {
     return this.apollo.watchQuery<GetProjectsQuery>({
       query: GetProjectsDocument,
@@ -44,8 +56,8 @@ export class ProjectService {
     }).valueChanges
   }
 
-  getProjects() {
-    return this.getProjectsQuery().pipe(
+  getProjectById(projectId: string) {
+    return this.getProjectByIdQuery(projectId).pipe(
       map(({ data: { getProjects }, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
@@ -61,17 +73,6 @@ export class ProjectService {
       errorPolicy: 'all',
       variables: { projectId }
     })
-  }
-
-  getProjectById(projectId: string) {
-    return this.getProjectByIdQuery(projectId).pipe(
-      map(({ data: { getProjects }, errors }) => {
-        if (errors)
-          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-        if (getProjects) return getProjects
-        return null
-      })
-    )
   }
 
   createProject(name: string, description: string) {
@@ -107,6 +108,31 @@ export class ProjectService {
         data: { getProjects: [...getProjects, data.createProject] }
       })
     }
+  }
+
+  updateProjectMutation(projectInput: ProjectInput) {
+    return this.apollo.mutate<GetProjectsQuery>({
+      mutation: GetProjectsDocument,
+      errorPolicy: 'all',
+      variables: { input: projectInput }
+    })
+  }
+
+  updateProject(projectInput: ProjectInput) {
+    return this.updateProjectMutation(projectInput).pipe(
+      map(({ data, errors }) => {
+        console.log({ data, errors })
+
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data) {
+          this.toastService.present({
+            variant: ToastType.SUCCESS,
+            message: Messages.PROJECT_DELETED
+          })
+        }
+      })
+    )
   }
 
   deleteProject(projectId: string) {
