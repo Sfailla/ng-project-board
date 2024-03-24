@@ -1,17 +1,19 @@
 export enum ErrorMessages {
-  JWT = 'jwt expired',
-  UNAUTHORIZED = 'Not authenticated',
-  PASSWORDS_DO_NOT_MATCH = '⛔️🔐 Passwords do not match',
-  LOGIN_FAILED = '⛔️🔐 Login failed',
-  LOGOUT_FAILED = '⛔️🔐 Logout failed',
-  REGISTRATION_FAILED = '⛔️🔐 Registration failed',
-  SESSION_EXPIRED = 'Your session has expired. Please login again'
+  JWT = '🚫⏱️ jwt expired',
+  UNAUTHORIZED = '🚫🔐 Not authenticated',
+  PASSWORDS_DO_NOT_MATCH = '🚫🔐 Passwords do not match',
+  LOGIN_FAILED = '🚫🔐 Login failed',
+  LOGOUT_FAILED = '🚫🔐 Logout failed',
+  REGISTRATION_FAILED = '🚫🔐 Registration failed',
+  SESSION_EXPIRED = '🚫⏱️ Your session has expired. Please login again'
 }
 
 export enum Messages {
-  LOGIN_SUCCESSFUL = '🎉🔐 Login successful',
-  REGISTRATION_SUCCESSFUL = '🎉🔐 Registration successful',
-  LOGOUT_SUCCESSFUL = '🎉🔐 Logout successful'
+  LOGIN_SUCCESSFUL = '🚀 Login successful',
+  REGISTRATION_SUCCESSFUL = '🚀 Registration successful',
+  LOGOUT_SUCCESSFUL = '🚀 Logout successful',
+  PROJECT_CREATED = '🚀 Project created',
+  PROJECT_DELETED = '🚀 Project deleted'
 }
 
 export enum ConfirmationHeader {
