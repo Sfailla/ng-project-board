@@ -8,7 +8,7 @@ import { LocalStorageKeys, Routes, ErrorMessages } from '@shared/types'
 import { NavController } from '@ionic/angular'
 import { ToastService } from '@shared/services'
 import { HttpHeaders } from '@angular/common/http'
-import { TokenService } from './auth/services'
+import { TokenService } from '@auth/services'
 
 export function apolloOptionsFactory(): ApolloClientOptions<unknown> {
   const navController = inject(NavController)

@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router'
 import { IonicModule } from '@ionic/angular'
 import { addIcons } from 'ionicons'
 import { ToastComponent } from '@shared/components'
-import { AuthService } from '@auth/service'
+import { AuthService } from '@auth/services'
 import {
   logoApple,
   logoGoogle,

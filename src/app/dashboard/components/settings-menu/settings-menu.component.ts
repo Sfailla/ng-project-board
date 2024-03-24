@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject } from '@angular/core'
-import { AuthService } from '../../../auth/services/auth.service'
+import { AuthService } from '@auth/services'
 import { IonicModule } from '@ionic/angular'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
