@@ -4,11 +4,7 @@ import { ProjectService } from '../../services/project.service'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { Project } from '@generated/types'
-import {
-  ConfirmationHeader,
-  ConfirmationMessage,
-  Routes
-} from '../../../../shared/types/shared-types'
+import { ConfirmationHeader, ConfirmationMessage, Routes } from '@shared/types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { ConfirmationService, ModalService } from '@shared/services'
 import { ProjectDetailsComponent } from '../project-details/project-details.component'
@@ -49,7 +45,7 @@ import { ProjectDetailsComponent } from '../project-details/project-details.comp
 
                   <div class="right-side">
                     <div class="project-icon-container">
-                      <span role="button" (click)="projectDetails($event, project.id)">
+                      <span role="button" (click)="projectDetails($event, project)">
                         <ion-icon src="assets/pencil.svg" />
                       </span>
                       <span role="button" (click)="deleteProject($event, project.id)">
@@ -113,13 +109,13 @@ export class SelectProjectComponent implements OnInit {
       .subscribe()
   }
 
-  projectDetails(event: Event, projectId: string) {
+  projectDetails(event: Event, project: Project) {
     event.stopPropagation()
 
     this.modalService.create({
       title: 'Project Details',
       component: ProjectDetailsComponent,
-      componentProps: { projectId }
+      componentProps: { project }
     })
 
     this.modalService.present()
