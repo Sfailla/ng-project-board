@@ -1,18 +1,25 @@
 import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
-import { map } from 'rxjs/internal/operators/map'
 import { LocalStorageService, ToastService } from '@shared/services'
 import { LocalStorageKeys, Messages, Routes, ToastType } from '@shared/types'
-import { GetProjectsDocument, GetProjectsQuery } from '@generated/queries'
+import { NavController } from '@ionic/angular'
+import { ProjectInput } from '@generated/types'
+import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
+import { map } from 'rxjs/internal/operators/map'
+import {
+  GetProjectByIdDocument,
+  GetProjectByIdQuery,
+  GetProjectsDocument,
+  GetProjectsQuery
+} from '@generated/queries'
 import {
   CreateProjectDocument,
   CreateProjectMutation,
   DeleteProjectDocument,
-  DeleteProjectMutation
+  DeleteProjectMutation,
+  UpdateProjectDocument,
+  UpdateProjectMutation
 } from '@generated/mutations'
-import { NavController } from '@ionic/angular'
-import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
-import { ProjectInput } from '@generated/types'
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -31,11 +38,19 @@ export class ProjectService {
     return this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
   }
 
-  removeProjectId(projectId: string) {
+  removeProjectId(projectId: string): void {
     const currProjectId = this.getProjectId()
     if (currProjectId !== projectId) return
+
     this.storageService.removeItem(LocalStorageKeys.PROJECT_ID)
     this.navController.navigateBack(Routes.HOME)
+  }
+
+  getProjectsQuery() {
+    return this.apollo.watchQuery<GetProjectsQuery>({
+      query: GetProjectsDocument,
+      errorPolicy: 'all'
+    }).valueChanges
   }
 
   getProjects() {
@@ -49,29 +64,45 @@ export class ProjectService {
     )
   }
 
-  getProjectsQuery() {
-    return this.apollo.watchQuery<GetProjectsQuery>({
-      query: GetProjectsDocument,
-      errorPolicy: 'all'
-    }).valueChanges
+  getProjectByIdQuery(projectId: string) {
+    return this.apollo.query<GetProjectByIdQuery>({
+      query: GetProjectByIdDocument,
+      errorPolicy: 'all',
+      variables: { projectId }
+    })
   }
 
   getProjectById(projectId: string) {
     return this.getProjectByIdQuery(projectId).pipe(
-      map(({ data: { getProjects }, errors }) => {
+      map(({ data: { getProjectById }, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-        if (getProjects) return getProjects
+        if (getProjectById) return getProjectById
         return null
       })
     )
   }
 
-  getProjectByIdQuery(projectId: string) {
-    return this.apollo.query<GetProjectsQuery>({
-      query: GetProjectsDocument,
+  createProjectCacheUpdate<T extends GetProjectsQuery, D extends CreateProjectMutation>() {
+    return (store: ApolloCache<T>, storeData: T, data: D) => {
+      const { getProjects } = storeData
+
+      store.writeQuery<GetProjectsQuery>({
+        query: GetProjectsDocument,
+        data: { getProjects: [...getProjects, data.createProject] }
+      })
+    }
+  }
+
+  createProjectMutation(name: string, description: string) {
+    return this.apollo.mutate<CreateProjectMutation>({
+      mutation: CreateProjectDocument,
       errorPolicy: 'all',
-      variables: { projectId }
+      variables: { name, description },
+      update: this.updateApolloCache<GetProjectsQuery, CreateProjectMutation>(
+        GetProjectsDocument,
+        this.createProjectCacheUpdate()
+      )
     })
   }
 
@@ -87,32 +118,9 @@ export class ProjectService {
     )
   }
 
-  createProjectMutation(name: string, description: string) {
-    return this.apollo.mutate<CreateProjectMutation>({
-      mutation: CreateProjectDocument,
-      errorPolicy: 'all',
-      variables: { name, description },
-      update: this.updateApolloCache<GetProjectsQuery, CreateProjectMutation>(
-        GetProjectsDocument,
-        this.updateCreateProjectCache()
-      )
-    })
-  }
-
-  updateCreateProjectCache<T extends GetProjectsQuery, D extends CreateProjectMutation>() {
-    return (store: ApolloCache<T>, storeData: T, data: D) => {
-      const { getProjects } = storeData
-
-      store.writeQuery<GetProjectsQuery>({
-        query: GetProjectsDocument,
-        data: { getProjects: [...getProjects, data.createProject] }
-      })
-    }
-  }
-
   updateProjectMutation(projectInput: ProjectInput) {
-    return this.apollo.mutate<GetProjectsQuery>({
-      mutation: GetProjectsDocument,
+    return this.apollo.mutate<UpdateProjectMutation>({
+      mutation: UpdateProjectDocument,
       errorPolicy: 'all',
       variables: { input: projectInput }
     })
@@ -121,35 +129,24 @@ export class ProjectService {
   updateProject(projectInput: ProjectInput) {
     return this.updateProjectMutation(projectInput).pipe(
       map(({ data, errors }) => {
-        console.log({ data, errors })
-
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+
         if (data) {
           this.toastService.present({
             variant: ToastType.SUCCESS,
-            message: Messages.PROJECT_DELETED
+            message: Messages.PROJECT_UPDATED
           })
+
+          return data.updateProject
         }
+
+        return null
       })
     )
   }
 
-  deleteProject(projectId: string) {
-    return this.deleteProjectMutation(projectId).pipe(
-      map(({ data, errors }) => {
-        if (errors)
-          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-        if (data?.deleteProject)
-          this.toastService.present({
-            variant: ToastType.SUCCESS,
-            message: Messages.PROJECT_DELETED
-          })
-      })
-    )
-  }
-
-  updateDeleteProjectCache<T extends GetProjectsQuery>(projectId: string) {
+  deleteProjectCacheUpdate<T extends GetProjectsQuery>(projectId: string) {
     return (store: ApolloCache<T>, storeData: T) => {
       const { getProjects } = storeData
       const updatedProjects = getProjects.filter(project => project.id !== projectId)
@@ -170,9 +167,23 @@ export class ProjectService {
       variables: { deleteProjectId: projectId },
       update: this.updateApolloCache<GetProjectsQuery, DeleteProjectMutation>(
         GetProjectsDocument,
-        this.updateDeleteProjectCache(projectId)
+        this.deleteProjectCacheUpdate(projectId)
       )
     })
+  }
+
+  deleteProject(projectId: string) {
+    return this.deleteProjectMutation(projectId).pipe(
+      map(({ data, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data?.deleteProject)
+          this.toastService.present({
+            variant: ToastType.SUCCESS,
+            message: Messages.PROJECT_DELETED
+          })
+      })
+    )
   }
 
   updateApolloCache<T, D>(
