@@ -8,7 +8,7 @@ import { AuthTitles } from '../../../../auth/auth-types'
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule],
   template: `
-    <form [formGroup]="form()">
+    <form [formGroup]="form()" (ngSubmit)="submitForm()">
       <ion-list lines="none">
         @if (!isLogin()) {
           <ion-item color="light">
@@ -39,12 +39,7 @@ import { AuthTitles } from '../../../../auth/auth-types'
           </ion-item>
         }
       </ion-list>
-      <ion-button
-        type="submit"
-        expand="block"
-        color="primary"
-        (click)="submit()()"
-        [disabled]="!form().valid">
+      <ion-button type="submit" expand="block" color="primary" [disabled]="!form().valid">
         {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
       </ion-button>
     </form>
@@ -99,6 +94,8 @@ export class AuthFormComponent {
   isLogin = input.required<boolean>()
   form = input.required<FormGroup>()
   submit = input.required<() => void>()
+
+  submitForm = () => this.submit()()
 
   AuthTitles: typeof AuthTitles = AuthTitles
 }
