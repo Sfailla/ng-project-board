@@ -91,8 +91,11 @@
   --select-project-card-title-color: var(--ion-color-step-850, #262626);
   --select-project-card-border-color: #e5e5e5;
   --select-project-icon-border-color: #afafaf;
+  --select-project-background-color: #f5f6f9;
+  --select-project-button-group-border-color: #a2a2a2;
 
   --nav-link-border-color: #e1dcdc;
+  --nav-item-background-color: #fff;
 
   --create-project-card-border-color: #5e5e5e;
 }
@@ -216,8 +219,11 @@
     --select-project-card-title-color: #fff;
     --select-project-card-border-color: #424244;
     --select-project-icon-border-color: #808289;
+    --select-project-background-color: #000;
+    --select-project-button-group-border-color: #5e5d5d;
 
     --nav-link-border-color: #323232;
+    --nav-item-background-color: #000;
 
     --create-project-card-border-color: #5e5e5e;
   }
@@ -282,8 +288,11 @@
     --select-project-card-title-color: #fff;
     --select-project-card-border-color: #424244;
     --select-project-icon-border-color: #808289;
+    --select-project-background-color: #000;
+    --select-project-button-group-border-color: #5e5d5d;
 
     --nav-link-border-color: #323232;
+    --nav-item-background-color: #000;
 
     --create-project-card-border-color: #5e5e5e;
   }

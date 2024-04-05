@@ -75,7 +75,7 @@
   &__nav-item {
     width: 100%;
     cursor: pointer;
-    --background: black;
+    --background: var(--nav-item-background-color);
     --color-hover: inherit;
 
     &::part(native) {

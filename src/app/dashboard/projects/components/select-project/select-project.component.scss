@@ -109,7 +109,7 @@
             color: #4c87ff;
           }
 
-          background-color: #000000;
+          background-color: var(--select-project-background-color);
         }
 
         & .left-side {
@@ -133,7 +133,7 @@
               height: 100%;
               width: rem(25px);
               @include flex();
-              border: 1px solid #5e5d5d;
+              border: 1px solid var(--select-project-button-group-border-color);
               border-radius: rem(5px);
               transition: border 0.3s ease-in-out;
 
