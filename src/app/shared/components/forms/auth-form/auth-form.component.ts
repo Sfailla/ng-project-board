@@ -20,8 +20,14 @@ import { AuthTitles } from '../../../../auth/auth-types'
           </ion-item>
         }
         <ion-item color="light">
-          <ion-input formControlName="email" label="Email" labelPlacement="floating" type="email" />
+          <ion-input
+            aria-label="email-input"
+            formControlName="email"
+            label="Email"
+            labelPlacement="floating"
+            type="email" />
         </ion-item>
+
         <ion-item color="light">
           <ion-input
             formControlName="password"
@@ -29,6 +35,7 @@ import { AuthTitles } from '../../../../auth/auth-types'
             labelPlacement="floating"
             type="password" />
         </ion-item>
+
         @if (!isLogin()) {
           <ion-item color="light">
             <ion-input
@@ -39,7 +46,13 @@ import { AuthTitles } from '../../../../auth/auth-types'
           </ion-item>
         }
       </ion-list>
-      <ion-button type="submit" expand="block" color="primary" [disabled]="!form().valid">
+
+      <ion-button
+        aria-label="submit-button"
+        type="submit"
+        expand="block"
+        color="primary"
+        [disabled]="form().invalid">
         {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
       </ion-button>
     </form>

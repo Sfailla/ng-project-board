@@ -7,16 +7,23 @@ import { IonicModule } from '@ionic/angular'
   standalone: true,
   imports: [IonicModule, ReactiveFormsModule],
   template: `
-    <form class="form" [formGroup]="form()">
-      <ion-item>
-        <ion-input formControlName="projectName" label="Project Name" labelPlacement="floating" />
-      </ion-item>
-      <ion-item>
+    <form class="form" [formGroup]="form()" (ngSubmit)="submitForm()">
+      <div class="form__input-wrapper">
+        <ion-input
+          aria-label="project-name"
+          formControlName="projectName"
+          label="Project Name"
+          labelPlacement="floating"
+          fill="outline" />
+
         <ion-textarea
+          aria-label="project-description"
           formControlName="projectDescription"
           label="Project Description"
-          labelPlacement="floating" />
-      </ion-item>
+          labelPlacement="floating"
+          fill="outline" />
+      </div>
+
       <div class="form__select-view">
         <h3>Default View</h3>
         <div class="toggle-button-container">
@@ -30,12 +37,13 @@ import { IonicModule } from '@ionic/angular'
           </button>
         </div>
       </div>
+
       <ion-button
+        aria-label="submit-button"
         type="submit"
         expand="block"
         color="primary"
-        [disabled]="!form().valid"
-        (click)="createProject()()">
+        [disabled]="form().invalid">
         Create Project
       </ion-button>
     </form>
@@ -53,6 +61,12 @@ import { IonicModule } from '@ionic/angular'
           --padding-start: 0;
           --padding-end: 0;
           --padding-bottom: rem(16px);
+        }
+
+        &__input-wrapper {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: rem(16px);
         }
 
         &__select-view {
@@ -103,4 +117,6 @@ import { IonicModule } from '@ionic/angular'
 export class CreateProjectFormComponent {
   form = input.required<FormGroup>()
   createProject = input.required<() => void>()
+
+  submitForm = () => this.createProject()()
 }
