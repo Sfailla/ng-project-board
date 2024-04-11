@@ -21,7 +21,10 @@ import {
   closeCircleOutline,
   checkmarkCircleOutline,
   menu,
-  close
+  close,
+  add,
+  addCircleSharp,
+  addCircleOutline
 } from 'ionicons/icons'
 
 @Component({
@@ -57,6 +60,9 @@ export class AppComponent implements OnInit {
     addIcons({
       menu,
       close,
+      add,
+      'add-circle-sharp': addCircleSharp,
+      'add-circle-outline': addCircleOutline,
       'logo-apple': logoApple,
       'logo-google': logoGoogle,
       'logo-github': logoGithub,
