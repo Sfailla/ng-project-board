@@ -104,9 +104,6 @@ export class TaskComponent implements OnInit {
     this.projectService
       .getProjectById(projectId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(project => {
-        console.log({ project })
-        this.currentProject.set(project)
-      })
+      .subscribe(project => this.currentProject.set(project))
   }
 }
