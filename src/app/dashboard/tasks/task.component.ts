@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   OnInit,
+  effect,
   inject,
   signal
 } from '@angular/core'
@@ -10,20 +11,38 @@ import { PageWrapperComponent } from '@shared/components'
 import { IonicModule } from '@ionic/angular'
 import { Project } from '@generated/types'
 import { ProjectService } from 'src/app/dashboard/projects/services/project.service'
-import { KeyValuePipe } from '@angular/common'
+import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import {
+  CdkDropList,
+  CdkDrag,
+  CdkDragDrop,
+  moveItemInArray,
+  CdkDropListGroup
+} from '@angular/cdk/drag-drop'
 
 @Component({
   standalone: true,
-  imports: [IonicModule, PageWrapperComponent, KeyValuePipe],
+  imports: [
+    CommonModule,
+    IonicModule,
+    PageWrapperComponent,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup
+  ],
   selector: 'app-task',
   template: `
     <app-page-wrapper>
-      <div class="board">
-        @for (category of currentProject()?.categories; track category.id) {
-          <section class="board__section">
+      <div
+        class="board"
+        cdkDropListOrientation="horizontal"
+        (cdkDropListDropped)="drop($event)"
+        cdkDropList>
+        @for (category of this.categories(); track category) {
+          <section class="board__section" cdkDragLockAxis="x" cdkDrag>
             <div class="board__section-header">
-              <span class="board__section-title">{{ category.name }}</span>
+              <span class="board__section-title">{{ category }}</span>
               <ion-button color="primary" aria-label="add-task-button" fill="none">
                 <ion-icon
                   color="white"
@@ -40,6 +59,61 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
   `,
   styles: [
     `
+      .cdk-drag-preview {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 330px;
+        min-width: 275px;
+        height: 100%;
+        margin: 0;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: var(--dashboard-sub-background);
+
+        div.board__section-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        span.board__section-title {
+          font-size: 16px;
+          font-weight: bold;
+          color: white;
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+
+        ion-button {
+          --background: transparent;
+          --background-hover: #4a4a4ab8;
+          --transition: background-color 3s ease-in-out;
+          min-height: 20px;
+
+          &::part(native) {
+            padding: 5px;
+          }
+        }
+      }
+
+      .cdk-drag-placeholder {
+        background-color: #1e1e1e !important;
+        border: 2px dashed #4a4a4a;
+
+        div.board__section-header {
+          display: none;
+        }
+      }
+
+      .cdk-drag-animating {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
+
+      .board.cdk-drop-list-dragging .board__section:not(.cdk-drag-placeholder) {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
+
       .board {
         width: 100%;
         height: 100%;
@@ -92,6 +166,17 @@ export class TaskComponent implements OnInit {
 
   currentProject = signal<Project | null>(null)
 
+  categories = signal<string[]>([])
+
+  testCategories!: string[]
+
+  constructor() {
+    effect(() => {
+      console.log('categories changed', this.categories())
+      console.log('project changed', this.currentProject())
+    })
+  }
+
   ngOnInit(): void {
     this.getCurrentProject()
   }
@@ -104,6 +189,19 @@ export class TaskComponent implements OnInit {
     this.projectService
       .getProjectById(projectId)
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(project => this.currentProject.set(project))
+      .subscribe(project => {
+        if (!project) return
+        this.setSignals(project)
+      })
+  }
+
+  setSignals(project: Project): void {
+    this.currentProject.set(project)
+    this.categories.set(project?.categories.map(({ name }) => name))
+    this.testCategories = this.categories()
+  }
+
+  drop(event: CdkDragDrop<string[]>): void {
+    moveItemInArray(this.categories(), event.previousIndex, event.currentIndex)
   }
 }
