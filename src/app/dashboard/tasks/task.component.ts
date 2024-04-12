@@ -3,7 +3,6 @@ import {
   Component,
   DestroyRef,
   OnInit,
-  effect,
   inject,
   signal
 } from '@angular/core'
@@ -13,6 +12,7 @@ import { Project } from '@generated/types'
 import { ProjectService } from 'src/app/dashboard/projects/services/project.service'
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
+import { map } from 'rxjs/internal/operators/map'
 import {
   CdkDropList,
   CdkDrag,
@@ -20,6 +20,7 @@ import {
   moveItemInArray,
   CdkDropListGroup
 } from '@angular/cdk/drag-drop'
+import { Observable } from 'rxjs/internal/Observable'
 
 @Component({
   standalone: true,
@@ -165,40 +166,31 @@ export class TaskComponent implements OnInit {
   destroyRef: DestroyRef = inject(DestroyRef)
 
   currentProject = signal<Project | null>(null)
-
   categories = signal<string[]>([])
 
-  testCategories!: string[]
-
-  constructor() {
-    effect(() => {
-      console.log('categories changed', this.categories())
-      console.log('project changed', this.currentProject())
-    })
-  }
-
   ngOnInit(): void {
-    this.getCurrentProject()
+    this.getProjectAndSetSignals(this.getCurrentProject())
   }
 
-  getCurrentProject(): void {
-    const projectId = this.projectService.getProjectId()
+  getCurrentProject(): Observable<NonNullable<Project>> {
+    const projectId = <string>this.projectService.getProjectId()
 
-    if (!projectId) return
-
-    this.projectService
-      .getProjectById(projectId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(project => {
-        if (!project) return
-        this.setSignals(project)
-      })
+    return this.projectService.getProjectById(projectId).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      map(project => project as Project)
+    )
   }
 
   setSignals(project: Project): void {
     this.currentProject.set(project)
     this.categories.set(project?.categories.map(({ name }) => name))
-    this.testCategories = this.categories()
+  }
+
+  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(getProjectsObsFn: T) => {
+    return getProjectsObsFn.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(project => {
+      if (!project) return
+      this.setSignals(project)
+    })
   }
 
   drop(event: CdkDragDrop<string[]>): void {
