@@ -13,8 +13,8 @@ export const DASHBOARD_ROUTES = [
         loadChildren: () => import('./home/home.routes').then(m => m.HOME_ROUTES)
       },
       {
-        path: ':id/tasks',
-        loadChildren: () => import('./tasks/task.routes').then(m => m.TASK_ROUTES)
+        path: ':id/board',
+        loadChildren: () => import('./board/board.routes').then(m => m.BOARD_ROUTES)
       },
       {
         path: 'projects',

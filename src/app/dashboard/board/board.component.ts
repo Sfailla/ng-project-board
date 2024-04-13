@@ -161,7 +161,7 @@ import { Observable } from 'rxjs/internal/Observable'
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TaskComponent implements OnInit {
+export class BoardComponent implements OnInit {
   projectService: ProjectService = inject(ProjectService)
   destroyRef: DestroyRef = inject(DestroyRef)
 

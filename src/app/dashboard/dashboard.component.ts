@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
     const projectId = this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
 
     projectId
-      ? this.navController.navigateForward([IonicRoutes.DASHBOARD, projectId, IonicRoutes.TASKS])
+      ? this.navController.navigateForward([IonicRoutes.DASHBOARD, projectId, IonicRoutes.BOARD])
       : this.navController.navigateForward([IonicRoutes.DASHBOARD, IonicRoutes.HOME])
   }
 }
