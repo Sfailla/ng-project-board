@@ -177,7 +177,7 @@ export class TaskComponent implements OnInit {
 
     return this.projectService.getProjectById(projectId).pipe(
       takeUntilDestroyed(this.destroyRef),
-      map(project => project as Project)
+      map(project => project)
     )
   }
 
