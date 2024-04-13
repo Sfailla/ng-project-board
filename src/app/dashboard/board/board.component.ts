@@ -13,25 +13,13 @@ import { ProjectService } from 'src/app/dashboard/projects/services/project.serv
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { map } from 'rxjs/internal/operators/map'
-import {
-  CdkDropList,
-  CdkDrag,
-  CdkDragDrop,
-  moveItemInArray,
-  CdkDropListGroup
-} from '@angular/cdk/drag-drop'
+import { CdkDropList, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { Observable } from 'rxjs/internal/Observable'
+import { BoardSectionComponent } from './components'
 
 @Component({
   standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    PageWrapperComponent,
-    CdkDropList,
-    CdkDrag,
-    CdkDropListGroup
-  ],
+  imports: [CommonModule, IonicModule, PageWrapperComponent, CdkDropList, BoardSectionComponent],
   selector: 'app-task',
   template: `
     <app-page-wrapper>
@@ -41,77 +29,16 @@ import { Observable } from 'rxjs/internal/Observable'
         (cdkDropListDropped)="drop($event)"
         cdkDropList>
         @for (category of this.categories(); track category) {
-          <section class="board__section" cdkDragLockAxis="x" cdkDrag>
-            <div class="board__section-header">
-              <span class="board__section-title">{{ category }}</span>
-              <ion-button color="primary" aria-label="add-task-button" fill="none">
-                <ion-icon
-                  color="white"
-                  aria-label="add-icon"
-                  name="add"
-                  size="small"
-                  slot="icon-only" />
-              </ion-button>
-            </div>
-          </section>
+          <app-board-section [category]="category"></app-board-section>
         }
       </div>
     </app-page-wrapper>
   `,
   styles: [
     `
-      .cdk-drag-preview {
-        box-sizing: border-box;
-        width: 100%;
-        max-width: 330px;
-        min-width: 275px;
-        height: 100%;
-        margin: 0;
-        padding: 10px;
-        border-radius: 8px;
-        background-color: var(--dashboard-sub-background);
+      @use '../../styles/abstracts' as *;
 
-        div.board__section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        span.board__section-title {
-          font-size: 16px;
-          font-weight: bold;
-          color: white;
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-        }
-
-        ion-button {
-          --background: transparent;
-          --background-hover: #4a4a4ab8;
-          --transition: background-color 3s ease-in-out;
-          min-height: 20px;
-
-          &::part(native) {
-            padding: 5px;
-          }
-        }
-      }
-
-      .cdk-drag-placeholder {
-        background-color: #1e1e1e !important;
-        border: 2px dashed #4a4a4a;
-
-        div.board__section-header {
-          display: none;
-        }
-      }
-
-      .cdk-drag-animating {
-        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-      }
-
-      .board.cdk-drop-list-dragging .board__section:not(.cdk-drag-placeholder) {
+      .board.cdk-drop-list-dragging {
         transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
       }
 
@@ -123,39 +50,6 @@ import { Observable } from 'rxjs/internal/Observable'
         flex-wrap: nowrap;
         gap: 15px;
         overflow-x: auto;
-
-        &__section {
-          width: 100%;
-          max-width: 330px;
-          min-width: 275px;
-          height: 100%;
-          padding: 10px;
-          border-radius: 8px;
-          background-color: var(--dashboard-sub-background);
-        }
-
-        &__section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        &__section-title {
-          font-size: 16px;
-          font-weight: bold;
-          color: white;
-        }
-
-        ion-button {
-          --background: transparent;
-          --background-hover: #4a4a4ab8;
-          --transition: background-color 3s ease-in-out;
-          min-height: 20px;
-
-          &::part(native) {
-            padding: 5px;
-          }
-        }
       }
     `
   ],
@@ -186,8 +80,8 @@ export class BoardComponent implements OnInit {
     this.categories.set(project?.categories.map(({ name }) => name))
   }
 
-  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(getProjectsObsFn: T) => {
-    return getProjectsObsFn.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(project => {
+  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(observable: T) => {
+    return observable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(project => {
       if (!project) return
       this.setSignals(project)
     })
