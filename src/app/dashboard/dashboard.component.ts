@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { RouterOutlet } from '@angular/router'
 import { IonicModule, NavController } from '@ionic/angular'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
-import { ProjectService } from './projects/services/project.service'
-import { LocalStorageService } from '@shared/services'
+import { LocalStorageService, ProjectService } from '@shared/services'
 import { IonicRoutes, LocalStorageKeys } from '@shared/types'
 import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared/components'
 

@@ -7,11 +7,10 @@ import {
   input
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { ProjectService } from '../../services/project.service'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Project } from '@generated/types'
-import { ModalService } from '@shared/services'
+import { ModalService, ProjectService } from '@shared/services'
 
 @Component({
   selector: 'app-project-details',
