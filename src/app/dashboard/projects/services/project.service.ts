@@ -3,10 +3,11 @@ import { Apollo } from 'apollo-angular'
 import { LocalStorageService, ToastService } from '@shared/services'
 import { LocalStorageKeys, Messages, Routes, ToastType } from '@shared/types'
 import { NavController } from '@ionic/angular'
-import { ProjectInput } from '@generated/types'
+import { Project, ProjectInput } from '@generated/types'
 import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
 import { map } from 'rxjs/internal/operators/map'
 import { ProjectDocument, ProjectQuery, ProjectsDocument, ProjectsQuery } from '@generated/queries'
+import { Observable } from 'rxjs/internal/Observable'
 import {
   CreateProjectDocument,
   CreateProjectMutation,
@@ -43,8 +44,8 @@ export class ProjectService {
 
   getProjectsQuery() {
     return this.apollo.watchQuery<ProjectsQuery>({
-      query: ProjectsDocument,
-      errorPolicy: 'all'
+      errorPolicy: 'all',
+      query: ProjectsDocument
     }).valueChanges
   }
 
@@ -61,19 +62,18 @@ export class ProjectService {
 
   getProjectByIdQuery(projectId: string) {
     return this.apollo.query<ProjectQuery>({
-      query: ProjectDocument,
       errorPolicy: 'all',
+      query: ProjectDocument,
       variables: { projectId }
     })
   }
 
-  getProjectById(projectId: string) {
+  getProjectById(projectId: string): Observable<NonNullable<Project>> {
     return this.getProjectByIdQuery(projectId).pipe(
       map(({ data: { project }, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
-        if (project) return project
-        return null
+        return project
       })
     )
   }
@@ -91,8 +91,8 @@ export class ProjectService {
 
   createProjectMutation(name: string, description: string) {
     return this.apollo.mutate<CreateProjectMutation>({
-      mutation: CreateProjectDocument,
       errorPolicy: 'all',
+      mutation: CreateProjectDocument,
       variables: { name, description },
       update: this.updateApolloCache<ProjectsQuery, CreateProjectMutation>(
         ProjectsDocument,
