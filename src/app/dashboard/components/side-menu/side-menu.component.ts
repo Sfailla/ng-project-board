@@ -5,7 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router'
 import { IonIconTitleDirective } from '@shared/directives'
 import { CommonModule } from '@angular/common'
 import { LocalStorageService } from '@shared/services'
-import { LocalStorageKeys, Routes } from '@shared/types'
+import { IonicRoutes, LocalStorageKeys, Routes } from '@shared/types'
 import { ProjectService } from '../../projects/services/project.service'
 
 @Component({
@@ -63,7 +63,12 @@ import { ProjectService } from '../../projects/services/project.service'
           @if (projectService.getProjectId()) {
             <ion-item
               class="side-menu__nav-item"
-              [routerLink]="['/', 'dashboard', projectService.getProjectId(), 'tasks']"
+              [routerLink]="[
+                '/',
+                IonicRoutes.DASHBOARD,
+                projectService.getProjectId(),
+                IonicRoutes.BOARD
+              ]"
               routerLinkActive="is-active"
               routerDirection="root">
               <ion-icon name="list-outline" ionIconRemoveTitle [iconTitle]="'Tasks'" />
@@ -86,6 +91,7 @@ export class SideMenuComponent implements OnInit {
   isMenuExpanded = computed(() => this.menuState())
 
   Routes: typeof Routes = Routes
+  IonicRoutes: typeof IonicRoutes = IonicRoutes
 
   storageService: LocalStorageService = inject(LocalStorageService)
   projectService: ProjectService = inject(ProjectService)
