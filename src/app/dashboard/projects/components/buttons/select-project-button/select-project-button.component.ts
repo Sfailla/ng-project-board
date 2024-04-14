@@ -86,9 +86,6 @@ export class SelectProjectButtonComponent {
   async setCurrentProjectId(projectId: string): Promise<void> {
     this.projectService.setProjectId(projectId)
 
-    await this.navController.navigateForward(
-      [IonicRoutes.DASHBOARD, projectId, IonicRoutes.BOARD],
-      { animationDirection: 'back' }
-    )
+    await this.navController.navigateForward([IonicRoutes.DASHBOARD, projectId, IonicRoutes.BOARD])
   }
 }
