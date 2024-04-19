@@ -4,9 +4,10 @@ import { LocalStorageService, ToastService } from '@shared/services'
 import { LocalStorageKeys, Messages, Routes, ToastType } from '@shared/types'
 import { NavController } from '@ionic/angular/standalone'
 import { Project, ProjectInput } from '@generated/types'
-import { ApolloCache, DocumentNode, FetchResult } from '@apollo/client'
-import { map } from 'rxjs/internal/operators/map'
 import { ProjectDocument, ProjectQuery, ProjectsDocument, ProjectsQuery } from '@generated/queries'
+import { updateApolloCache } from '@shared/utils'
+import { ApolloCache } from '@apollo/client'
+import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
 import {
   CreateProjectDocument,
@@ -69,6 +70,8 @@ export class ProjectService {
   }
 
   getProjectById(projectId: string): Observable<NonNullable<Project>> {
+    console.log({ projectId })
+
     return this.getProjectByIdQuery(projectId).pipe(
       map(({ data: { project }, errors }) => {
         if (errors)
@@ -94,7 +97,7 @@ export class ProjectService {
       errorPolicy: 'all',
       mutation: CreateProjectDocument,
       variables: { name, description },
-      update: this.updateApolloCache<ProjectsQuery, CreateProjectMutation>(
+      update: updateApolloCache<ProjectsQuery, CreateProjectMutation>(
         ProjectsDocument,
         this.createProjectCacheUpdate()
       )
@@ -160,7 +163,7 @@ export class ProjectService {
       mutation: DeleteProjectDocument,
       errorPolicy: 'all',
       variables: { deleteProjectId: projectId },
-      update: this.updateApolloCache<ProjectsQuery, DeleteProjectMutation>(
+      update: updateApolloCache<ProjectsQuery, DeleteProjectMutation>(
         ProjectsDocument,
         this.deleteProjectCacheUpdate(projectId)
       )
@@ -179,18 +182,5 @@ export class ProjectService {
           })
       })
     )
-  }
-
-  updateApolloCache<T, D>(
-    query: DocumentNode,
-    writeQueryData: (store: ApolloCache<T>, storeData: T, data: D) => void
-  ) {
-    return (store: ApolloCache<T>, { data }: FetchResult<D>) => {
-      const storeData = store.readQuery<T>({ query })
-
-      if (storeData && data) {
-        writeQueryData(store, storeData, data)
-      }
-    }
   }
 }
