@@ -1,5 +1,5 @@
 export enum ErrorMessages {
-  JWT = '🚫⏱️ jwt expired',
+  JWT = 'jwt expired',
   UNAUTHORIZED = '🚫🔐 Not authenticated',
   PASSWORDS_DO_NOT_MATCH = '🚫🔐 Passwords do not match',
   LOGIN_FAILED = '🚫🔐 Login failed',
