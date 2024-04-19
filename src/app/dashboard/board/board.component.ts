@@ -8,7 +8,7 @@ import {
 } from '@angular/core'
 import { PageWrapperComponent } from '@shared/components'
 import { IonicModule } from '@ionic/angular'
-import { Project } from '@generated/types'
+import { Category, Project } from '@generated/types'
 import { ProjectService } from '@shared/services'
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
@@ -16,6 +16,8 @@ import { map } from 'rxjs/internal/operators/map'
 import { CdkDropList, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { Observable } from 'rxjs/internal/Observable'
 import { BoardSectionComponent } from './components'
+
+type SetSignals = (project: Project) => void
 
 @Component({
   standalone: true,
@@ -60,10 +62,12 @@ export class BoardComponent implements OnInit {
   destroyRef: DestroyRef = inject(DestroyRef)
 
   currentProject = signal<Project | null>(null)
-  categories = signal<string[]>([])
+  categories = signal<Category[]>([])
 
   ngOnInit(): void {
-    this.getProjectAndSetSignals(this.getCurrentProject())
+    this.getProjectAndSetSignals(this.getCurrentProject(), this.setSignals())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
   }
 
   getCurrentProject(): Observable<NonNullable<Project>> {
@@ -75,16 +79,22 @@ export class BoardComponent implements OnInit {
     )
   }
 
-  setSignals(project: Project): void {
-    this.currentProject.set(project)
-    this.categories.set(project?.categories.map(({ name }) => name))
+  setSignals(): SetSignals {
+    return project => {
+      this.currentProject.set(project)
+      this.categories.set(project?.categories.map(category => category))
+    }
   }
 
-  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(observable: T) => {
-    return observable.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(project => {
-      if (!project) return
-      this.setSignals(project)
-    })
+  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(
+    observable: T,
+    setSignalsFn: (project: Project) => void
+  ) => {
+    return observable.pipe(
+      map(project => {
+        setSignalsFn(project)
+      })
+    )
   }
 
   drop(event: CdkDragDrop<string[]>): void {
