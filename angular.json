@@ -156,6 +156,9 @@
     "schematicCollections": ["@angular-eslint/schematics", "@ionic/angular-toolkit"]
   },
   "schematics": {
+    "@schematics/angular:service": {
+      "path": "src/app/shared/services"
+    },
     "@ionic/angular-toolkit:component": {
       "styleext": "scss"
     },
