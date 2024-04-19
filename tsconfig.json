@@ -28,6 +28,7 @@
       "@shared/services": ["src/app/shared/services/index.ts"],
       "@shared/types": ["src/app/shared/types/index.ts"],
       "@shared/components": ["src/app/shared/components/index.ts"],
+      "@shared/utils": ["src/app/shared/utils/index.ts"],
       "@shared/directives": ["src/app/shared/directives/index.ts"],
       "@auth/services": ["src/app/auth/services/index.ts"]
     }
