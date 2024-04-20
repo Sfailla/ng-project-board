@@ -70,8 +70,6 @@ export class ProjectService {
   }
 
   getProjectById(projectId: string): Observable<NonNullable<Project>> {
-    console.log({ projectId })
-
     return this.getProjectByIdQuery(projectId).pipe(
       map(({ data: { project }, errors }) => {
         if (errors)
