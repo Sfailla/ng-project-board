@@ -13,7 +13,7 @@ import { ProjectService } from '@shared/services'
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { map } from 'rxjs/internal/operators/map'
-import { CdkDropList, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
+import { CdkDropList, CdkDragDrop, moveItemInArray, CdkDropListGroup } from '@angular/cdk/drag-drop'
 import { Observable } from 'rxjs/internal/Observable'
 import { BoardSectionComponent } from './components'
 
@@ -21,7 +21,14 @@ type SetSignals = (project: Project) => void
 
 @Component({
   standalone: true,
-  imports: [CommonModule, IonicModule, PageWrapperComponent, CdkDropList, BoardSectionComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    PageWrapperComponent,
+    BoardSectionComponent,
+    CdkDropListGroup,
+    CdkDropList
+  ],
   selector: 'app-task',
   template: `
     <app-page-wrapper>
@@ -29,9 +36,10 @@ type SetSignals = (project: Project) => void
         class="board"
         cdkDropListOrientation="horizontal"
         (cdkDropListDropped)="drop($event)"
+        cdkDropListGroup
         cdkDropList>
         @for (category of this.categories(); track category) {
-          <app-board-section [category]="category"></app-board-section>
+          <app-board-section [categories]="categories()" [category]="category"></app-board-section>
         }
       </div>
     </app-page-wrapper>
@@ -72,11 +80,7 @@ export class BoardComponent implements OnInit {
 
   getCurrentProject(): Observable<NonNullable<Project>> {
     const projectId = <string>this.projectService.getProjectId()
-
-    return this.projectService.getProjectById(projectId).pipe(
-      takeUntilDestroyed(this.destroyRef),
-      map(project => project)
-    )
+    return this.projectService.getProjectById(projectId).pipe(map(project => project))
   }
 
   setSignals(): SetSignals {
@@ -88,13 +92,9 @@ export class BoardComponent implements OnInit {
 
   getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(
     observable: T,
-    setSignalsFn: (project: Project) => void
+    setSignalsFn: SetSignals
   ) => {
-    return observable.pipe(
-      map(project => {
-        setSignalsFn(project)
-      })
-    )
+    return observable.pipe(map(project => setSignalsFn(project)))
   }
 
   drop(event: CdkDragDrop<string[]>): void {
