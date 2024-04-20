@@ -30,7 +30,7 @@ export class TaskService {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
         if (tasks) return tasks
-        return null
+        return []
       })
     )
   }
