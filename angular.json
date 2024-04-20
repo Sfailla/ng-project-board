@@ -5,11 +5,6 @@
   "projects": {
     "ng-project-board-v2": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -158,6 +153,11 @@
   "schematics": {
     "@schematics/angular:service": {
       "path": "src/app/shared/services"
+    },
+    "@schematics/angular:component": {
+      "style": "scss",
+      "inlineStyle": true,
+      "inlineTemplate": true
     },
     "@ionic/angular-toolkit:component": {
       "styleext": "scss"
