@@ -1,0 +1,62 @@
+@use '../../../../styles/abstracts' as *;
+
+.form {
+  margin: rem(32px) 0 rem(60px) 0;
+
+  &__input-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: rem(16px);
+  }
+
+  ion-input,
+  ion-textarea {
+    color: white;
+  }
+
+  ion-input.input-fill-outline.has-focus,
+  ion-textarea.textarea-fill-outline.has-focus {
+    --border-width: 1px;
+  }
+
+  &__select-view {
+    margin: 2rem 0;
+
+    & h3 {
+      color: white;
+      font-size: rem(15px);
+      margin-bottom: rem(16px);
+    }
+
+    & .toggle-button-container {
+      @include flex(space-between);
+
+      & button {
+        width: rem(150px);
+        height: rem(80px);
+        font-size: rem(16px);
+        color: var(--heading-color-primary);
+        @include flex();
+        border: 1px solid var(--create-project-card-border-color);
+        border-radius: rem(5px);
+        margin-bottom: rem(16px);
+        background-color: transparent;
+
+        &.selected {
+          background-color: #428cff1c;
+          border: 1px solid var(--ion-color-primary);
+        }
+
+        & ion-icon {
+          font-size: rem(25px);
+          margin-right: rem(10px);
+
+          &[name='list-outline'] {
+            font-size: rem(30px);
+            color: var(--ion-color-danger);
+          }
+        }
+      }
+    }
+  }
+}
