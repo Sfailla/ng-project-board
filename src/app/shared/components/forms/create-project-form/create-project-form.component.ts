@@ -21,6 +21,8 @@ import { IonicModule } from '@ionic/angular'
           formControlName="projectDescription"
           label="Project Description"
           labelPlacement="floating"
+          [autoGrow]="true"
+          [rows]="5"
           fill="outline" />
       </div>
 
@@ -48,70 +50,7 @@ import { IonicModule } from '@ionic/angular'
       </ion-button>
     </form>
   `,
-  styles: [
-    `
-      @use '../../../../styles/abstracts' as *;
-
-      .form {
-        margin: rem(40px) 0 rem(60px) 0;
-        ion-item {
-          --background: var(--dashboard-sub-background);
-          --border-color: var(--create-project-card-border-color);
-          --border-radius: rem(5px);
-          --padding-start: 0;
-          --padding-end: 0;
-          --padding-bottom: rem(16px);
-        }
-
-        &__input-wrapper {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: rem(16px);
-        }
-
-        &__select-view {
-          margin: 4rem 0;
-
-          & h3 {
-            color: white;
-            font-size: rem(15px);
-            margin-bottom: rem(16px);
-          }
-
-          & .toggle-button-container {
-            @include flex(space-between);
-
-            & button {
-              width: rem(150px);
-              height: rem(80px);
-              font-size: rem(16px);
-              color: var(--heading-color-primary);
-              @include flex();
-              border: 1px solid var(--create-project-card-border-color);
-              border-radius: rem(5px);
-              margin-bottom: rem(16px);
-              background-color: transparent;
-
-              &.selected {
-                background-color: #428cff1c;
-                border: 1px solid var(--ion-color-primary);
-              }
-
-              & ion-icon {
-                font-size: rem(25px);
-                margin-right: rem(10px);
-
-                &[name='list-outline'] {
-                  font-size: rem(30px);
-                  color: var(--ion-color-danger);
-                }
-              }
-            }
-          }
-        }
-      }
-    `
-  ],
+  styleUrl: './style.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreateProjectFormComponent {
