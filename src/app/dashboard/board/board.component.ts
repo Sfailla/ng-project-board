@@ -55,8 +55,7 @@ type SetSignals = (project: Project) => void
       .board {
         width: 100%;
         height: 100%;
-        display: flex;
-        justify-content: space-between;
+        @include flex(space-between, space-between);
         flex-wrap: nowrap;
         gap: 15px;
         overflow-x: auto;
