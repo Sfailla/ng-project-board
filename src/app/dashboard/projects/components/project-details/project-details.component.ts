@@ -91,7 +91,7 @@ export class ProjectDetailsComponent implements OnInit {
       id: this.project().id,
       name: this.project().name,
       description: this.project().description,
-      dueDate: this.project().dueDate || null
+      dueDate: this.project().dueDate
     })
   }
 
