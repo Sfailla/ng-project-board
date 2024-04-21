@@ -1,7 +1,12 @@
 import { Injectable, inject } from '@angular/core'
 import { Apollo } from 'apollo-angular'
 import { TaskDocument, TaskQuery, TasksDocument, TasksQuery } from '@generated/queries'
-import { CreateTaskDocument, CreateTaskMutation } from '@generated/mutations'
+import {
+  CreateTaskDocument,
+  CreateTaskMutation,
+  UpdateTaskDocument,
+  UpdateTaskMutation
+} from '@generated/mutations'
 import { TaskInput } from '@generated/types'
 import { ToastService } from '@shared/services'
 import { ToastType } from '@shared/types'
@@ -25,8 +30,6 @@ export class TaskService {
   getTasks(projectId: string) {
     return this.getTasksQuery(projectId).pipe(
       map(({ data: { tasks }, errors }) => {
-        console.log({ tasks, errors })
-
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
         if (tasks) return tasks
@@ -63,6 +66,24 @@ export class TaskService {
 
   createTask(task: TaskInput) {
     return this.createTaskMutation(task).pipe(
+      map(({ data, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data) return data
+        return null
+      })
+    )
+  }
+
+  updateTaskMutation(task: TaskInput) {
+    return this.apollo.mutate<UpdateTaskMutation>({
+      mutation: UpdateTaskDocument,
+      variables: { input: task }
+    })
+  }
+
+  updateTask(task: TaskInput) {
+    return this.updateTaskMutation(task).pipe(
       map(({ data, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
