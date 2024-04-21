@@ -16,8 +16,7 @@ import { map } from 'rxjs/internal/operators/map'
 import { CdkDropList, CdkDragDrop, moveItemInArray, CdkDropListGroup } from '@angular/cdk/drag-drop'
 import { Observable } from 'rxjs/internal/Observable'
 import { BoardSectionComponent } from './components'
-
-type SetSignals = (project: Project) => void
+import { getDataAndSetSignals, SetSignals } from '@shared/utils'
 
 @Component({
   standalone: true,
@@ -72,7 +71,7 @@ export class BoardComponent implements OnInit {
   categories = signal<Category[]>([])
 
   ngOnInit(): void {
-    this.getProjectAndSetSignals(this.getCurrentProject(), this.setSignals())
+    getDataAndSetSignals(this.getCurrentProject(), this.setSignals())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe()
   }
@@ -82,18 +81,11 @@ export class BoardComponent implements OnInit {
     return this.projectService.getProjectById(projectId).pipe(map(project => project))
   }
 
-  setSignals(): SetSignals {
-    return project => {
-      this.currentProject.set(project)
-      this.categories.set(project?.categories.map(category => category))
+  setSignals(): SetSignals<Project> {
+    return state => {
+      this.currentProject.set(state)
+      this.categories.set(state?.categories.map(category => category))
     }
-  }
-
-  getProjectAndSetSignals = <T extends Observable<NonNullable<Project>>>(
-    observable: T,
-    setSignalsFn: SetSignals
-  ) => {
-    return observable.pipe(map(project => setSignalsFn(project)))
   }
 
   drop(event: CdkDragDrop<string[]>): void {

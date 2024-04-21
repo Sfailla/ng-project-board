@@ -21,8 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TaskComponent } from '../task/task.component'
 import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
-
-type SetSignal = (tasks: Task[]) => void
+import { getDataAndSetSignals, SetSignals } from '@shared/utils'
 
 @Component({
   selector: 'app-board-section',
@@ -63,16 +62,9 @@ export class BoardSectionComponent implements OnInit {
   tasks = signal<Task[]>([])
 
   ngOnInit(): void {
-    this.getTasksAndSetSignal(this.getTasks(), this.setSignal())
+    getDataAndSetSignals(this.getTasks(), this.setSignal())
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe()
-  }
-
-  getTasksAndSetSignal<T extends Observable<NonNullable<Task>[]>>(
-    observable: T,
-    setSignalFn: SetSignal
-  ) {
-    return observable.pipe(map(tasks => setSignalFn(tasks)))
   }
 
   getTasks(): Observable<Task[]> {
@@ -80,9 +72,9 @@ export class BoardSectionComponent implements OnInit {
     return this.taskService.getTasks(projectId).pipe(map(tasks => tasks))
   }
 
-  setSignal(): SetSignal {
-    return tasks => {
-      return this.tasks.set(this.filterTasksByStatus(tasks))
+  setSignal(): SetSignals<Task[]> {
+    return state => {
+      return this.tasks.set(this.filterTasksByStatus(state))
     }
   }
 
