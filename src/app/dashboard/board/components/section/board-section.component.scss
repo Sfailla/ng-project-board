@@ -55,10 +55,7 @@
   background-color: #1e1e1e !important;
   border: 2px dashed #4a4a4a;
 
-  .board-section__header {
-    display: none;
-  }
-
+  .board-section__header,
   .board-section__content {
     display: none;
   }
@@ -68,6 +65,6 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
-div.board__section:not(.cdk-drag-placeholder) {
+.board__section:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
