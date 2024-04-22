@@ -1,5 +1,10 @@
 @use '../../../../styles/abstracts' as *;
 
+:host {
+  @include flex(flex-start, center, column);
+  gap: 10px;
+}
+
 .card {
   width: 100%;
   height: auto;
@@ -80,12 +85,17 @@
   background-color: #1e1e1e !important;
   border: 2px dashed #4a4a4a;
   box-sizing: border-box;
+  // display: flex;
+  // flex-direction: column;
+  // gap: 10px !important;
+  // margin-bottom: 10px;
 
   .card__tags,
   .card__title,
   .card__description,
   .card__footer {
     display: none;
+    box-sizing: border-box;
     padding: 0;
     margin: 0;
   }
