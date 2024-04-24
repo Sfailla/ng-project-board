@@ -64,8 +64,6 @@
   &__footer {
     @include flex(space-between, flex-end);
 
-    & .avatar {
-    }
     & .date {
       height: 100%;
 
@@ -85,10 +83,6 @@
   background-color: #1e1e1e !important;
   border: 2px dashed #4a4a4a;
   box-sizing: border-box;
-  // display: flex;
-  // flex-direction: column;
-  // gap: 10px !important;
-  // margin-bottom: 10px;
 
   .card__tags,
   .card__title,
