@@ -9,25 +9,18 @@ import {
 import { PageWrapperComponent } from '@shared/components'
 import { IonicModule } from '@ionic/angular'
 import { Category, Project } from '@generated/types'
-import { ProjectService } from '@shared/services'
+import { CategoryService, ProjectService } from '@shared/services'
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { map } from 'rxjs/internal/operators/map'
-import { CdkDropList, CdkDragDrop, moveItemInArray, CdkDropListGroup } from '@angular/cdk/drag-drop'
+import { CdkDropList, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop'
 import { Observable } from 'rxjs/internal/Observable'
 import { BoardSectionComponent } from './components'
 import { getDataAndSetSignals, SetSignals } from '@shared/utils'
 
 @Component({
   standalone: true,
-  imports: [
-    CommonModule,
-    IonicModule,
-    PageWrapperComponent,
-    BoardSectionComponent,
-    CdkDropListGroup,
-    CdkDropList
-  ],
+  imports: [CommonModule, IonicModule, PageWrapperComponent, BoardSectionComponent, CdkDropList],
   selector: 'app-task',
   template: `
     <app-page-wrapper>
@@ -35,7 +28,6 @@ import { getDataAndSetSignals, SetSignals } from '@shared/utils'
         class="board"
         cdkDropListOrientation="horizontal"
         (cdkDropListDropped)="drop($event)"
-        cdkDropListGroup
         cdkDropList>
         @for (category of this.categories(); track category) {
           <app-board-section [categories]="categories()" [category]="category"></app-board-section>
@@ -54,7 +46,7 @@ import { getDataAndSetSignals, SetSignals } from '@shared/utils'
       .board {
         width: 100%;
         height: 100%;
-        @include flex(space-between, space-between);
+        @include flex(space-between, stretch);
         flex-wrap: nowrap;
         gap: 15px;
         overflow-x: auto;
@@ -65,6 +57,7 @@ import { getDataAndSetSignals, SetSignals } from '@shared/utils'
 })
 export class BoardComponent implements OnInit {
   projectService: ProjectService = inject(ProjectService)
+  categoryService: CategoryService = inject(CategoryService)
   destroyRef: DestroyRef = inject(DestroyRef)
 
   currentProject = signal<Project | null>(null)
@@ -84,11 +77,37 @@ export class BoardComponent implements OnInit {
   setSignals(): SetSignals<Project> {
     return state => {
       this.currentProject.set(state)
-      this.categories.set(state?.categories.map(category => category))
+      this.categories.set(this.sortCategoriesByDisplayOrder(state.categories))
     }
   }
 
-  drop(event: CdkDragDrop<string[]>): void {
+  sortCategoriesByDisplayOrder(categories: Category[]): Category[] {
+    return categories.map(category => category).sort((a, b) => b.displayOrder - a.displayOrder)
+  }
+
+  updateCategoryDisplayOrder(categories: Category[]): void {
+    this.categoryService
+      .updateCategories(categories)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
+  }
+
+  drop(event: CdkDragDrop<Category[]>): void {
+    const updatedCategories: Category[] = []
+
+    // Update the displayOrder of each category
     moveItemInArray(this.categories(), event.previousIndex, event.currentIndex)
+
+    // Persist the displayOrder of each category
+    this.categories().forEach((category, index) => {
+      updatedCategories.push({
+        id: category.id,
+        displayOrder: index,
+        status: category.status,
+        name: category.name
+      })
+    })
+
+    this.updateCategoryDisplayOrder(updatedCategories)
   }
 }
