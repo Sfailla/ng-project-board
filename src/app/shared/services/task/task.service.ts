@@ -5,9 +5,11 @@ import {
   CreateTaskDocument,
   CreateTaskMutation,
   UpdateTaskDocument,
-  UpdateTaskMutation
+  UpdateTaskMutation,
+  UpdateTaskOrderAndPositionDocument,
+  UpdateTaskOrderAndPositionMutation
 } from '@generated/mutations'
-import { TaskInput } from '@generated/types'
+import { OrderAndPositionInput, TaskInput } from '@generated/types'
 import { ToastService } from '@shared/services'
 import { ToastType } from '@shared/types'
 import { map } from 'rxjs/internal/operators/map'
@@ -57,15 +59,15 @@ export class TaskService {
     )
   }
 
-  createTaskMutation(task: TaskInput) {
+  createTaskMutation(input: TaskInput) {
     return this.apollo.mutate<CreateTaskMutation>({
       mutation: CreateTaskDocument,
-      variables: { input: task }
+      variables: { input }
     })
   }
 
-  createTask(task: TaskInput) {
-    return this.createTaskMutation(task).pipe(
+  createTask(input: TaskInput) {
+    return this.createTaskMutation(input).pipe(
       map(({ data, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
@@ -75,15 +77,33 @@ export class TaskService {
     )
   }
 
-  updateTaskMutation(task: TaskInput) {
+  updateTaskMutation(input: TaskInput) {
     return this.apollo.mutate<UpdateTaskMutation>({
       mutation: UpdateTaskDocument,
-      variables: { input: task }
+      variables: { input }
     })
   }
 
-  updateTask(task: TaskInput) {
-    return this.updateTaskMutation(task).pipe(
+  updateTask(input: TaskInput) {
+    return this.updateTaskMutation(input).pipe(
+      map(({ data, errors }) => {
+        if (errors)
+          this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
+        if (data) return data
+        return null
+      })
+    )
+  }
+
+  updateTaskOrderAndPositionMutation(input: OrderAndPositionInput) {
+    return this.apollo.mutate<UpdateTaskOrderAndPositionMutation>({
+      mutation: UpdateTaskOrderAndPositionDocument,
+      variables: { input }
+    })
+  }
+
+  updateTaskOrderAndPosition(input: OrderAndPositionInput) {
+    return this.updateTaskOrderAndPositionMutation(input).pipe(
       map(({ data, errors }) => {
         if (errors)
           this.toastService.present({ variant: ToastType.ERROR, message: errors[0].message })
