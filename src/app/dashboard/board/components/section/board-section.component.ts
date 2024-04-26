@@ -15,13 +15,13 @@ import {
   signal
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { Category, Task, TaskInput } from '@generated/types'
+import { Category, OrderAndPositionInput, Task, TaskInput } from '@generated/types'
 import { ProjectService, TaskService } from '@shared/services'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TaskComponent } from '../task/task.component'
 import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
-import { getDataAndSetSignals, SetSignals } from '@shared/utils'
+import { getDataAndSetSignals, SetSignals, getCategoryId, categoryStatusMap } from '@shared/utils'
 
 @Component({
   selector: 'app-board-section',
@@ -74,16 +74,25 @@ export class BoardSectionComponent implements OnInit {
 
   setSignal(): SetSignals<Task[]> {
     return state => {
-      return this.tasks.set(this.filterTasksByStatus(state))
+      return this.tasks.set(this.filterAndSortTasks(state))
     }
   }
 
-  filterTasksByStatus(tasks: Task[]): Task[] {
-    return tasks.filter(task => task.status === this.category().status)
+  filterAndSortTasks(tasks: Task[]): Task[] {
+    return tasks
+      .filter(task => task.status === this.category().status)
+      .sort((a, b) => a.displayOrder - b.displayOrder)
   }
 
   updateTaskStatusOnDrop(taskInput: TaskInput): void {
     this.taskService.updateTask(taskInput).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
+  }
+
+  updateOrderAndPositionOnDrop(input: OrderAndPositionInput): void {
+    this.taskService
+      .updateTaskOrderAndPosition(input)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe()
   }
 
   dropListConnectedTo(): string[] {
@@ -93,28 +102,22 @@ export class BoardSectionComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<Task[]>) {
-    const statusMap: Record<string, string> = {
-      Open: 'open',
-      'In Progress': 'in-progress',
-      'In Review': 'in-review',
-      Complete: 'complete'
-    }
+    event.previousContainer === event.container
+      ? moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
+      : transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        )
 
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      )
-
-      this.updateTaskStatusOnDrop({
-        id: this.tasks()[event.currentIndex].id,
-        projectId: this.tasks()[event.currentIndex].project.id,
-        status: statusMap[event.container.id]
-      })
-    }
+    this.updateOrderAndPositionOnDrop({
+      taskId: this.tasks()[event.currentIndex].id,
+      status: categoryStatusMap[event.container.id],
+      oldPosition: event.previousIndex,
+      newPosition: event.currentIndex,
+      oldCategoryId: <string>getCategoryId(event.previousContainer.id, this.categories()),
+      newCategoryId: <string>getCategoryId(event.container.id, this.categories())
+    })
   }
 }
