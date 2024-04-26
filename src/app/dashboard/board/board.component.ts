@@ -82,7 +82,7 @@ export class BoardComponent implements OnInit {
   }
 
   sortCategoriesByDisplayOrder(categories: Category[]): Category[] {
-    return categories.map(category => category).sort((a, b) => b.displayOrder - a.displayOrder)
+    return categories.map(category => category).sort((a, b) => a.displayOrder - b.displayOrder)
   }
 
   updateCategoryDisplayOrder(categories: Category[]): void {
@@ -95,10 +95,8 @@ export class BoardComponent implements OnInit {
   drop(event: CdkDragDrop<Category[]>): void {
     const updatedCategories: Category[] = []
 
-    // Update the displayOrder of each category
     moveItemInArray(this.categories(), event.previousIndex, event.currentIndex)
 
-    // Persist the displayOrder of each category
     this.categories().forEach((category, index) => {
       updatedCategories.push({
         id: category.id,
