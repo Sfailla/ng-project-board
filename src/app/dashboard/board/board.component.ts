@@ -87,7 +87,7 @@ export class BoardComponent implements OnInit {
 
   updateCategoryDisplayOrder(categories: Category[]): void {
     this.categoryService
-      .updateCategories(categories)
+      .updateCategoryDisplayOrder(categories)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe()
   }
