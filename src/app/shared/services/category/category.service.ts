@@ -7,8 +7,8 @@ import {
   UpdateCategoryDocument,
   DeleteCategoryMutation,
   DeleteCategoryDocument,
-  UpdateCategoriesMutation,
-  UpdateCategoriesDocument
+  UpdateCategoriesDisplayOrderMutation,
+  UpdateCategoriesDisplayOrderDocument
 } from '@generated/mutations'
 import { CategoryInput } from '@generated/types'
 import { map } from 'rxjs/internal/operators/map'
@@ -74,10 +74,10 @@ export class CategoryService {
     return this.createCategoryMutation(category).pipe(map(({ data }) => data?.createCategory))
   }
 
-  updateCategoryMutation(category: CategoryInput) {
+  updateCategoryMutation(input: CategoryInput) {
     return this.apollo.mutate<UpdateCategoryMutation>({
       mutation: UpdateCategoryDocument,
-      variables: { input: category }
+      variables: { input }
     })
   }
 
@@ -85,15 +85,17 @@ export class CategoryService {
     return this.updateCategoryMutation(category).pipe(map(({ data }) => data?.updateCategory))
   }
 
-  updateCategoriesMutation(categories: CategoryInput[]) {
-    return this.apollo.mutate<UpdateCategoriesMutation>({
-      mutation: UpdateCategoriesDocument,
-      variables: { updatedCategories: categories }
+  updateCategoryDisplayOrderMutation(updatedCategories: CategoryInput[]) {
+    return this.apollo.mutate<UpdateCategoriesDisplayOrderMutation>({
+      mutation: UpdateCategoriesDisplayOrderDocument,
+      variables: { updatedCategories }
     })
   }
 
-  updateCategories(categories: CategoryInput[]) {
-    return this.updateCategoriesMutation(categories).pipe(map(({ data }) => data?.updateCategories))
+  updateCategoryDisplayOrder(categories: CategoryInput[]) {
+    return this.updateCategoryDisplayOrderMutation(categories).pipe(
+      map(({ data }) => data?.updateCategoriesDisplayOrder)
+    )
   }
 
   deleteCategoryCacheUpdate<T extends CategoriesQuery>(categoryId: string) {
