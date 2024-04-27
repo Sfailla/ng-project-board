@@ -15,17 +15,20 @@
   display: grid;
   grid-template-rows: repeat(2, min-content) 1fr min-content;
   row-gap: 10px;
+  cursor: pointer;
 
   &__tags {
     @include flex(flex-start);
     flex-wrap: wrap;
     gap: 5px;
+    pointer-events: none;
 
     & .tag {
       @include flex(flex-start);
       padding: 5px;
       border-radius: 4px;
       background-color: #000;
+      pointer-events: none;
 
       & .tag-color {
         display: block;
@@ -54,6 +57,7 @@
     letter-spacing: 1px;
     padding-top: 5px;
     color: #d8d8d8;
+    pointer-events: none;
   }
 
   &__description {
@@ -66,6 +70,7 @@
 
     & .date {
       height: 100%;
+      pointer-events: none;
 
       & span {
         height: 22px;
