@@ -21,7 +21,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TaskComponent } from '../task/task.component'
 import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
-import { getDataAndSetSignals, SetSignals, getCategoryId, categoryStatusMap } from '@shared/utils'
+import { getDataAndSetSignals, SetSignals, getCategoryId, getCategoryStatus } from '@shared/utils'
 
 @Component({
   selector: 'app-board-section',
@@ -113,12 +113,12 @@ export class BoardSectionComponent implements OnInit {
 
     this.updateOrderAndPositionOnDrop({
       taskId: this.tasks()[event.currentIndex].id,
-      projectId: <string>this.projectService.getProjectId(),
-      status: categoryStatusMap[event.container.id],
       oldPosition: event.previousIndex,
       newPosition: event.currentIndex,
-      oldCategoryId: <string>getCategoryId(event.previousContainer.id, this.categories()),
-      newCategoryId: <string>getCategoryId(event.container.id, this.categories())
+      projectId: <string>this.projectService.getProjectId(),
+      status: <string>getCategoryStatus(this.categories(), event.container.id),
+      oldCategoryId: <string>getCategoryId(this.categories(), event.previousContainer.id),
+      newCategoryId: <string>getCategoryId(this.categories(), event.container.id)
     })
   }
 }
