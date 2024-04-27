@@ -1,11 +1,7 @@
 import { Category } from '@generated/types'
 
-export const getCategoryId = (name: string, categories: Category[]) =>
+export const getCategoryId = (categories: Category[], name: string) =>
   categories.find(category => category.name === name)?.id
 
-export const categoryStatusMap: Record<string, string> = {
-  Open: 'open',
-  'In Progress': 'in-progress',
-  'In Review': 'in-review',
-  Complete: 'complete'
-} as const
+export const getCategoryStatus = (categories: Category[], name: string) =>
+  categories.find(category => category.name === name)?.status
