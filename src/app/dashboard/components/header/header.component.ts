@@ -1,11 +1,14 @@
-import { Component, inject } from '@angular/core'
+import { Component, OnInit, inject, signal } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { MenuController } from '@ionic/angular/standalone'
+import { AuthService } from '@auth/services'
+import { User } from '@generated/types'
+import { AvatarComponent } from '@shared/components'
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, AvatarComponent],
   template: `
     <ion-header class="ion-no-border header" collapse="fade">
       <div class="header__toolbar">
@@ -13,13 +16,9 @@ import { MenuController } from '@ionic/angular/standalone'
           <ion-title class="header__logo--text">Project Board</ion-title>
         </div>
         <div class="header__profile" slot="end">
-          <ion-avatar class="header__profile-photo">
-            <img
-              alt="Silhouette of a person's head"
-              src="https://ionicframework.com/docs/demos/api/avatar/avatar.svg" />
-          </ion-avatar>
+          <app-avatar [user]="user()" />
           <div class="header__profile-info">
-            <span class="header__profile-name">Sfailla</span>
+            <span class="header__profile-name">{{ user()?.username }}</span>
           </div>
         </div>
         <div class="header__profile-settings">
@@ -30,10 +29,17 @@ import { MenuController } from '@ionic/angular/standalone'
       </div>
     </ion-header>
   `,
-  styleUrl: './header.component.scss'
+  styleUrl: 'style.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   menu: MenuController = inject(MenuController)
+  authService: AuthService = inject(AuthService)
+
+  user = signal<User | null>(null)
+
+  ngOnInit(): void {
+    this.user.set(this.authService.getCurrentUser())
+  }
 
   async toggleSideMenu() {
     await this.menu.toggle('settings')
