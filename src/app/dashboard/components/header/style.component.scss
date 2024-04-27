@@ -39,7 +39,7 @@ ion-menu-button {
     @include flex(flex-end);
   }
 
-  &__profile-photo {
+  &__avatar {
     width: rem(30px);
     height: rem(30px);
     border-radius: 50%;
@@ -47,7 +47,7 @@ ion-menu-button {
 
   &__profile-info {
     @include flex(flex-start);
-    margin-left: rem(5px);
+    margin-left: rem(10px);
   }
 
   &__profile-name {
