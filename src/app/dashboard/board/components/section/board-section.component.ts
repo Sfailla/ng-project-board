@@ -113,6 +113,7 @@ export class BoardSectionComponent implements OnInit {
 
     this.updateOrderAndPositionOnDrop({
       taskId: this.tasks()[event.currentIndex].id,
+      projectId: <string>this.projectService.getProjectId(),
       status: categoryStatusMap[event.container.id],
       oldPosition: event.previousIndex,
       newPosition: event.currentIndex,
