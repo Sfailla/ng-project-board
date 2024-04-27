@@ -28,16 +28,25 @@ export class AuthService {
 
   constructor() {
     effect(() => {
-      console.log('Current User:', { user: this.currentUser() })
+      console.log('CURRENT_USER:', { user: this.currentUser() })
     })
+  }
+
+  setCurrentUser() {
+    const user = this.tokenService.getUser()
+    this.currentUser.set(user)
+  }
+
+  getCurrentUser() {
+    return this.currentUser()
   }
 
   registerMutation(authUserInput: AuthUserInput) {
     const { username, email, password } = authUserInput
 
     return this.apollo.mutate<CreateUserMutation>({
-      mutation: CreateUserDocument,
       errorPolicy: 'all',
+      mutation: CreateUserDocument,
       variables: { username, email, password }
     })
   }
@@ -76,8 +85,8 @@ export class AuthService {
     const { email, password } = authUserInput
 
     return this.apollo.mutate<LoginMutation>({
-      mutation: LoginDocument,
       errorPolicy: 'all',
+      mutation: LoginDocument,
       variables: { email, password }
     })
   }
@@ -106,7 +115,7 @@ export class AuthService {
   }
 
   logoutQuery() {
-    return this.apollo.query<LogoutQuery>({ query: LogoutDocument })
+    return this.apollo.query<LogoutQuery>({ query: LogoutDocument, errorPolicy: 'all' })
   }
 
   logout() {
@@ -127,10 +136,5 @@ export class AuthService {
 
   isAuthenticated() {
     return !!this.tokenService.getToken()
-  }
-
-  setCurrentUser() {
-    const user = this.tokenService.getUser()
-    this.currentUser.set(user)
   }
 }
