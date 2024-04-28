@@ -1,2 +1,2 @@
-export * from './auth.service'
-export * from './token.service'
+export * from './auth/auth.service'
+export * from './token/token.service'

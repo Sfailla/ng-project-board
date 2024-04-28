@@ -6,9 +6,9 @@ import {
   LoginDocument,
   LoginMutation
 } from '@generated/mutations'
-import { AuthUserInput } from '../auth-types'
+import { AuthUserInput } from '../../auth-types'
 import { map } from 'rxjs/internal/operators/map'
-import { TokenService } from './token.service'
+import { TokenService } from '../token/token.service'
 import { User } from '@generated/types'
 import { Router } from '@angular/router'
 import { NavController } from '@ionic/angular/standalone'

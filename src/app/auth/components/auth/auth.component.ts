@@ -12,7 +12,7 @@ import {
 import { IonicModule } from '@ionic/angular'
 import { AuthTitles, AuthUserInput, RedirectTitles } from '../../auth-types'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../../services/auth.service'
+import { AuthService } from '../../services/auth/auth.service'
 import { SocialsComponent } from '../socials/socials.component'
 import { RouterLink } from '@angular/router'
 import { Routes } from '../../../shared/types/shared-types'
