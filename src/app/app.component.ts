@@ -49,8 +49,6 @@ import {
 export class AppComponent implements OnInit {
   authService: AuthService = inject(AuthService)
 
-  title = 'Project Board'
-
   constructor() {
     /**
      * Any icons you want to use in your application
