@@ -1,31 +1,31 @@
 /* eslint-disable @angular-eslint/directive-selector */
-import { Directive, ElementRef, Input, OnInit, inject } from '@angular/core'
+import { Directive, ElementRef, OnInit, inject, input } from '@angular/core'
 
 @Directive({
   standalone: true,
   selector: '[ionIconRemoveTitle]'
 })
 export class IonIconTitleDirective implements OnInit {
-  @Input()
-  iconTitle!: string
+  iconTitle = input.required()
 
   element: ElementRef = inject(ElementRef)
 
   ngOnInit(): void {
-    const removeTitle = () => {
-      if (
-        this.element.nativeElement &&
-        this.element.nativeElement.shadowRoot &&
-        this.element.nativeElement.shadowRoot.querySelector('.icon-inner svg title')
-      ) {
-        this.element.nativeElement.shadowRoot.querySelector('.icon-inner svg title').innerHTML =
-          this.iconTitle || ''
-      } else {
-        setTimeout(() => {
-          removeTitle()
-        }, 500)
-      }
+    this.removeTitle()
+  }
+
+  removeTitle = () => {
+    const nativeElement = this.element.nativeElement
+
+    if (
+      nativeElement &&
+      nativeElement.shadowRoot &&
+      nativeElement.shadowRoot.querySelector('.icon-inner svg')
+    ) {
+      nativeElement.shadowRoot.querySelector('.icon-inner svg').innerHTML +=
+        `<title>${this.iconTitle()}</title>`
+    } else {
+      setTimeout(() => this.removeTitle(), 250)
     }
-    removeTitle()
   }
 }
