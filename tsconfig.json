@@ -31,7 +31,8 @@
       "@shared/utils": ["src/app/shared/utils/index.ts"],
       "@shared/directives": ["src/app/shared/directives/index.ts"],
       "@auth/services": ["src/app/auth/services/index.ts"],
-      "@testing/components": ["src/testing/components/index.ts"]
+      "@testing/components": ["src/testing/components/index.ts"],
+      "@testing/utils": ["src/testing/utils/index.ts"]
     }
   },
   "angularCompilerOptions": {
