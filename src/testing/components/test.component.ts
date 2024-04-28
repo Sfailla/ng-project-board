@@ -5,6 +5,8 @@ import { IonIconTitleDirective } from '@shared/directives'
 @Component({
   standalone: true,
   imports: [IonicModule, IonIconTitleDirective],
-  template: ` <ion-icon name="list-outline" ionIconRemoveTitle iconTitle="Title" /> `
+  template: `
+    <ion-icon name="list-outline" iconTitle="Title" ionIconRemoveTitle />
+  `
 })
 export class TestComponent {}
