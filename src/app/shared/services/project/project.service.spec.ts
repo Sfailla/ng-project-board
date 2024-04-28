@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing'
 
-import { TaskService } from './task.service'
+import { ProjectService } from './project.service'
 import { Apollo } from 'apollo-angular'
 import { ToastService } from '../toast/toast.service'
 
-describe('TaskService', () => {
-  let service: TaskService
+describe('ProjectService', () => {
+  let service: ProjectService
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [Apollo, ToastService]
     })
-    service = TestBed.inject(TaskService)
+    service = TestBed.inject(ProjectService)
   })
 
   it('should be created', () => {
