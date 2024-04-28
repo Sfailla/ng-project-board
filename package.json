@@ -42,6 +42,7 @@
     "@angular-eslint/eslint-plugin-template": "17.2.0",
     "@angular-eslint/schematics": "17.2.0",
     "@angular-eslint/template-parser": "17.2.0",
+    "@angular-extensions/pretty-html-log": "^5.0.2",
     "@angular/cli": "^17.0.7",
     "@angular/compiler-cli": "^17.0.0",
     "@graphql-codegen/cli": "5.0.0",
