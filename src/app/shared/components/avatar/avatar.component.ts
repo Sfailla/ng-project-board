@@ -39,8 +39,6 @@ import { User } from '@generated/types'
 export class AvatarComponent {
   user = input.required<User | null>()
 
-  authService: AuthService = inject(AuthService)
-
   avatarInitials() {
     const user = this.user()
     const { firstname, lastname } = <User>user
