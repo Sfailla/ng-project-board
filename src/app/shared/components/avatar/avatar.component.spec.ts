@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { AvatarComponent } from './avatar.component'
 import { User } from '@generated/types'
-import { AuthService } from '@auth/services'
 
 const mockUser: User = {
   id: 'faijfejhfaojh4894',
