@@ -15,7 +15,8 @@ module.exports = {
     '^@generated/mutations$': '<rootDir>/src/generated/mutations/index.ts',
     '^@generated/queries$': '<rootDir>/src/generated/queries/index.ts',
     '^@generated/types$': '<rootDir>/src/generated/types/index.ts',
-    '^@auth/services$': '<rootDir>/src/app/auth/services/index.ts'
+    '^@auth/services$': '<rootDir>/src/app/auth/services/index.ts',
+    '^@testing/components$': '<rootDir>/src/testing/components/index.ts'
   },
   modulePathIgnorePatterns: ['dist'],
   moduleFileExtensions: ['ts', 'js', 'html'],
