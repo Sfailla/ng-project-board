@@ -1,1 +1,1 @@
-export * from './test.component.spec'
+export * from './test.component'
