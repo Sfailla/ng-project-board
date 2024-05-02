@@ -17,7 +17,9 @@ module.exports = {
     '^@generated/types$': '<rootDir>/src/generated/types/index.ts',
     '^@auth/services$': '<rootDir>/src/app/auth/services/index.ts',
     '^@testing/components$': '<rootDir>/src/testing/components/index.ts',
-    '^@testing/utils$': '<rootDir>/src/testing/utils/index.ts'
+    '^@testing/utils$': '<rootDir>/src/testing/utils/index.ts',
+    '^@testing/mocks/data$': '<rootDir>/src/testing/mocks/data/index.ts',
+    '^@testing/mocks/services$': '<rootDir>/src/testing/mocks/services/index.ts'
   },
   modulePathIgnorePatterns: ['dist'],
   moduleFileExtensions: ['ts', 'js', 'html'],
