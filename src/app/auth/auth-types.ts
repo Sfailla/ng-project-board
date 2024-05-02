@@ -4,10 +4,9 @@ import { User } from '@generated/types'
 
 export enum AuthTitles {
   LOGIN = 'Sign Into',
-  REGISTER = 'Sign Up For'
-}
-
-export enum RedirectTitles {
+  LOGIN_SUBTITLE = 'sign up for an account?',
+  REGISTER = 'Sign Up For',
+  REGISTER_SUBTITLE = 'already have an account?',
   SIGN_IN = 'Sign In',
   SIGN_UP = 'Sign Up'
 }
