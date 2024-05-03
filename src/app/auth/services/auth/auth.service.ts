@@ -27,9 +27,7 @@ export class AuthService {
   currentUser = signal<User | null>(null)
 
   constructor() {
-    effect(() => {
-      console.log('CURRENT_USER:', { user: this.currentUser() })
-    })
+    this.logCurrentUser()
   }
 
   setCurrentUser() {
@@ -39,6 +37,12 @@ export class AuthService {
 
   getCurrentUser() {
     return this.currentUser()
+  }
+
+  logCurrentUser() {
+    effect(() => {
+      console.log('CURRENT_USER:', { user: this.currentUser() })
+    })
   }
 
   registerMutation(authUserInput: AuthUserInput) {
