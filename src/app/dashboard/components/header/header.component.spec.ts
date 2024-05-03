@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { HeaderComponent } from './header.component'
 import { AuthService } from '@auth/services'
+import { MockAuthService } from '@testing/mocks/services'
+import { Apollo } from 'apollo-angular'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -10,19 +12,8 @@ describe('HeaderComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HeaderComponent],
       providers: [
-        {
-          provide: AuthService,
-          useValue: {
-            isAuthenticated: () => false,
-            getCurrentUser: () => ({
-              id: 'aiy93qhhafr9a',
-              email: 'testUser123@gmail.com',
-              username: 'testUser',
-              firstname: 'test',
-              lastname: 'user'
-            })
-          }
-        }
+        { provide: Apollo, useValue: {} },
+        { provide: AuthService, useClass: MockAuthService }
       ]
     }).compileComponents()
 
