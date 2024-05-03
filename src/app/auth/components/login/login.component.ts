@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { AuthComponent } from '../auth/auth.component'
 import { AuthTitles } from '../../auth-types'
-import { PageWrapperComponent, ToastComponent } from '../../../shared/components'
+import { PageWrapperComponent } from '@shared/components'
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AuthComponent, PageWrapperComponent, ToastComponent],
+  imports: [AuthComponent, PageWrapperComponent],
   template: `
     <app-page-wrapper class="login">
       <app-auth [title]="AuthTitles.LOGIN"></app-auth>
