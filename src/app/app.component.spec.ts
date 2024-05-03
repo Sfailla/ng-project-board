@@ -1,22 +1,19 @@
 import { TestBed } from '@angular/core/testing'
-import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component'
 import { AuthService } from './auth/services'
-import { RouterOutlet } from '@angular/router'
+import { provideRouter } from '@angular/router'
+import { MockAuthService } from '@testing/mocks/services'
+import { Apollo } from 'apollo-angular'
+import { AUTH_ROUTES } from './auth/auth.routes'
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, RouterTestingModule],
+      imports: [AppComponent],
       providers: [
-        RouterOutlet,
-        {
-          provide: AuthService,
-          useValue: {
-            setCurrentUser: () => {},
-            isAuthenticated: () => false
-          }
-        }
+        provideRouter(AUTH_ROUTES),
+        { provide: Apollo, useValue: {} },
+        { provide: AuthService, useClass: MockAuthService }
       ]
     }).compileComponents()
   })
