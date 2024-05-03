@@ -55,7 +55,7 @@ import { AuthTitles, AuthUserInput } from '../../../../auth/auth-types'
         expand="block"
         color="primary"
         [disabled]="form().invalid">
-        {{ isLogin() ? AuthTitles.LOGIN : AuthTitles.REGISTER }}
+        {{ isLogin() ? AuthTitles.SIGN_IN : AuthTitles.SIGN_UP }}
       </ion-button>
     </form>
   `,
