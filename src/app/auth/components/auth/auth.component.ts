@@ -10,14 +10,13 @@ import {
   signal
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { AuthTitles, AuthUserInput, RedirectTitles } from '../../auth-types'
+import { AuthTitles } from '../../auth-types'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from '../../services/auth/auth.service'
+import { AuthService } from '@auth/services'
 import { SocialsComponent } from '../socials/socials.component'
 import { RouterLink } from '@angular/router'
-import { Routes } from '../../../shared/types/shared-types'
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { AuthFormComponent } from '../../../shared/components'
+import { Routes } from '@shared/types'
+import { AuthFormComponent } from '@shared/components'
 
 @Component({
   selector: 'app-auth',
@@ -34,14 +33,16 @@ import { AuthFormComponent } from '../../../shared/components'
                 <ion-text class="card__title--text">{{ title() }} Project Board</ion-text>
               </ion-card-title>
               <ion-card-subtitle class="card__subtitle">
-                <ion-text class="card__subtitle--text">already have an account?</ion-text>
+                <ion-text class="card__subtitle--text">
+                  {{ isLogin() ? AuthTitles.LOGIN_SUBTITLE : AuthTitles.REGISTER_SUBTITLE }}
+                </ion-text>
                 <a [routerLink]="isLogin() ? Routes.REGISTER : Routes.LOGIN">
-                  {{ isLogin() ? RedirectTitles.SIGN_UP : RedirectTitles.SIGN_IN }}
+                  {{ isLogin() ? AuthTitles.SIGN_UP : AuthTitles.SIGN_IN }}
                 </a>
               </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content class="card__content">
-              <app-auth-form [isLogin]="isLogin()" [form]="authForm" [submit]="submit" />
+              <app-auth-form [isLogin]="isLogin()" [form]="authForm" />
               <div class="login__content-break">or</div>
               <app-socials />
             </ion-card-content>
@@ -64,7 +65,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   isLogin = signal<boolean>(false)
   // variables
   AuthTitles: typeof AuthTitles = AuthTitles
-  RedirectTitles: typeof RedirectTitles = RedirectTitles
   Routes: typeof Routes = Routes
   // form
   authForm = new FormGroup({
@@ -76,13 +76,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLogin.set(this.title() === AuthTitles.LOGIN)
-  }
-
-  submit = () => {
-    const credentials = this.authForm.value as AuthUserInput
-    this.isLogin()
-      ? this.authService.login(credentials).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
-      : this.authService.register(credentials).pipe(takeUntilDestroyed(this.destroyRef)).subscribe()
   }
 
   ngOnDestroy(): void {
