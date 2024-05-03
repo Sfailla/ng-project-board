@@ -33,7 +33,7 @@ export class MockAuthService extends AuthService {
           token: 'token'
         }
       },
-      errors: [],
+      errors: undefined,
       loading: false
     })
   }
@@ -44,6 +44,30 @@ export class MockAuthService extends AuthService {
         if (!data) return
         if (errors) console.log(errors)
         if (data) this.currentUser.set(data.login.user)
+        if (loading) console.log('loading...')
+      })
+    )
+  }
+
+  override registerMutation() {
+    return of({
+      data: {
+        createUser: {
+          user: mockUser,
+          token: 'token'
+        }
+      },
+      errors: undefined,
+      loading: false
+    })
+  }
+
+  override register() {
+    return this.registerMutation().pipe(
+      map(async ({ data, errors, loading }) => {
+        if (!data) return
+        if (errors) console.log(errors)
+        if (data) this.currentUser.set(data.createUser.user)
         if (loading) console.log('loading...')
       })
     )
