@@ -37,11 +37,11 @@ import { User } from '@generated/types'
   ]
 })
 export class AvatarComponent {
-  user = input.required<User>()
+  user = input.required<User | null>()
 
   avatarInitials() {
     const user = this.user()
-    const { firstname, lastname } = user
+    const { firstname, lastname } = <User>user
     return firstname && lastname ? `${firstname[0]}${lastname[0]}` : ''
   }
 }
