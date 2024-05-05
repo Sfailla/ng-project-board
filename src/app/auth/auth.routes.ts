@@ -1,4 +1,4 @@
-import { authRouteLockGuard } from './guards/auth-route-lock.guard'
+import { authRouteLockGuard } from './guards'
 import { LoginComponent, RegisterComponent } from './components'
 
 export const AUTH_ROUTES = [
