@@ -1,29 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 import { AuthFormComponent } from './auth-form.component'
 import { AuthService } from '@auth/services'
 import { MockAuthService } from '@testing/mocks/services'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
-import { findAllNativeElements, findNativeElement } from '@testing/utils'
+import { findAllNativeElements, findNativeElement, setupTest } from '@testing/utils'
 import { Apollo } from 'apollo-angular'
 import { NavController } from '@ionic/angular'
 
-function createComponent({ setInput = { isLogin: true } } = {}) {
-  const fixture: ComponentFixture<AuthFormComponent> = TestBed.createComponent(AuthFormComponent)
-  const component: AuthFormComponent = fixture.componentInstance
+const form = new FormGroup({
+  username: new FormControl('', Validators.min(4)),
+  email: new FormControl('', [Validators.email, Validators.required]),
+  password: new FormControl('', [Validators.required, Validators.min(4)]),
+  confirmPassword: new FormControl('', Validators.min(4))
+})
 
-  fixture.componentRef.setInput('isLogin', setInput.isLogin)
-  fixture.componentRef.setInput(
-    'form',
-    new FormGroup({
-      username: new FormControl('', Validators.min(4)),
-      email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.min(4)]),
-      confirmPassword: new FormControl('', Validators.min(4))
-    })
-  )
-
-  fixture.detectChanges()
-
+function createComponent({ setInput = { isLogin: true, form } } = {}) {
+  const { fixture, component } = setupTest(AuthFormComponent, { setInput })
   return { fixture, component }
 }
 
@@ -58,7 +50,7 @@ describe('AuthFormComponent', () => {
   })
 
   it('should have username | confirm-password fields if isLogin === false', () => {
-    const { fixture } = createComponent({ setInput: { isLogin: false } })
+    const { fixture } = createComponent({ setInput: { isLogin: false, form } })
     const inputs = findAllNativeElements(fixture, 'ion-input')
 
     expect(inputs.length).toBe(4)
@@ -119,8 +111,8 @@ describe('AuthFormComponent', () => {
   })
 
   it('should call authService.register() when isLogin === false', async () => {
-    const { component, fixture } = createComponent({ setInput: { isLogin: false } })
-    const form = findNativeElement(fixture, 'form')
+    const { component, fixture } = createComponent({ setInput: { isLogin: false, form } })
+    const authForm = findNativeElement(fixture, 'form')
     const username = component.form().get('username')
     const email = component.form().get('email')
     const password = component.form().get('password')
@@ -134,7 +126,7 @@ describe('AuthFormComponent', () => {
     password?.setValue('1234')
     confirmPassword?.setValue('1234')
 
-    form.dispatchEvent(new Event('submit'))
+    authForm.dispatchEvent(new Event('submit'))
     fixture.detectChanges()
 
     expect(component.authService.register).toHaveBeenCalledTimes(1)

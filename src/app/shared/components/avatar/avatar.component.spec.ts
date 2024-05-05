@@ -1,30 +1,28 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
-
+import { TestBed } from '@angular/core/testing'
 import { AvatarComponent } from './avatar.component'
-import { User } from '@generated/types'
+import { mockUser } from '@testing/mocks/data'
+import { findNativeElement, setupTest } from '@testing/utils'
 
-const mockUser: User = {
-  id: 'faijfejhfaojh4894',
-  username: 'testUser',
-  email: 'testUser@gmail.com'
+function createComponent() {
+  const { fixture, component } = setupTest(AvatarComponent, { setInput: { user: mockUser } })
+  return { fixture, component }
 }
 
 describe('AvatarComponent', () => {
-  let component: AvatarComponent
-  let fixture: ComponentFixture<AvatarComponent>
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AvatarComponent]
     }).compileComponents()
-
-    fixture = TestBed.createComponent(AvatarComponent)
-    fixture.componentRef.setInput('user', mockUser)
-    component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    const { component } = createComponent()
     expect(component).toBeTruthy()
+  })
+
+  it('should display the user initials', () => {
+    const { fixture } = createComponent()
+    const avatarInitials = findNativeElement(fixture, '.avatar__initials')
+    expect(avatarInitials.textContent).toBe('SF')
   })
 })
