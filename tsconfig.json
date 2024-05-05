@@ -1,9 +1,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "lib": ["ES2022", "dom", "esnext.asynciterable"],
+    "forceConsistentCasingInFileNames": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -15,12 +19,9 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "ES2022",
-    "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": ["ES2022", "dom", "esnext.asynciterable"],
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./",
+    "strictPropertyInitialization": false,
     "paths": {
       "@generated/queries": ["src/generated/queries/index.ts"],
       "@generated/mutations": ["src/generated/mutations/index.ts"],
