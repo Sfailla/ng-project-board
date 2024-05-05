@@ -1,14 +1,14 @@
-import { Component, inject, input } from '@angular/core'
-import { AuthService } from '@auth/services'
+import { Component, input } from '@angular/core'
 import { User } from '@generated/types'
 
 @Component({
   selector: 'app-avatar',
   standalone: true,
-  imports: [],
   template: `
     <div class="avatar">
-      <span class="avatar__initials">{{ avatarInitials() }}</span>
+      @if (user()) {
+        <span class="avatar__initials">{{ avatarInitials() }}</span>
+      }
     </div>
   `,
   styles: [
@@ -37,11 +37,11 @@ import { User } from '@generated/types'
   ]
 })
 export class AvatarComponent {
-  user = input.required<User | null>()
+  user = input.required<User>()
 
   avatarInitials() {
     const user = this.user()
-    const { firstname, lastname } = <User>user
+    const { firstname, lastname } = user
     return firstname && lastname ? `${firstname[0]}${lastname[0]}` : ''
   }
 }
