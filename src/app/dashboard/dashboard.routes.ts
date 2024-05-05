@@ -1,4 +1,4 @@
-import { authGuard } from '../auth/guards/auth.guard'
+import { authGuard } from '../auth/guards'
 import { DashboardComponent } from './dashboard.component'
 
 export const DASHBOARD_ROUTES = [
