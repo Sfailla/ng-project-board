@@ -26,7 +26,7 @@ describe('AuthRouteLockGuard', () => {
     expect(authRouteLockGuard).toBeTruthy()
   })
 
-  it('should return false if the user is authenticated', () => {
+  it('should return true if the user is not authenticated', () => {
     jest.spyOn(authService, 'isAuthenticated').mockReturnValue(false)
     jest.spyOn(router, 'createUrlTree')
 
@@ -34,7 +34,7 @@ describe('AuthRouteLockGuard', () => {
       return authRouteLockGuard(activatedRoute.snapshot, <RouterStateSnapshot>{})
     })
 
-    expect(result).toBe(false)
+    expect(result).toBe(true)
     expect(authService.isAuthenticated).toHaveBeenCalled()
     expect(router.createUrlTree).not.toHaveBeenCalled()
   })
@@ -50,6 +50,6 @@ describe('AuthRouteLockGuard', () => {
     expect(result).toBeInstanceOf(UrlTree)
     expect(authService.isAuthenticated).toHaveBeenCalled()
     expect(router.createUrlTree).toHaveBeenCalled()
-    expect(router.createUrlTree).toHaveBeenCalledWith([Routes.LOGIN])
+    expect(router.createUrlTree).toHaveBeenCalledWith([Routes.DASHBOARD])
   })
 })
