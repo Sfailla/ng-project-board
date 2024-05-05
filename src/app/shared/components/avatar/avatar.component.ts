@@ -27,10 +27,11 @@ import { User } from '@generated/types'
           0 1px 5px 0 rgba(0, 0, 0, 0.24);
 
         &__initials {
-          font-size: 12px;
+          font-size: 11px;
           font-weight: bold;
           color: white;
           letter-spacing: 1px;
+          padding-left: 1px;
         }
       }
     `
