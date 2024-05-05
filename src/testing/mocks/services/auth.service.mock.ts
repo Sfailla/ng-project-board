@@ -21,8 +21,8 @@ export class MockAuthService extends AuthService {
     return
   }
 
-  override isAuthenticated(): boolean {
-    return true
+  override isAuthenticated(authenticated: boolean = true): boolean {
+    return authenticated
   }
 
   override loginMutation(): Observable<MutationResult<LoginMutation>> {
