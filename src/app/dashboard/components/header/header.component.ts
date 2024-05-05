@@ -38,10 +38,14 @@ export class HeaderComponent implements OnInit {
   user = signal<User | null>(null)
 
   ngOnInit(): void {
-    this.user.set(this.authService.getCurrentUser())
+    this.setUser()
   }
 
   async toggleSideMenu() {
     await this.menu.toggle('settings')
+  }
+
+  setUser() {
+    this.user.set(this.authService.getCurrentUser())
   }
 }
