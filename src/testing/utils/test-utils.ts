@@ -45,8 +45,7 @@ export const getAllNativeElementsText = <T>(fixture: ComponentFixture<T>, select
   return findAllNativeElements(fixture, selector).map(el => el.textContent)
 }
 
-export const waitForElementToFinishLoading = <T>(fixture: ComponentFixture<T>) => {
-  fixture.whenStable().then(() => {
-    fixture.detectChanges()
-  })
+export const waitForElementToFinishLoading = async <T>(fixture: ComponentFixture<T>) => {
+  await fixture.whenStable()
+  fixture.detectChanges()
 }
