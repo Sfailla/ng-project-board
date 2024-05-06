@@ -3,10 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 export type InputSignal = Record<string, any>
 
-export type AdditionalService<K> = {
-  name: K
-  value: any
-}
+export type AdditionalService<K> = { name: K; value: any }
 
 export type SetupTestOptions<K extends string> = {
   setInput?: InputSignal
