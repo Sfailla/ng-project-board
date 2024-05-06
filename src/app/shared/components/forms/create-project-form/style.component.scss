@@ -14,9 +14,10 @@
     color: white;
   }
 
-  ion-input.input-fill-outline.has-focus,
-  ion-textarea.textarea-fill-outline.has-focus {
-    --border-width: 1px;
+  ion-input.input-fill-outline,
+  ion-textarea.textarea-fill-outline {
+    --border-width: 0.5px;
+    --border-radius: 8px;
   }
 
   &__select-view {
