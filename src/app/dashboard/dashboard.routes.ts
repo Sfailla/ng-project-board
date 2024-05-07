@@ -20,10 +20,6 @@ export const DASHBOARD_ROUTES = [
         path: 'projects',
         loadChildren: () => import('./projects/project.routes').then(m => m.PROJECT_ROUTES)
       }
-      //   // {
-      //   // 	path: 'settings',
-      //   // 	loadChildren: () => import('../settings/settings.module').then(m => m.SettingsModule)
-      //   // },
     ]
   }
 ]
