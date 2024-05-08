@@ -3,19 +3,15 @@ import { AuthService } from './auth.service'
 import { Apollo } from 'apollo-angular'
 import { ToastService } from '@shared/services'
 import { of } from 'rxjs/internal/observable/of'
-import { baseAuthenticatedResponse, withData, withErrors } from '@testing/mocks/data'
+import {
+  getAuthUserInput,
+  mockLoginResponseWithData,
+  mockLoginResponseWithError,
+  mockRegisterResponseWithData
+} from '@testing/mocks/data'
 import { provideRouter } from '@angular/router'
 import { DashboardComponent } from '../../../dashboard/dashboard.component'
 import { ErrorMessages, Messages } from '@shared/types'
-import { GraphQLError } from 'graphql'
-
-const mockLoginResponseWithData = withData({
-  login: baseAuthenticatedResponse
-})
-
-const mockLoginResponseWithError = withErrors(<GraphQLError[]>[
-  { message: ErrorMessages.LOGIN_FAILED }
-])
 
 const mockApolloClient = { client: { resetStore: jest.fn() } }
 
@@ -41,7 +37,7 @@ describe('AuthService', () => {
   })
 
   it('loginMutation() fn should work as expected', done => {
-    const authInput = { email: 'sfailla@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
 
@@ -55,7 +51,7 @@ describe('AuthService', () => {
   })
 
   it('login() fn should call mutation with correct args', done => {
-    const authInput = { email: 'sfailla@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service, 'login')
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
@@ -72,7 +68,7 @@ describe('AuthService', () => {
   })
 
   it('successful login() fn should call toast with correct args', done => {
-    const authInput = { email: 'sfailla@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service.toastService, 'present')
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
@@ -89,7 +85,7 @@ describe('AuthService', () => {
   })
 
   it('failed login() fn should call toast with correct args', done => {
-    const authInput = { email: 'sfailla@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service.toastService, 'present')
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithError))
@@ -106,7 +102,7 @@ describe('AuthService', () => {
   })
 
   it('successful login() fn should call resetStore', done => {
-    const authInput = { email: 'sfailla1983@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
     jest.spyOn(service.apollo.client, 'resetStore')
@@ -119,7 +115,7 @@ describe('AuthService', () => {
   })
 
   it('should set currentUser signal after successful login', done => {
-    const authInput = { email: 'sfailla1983@gmail.com', password: '1234' }
+    const authInput = getAuthUserInput()
 
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
 
@@ -128,5 +124,20 @@ describe('AuthService', () => {
     expect(service.currentUser()).toEqual(mockLoginResponseWithData.data.login.user)
 
     done()
+  })
+
+  it('registerMutation() fn should work as expected', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+    console.log({ reg: authInput })
+
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+
+    service.registerMutation(authInput).subscribe(data => {
+      expect(data).toEqual(mockRegisterResponseWithData)
+      done()
+    })
+
+    expect(service.registerMutation).toHaveBeenCalledTimes(1)
+    expect(service.registerMutation).toHaveBeenCalledWith(authInput)
   })
 })
