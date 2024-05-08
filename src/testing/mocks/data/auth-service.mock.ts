@@ -1,13 +1,17 @@
-import { MutationResult } from 'apollo-angular'
 import { GraphQLError } from 'graphql'
 import { mockUser, mockToken } from './'
-import { LoginMutation } from '@generated/mutations'
+import { AuthUserInput } from '../../../app/auth/auth-types'
+import { withData, withErrors } from '@testing/utils'
+import { ErrorMessages } from '@shared/types'
 
-// Base object that returns the default mutation response
-export const baseMutationResponse: MutationResult = {
-  data: {},
-  errors: undefined,
-  loading: false
+type AuthInputOptions = { type?: 'login' | 'register' }
+
+const loginCredentials = { email: 'sfailla@gmail.com', password: '1234' }
+
+export const getAuthUserInput = ({ type = 'login' }: AuthInputOptions = {}): AuthUserInput => {
+  return type === 'login'
+    ? loginCredentials
+    : { ...loginCredentials, username: 'sfailla', confirmPassword: '1234' }
 }
 
 export const baseAuthenticatedResponse = {
@@ -15,17 +19,14 @@ export const baseAuthenticatedResponse = {
   token: mockToken
 }
 
-export const withData = (data: LoginMutation) => ({
-  ...baseMutationResponse,
-  data
+export const mockLoginResponseWithData = withData({
+  login: baseAuthenticatedResponse
 })
 
-export const withErrors = (errors: GraphQLError[]) => ({
-  ...baseMutationResponse,
-  errors
+export const mockRegisterResponseWithData = withData({
+  createUser: baseAuthenticatedResponse
 })
 
-export const withLoading = (loading: boolean) => ({
-  ...baseMutationResponse,
-  loading
-})
+export const mockLoginResponseWithError = withErrors(<GraphQLError[]>[
+  { message: ErrorMessages.LOGIN_FAILED }
+])
