@@ -11,12 +11,12 @@ import { RegisterComponent } from '../register/register.component'
 import { LoginComponent } from '../login/login.component'
 
 function createComponent({ setInput = { title: AuthTitles.LOGIN } } = {}) {
-  const { fixture, component, ...services } = setupTest(AuthComponent, {
+  const { fixture, component, ...providers } = setupTest(AuthComponent, {
     setInput,
-    additionalServices: [{ name: 'location', value: Location }]
+    additionalProviders: [{ name: 'location', value: Location }]
   })
 
-  const { location } = services
+  const { location } = providers
   return { fixture, component, location }
 }
 

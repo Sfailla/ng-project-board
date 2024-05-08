@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 export type InputSignal = Record<string, any>
 
-export type AdditionalService<K> = { name: K; value: any }
+export type AdditionalProvider<K> = { name: K; value: any }
 
 export type SetupTestOptions<K extends string> = {
   setInput?: InputSignal
-  additionalServices?: AdditionalService<K>[]
+  additionalProviders?: AdditionalProvider<K>[]
 }
 
 export function setupTest<T extends object, K extends string>(
@@ -24,14 +24,15 @@ export function setupTest<T extends object, K extends string>(
     })
   }
 
-  const services = <Record<K, any>>{}
-  if (options.additionalServices) {
-    options.additionalServices.forEach(({ name, value }) => {
-      services[name] = TestBed.inject(value)
+  const providers = <Record<K, any>>{}
+
+  if (options.additionalProviders) {
+    options.additionalProviders.forEach(({ name, value }) => {
+      providers[name] = TestBed.inject(value)
     })
   }
 
   fixture.detectChanges()
 
-  return { fixture, component, ...services }
+  return { fixture, component, ...providers }
 }
