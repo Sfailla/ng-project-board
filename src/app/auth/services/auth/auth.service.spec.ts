@@ -273,8 +273,8 @@ describe('AuthService', () => {
     })
   })
 
-  it('logoutMutation() fn should work as expected', done => {
-    jest.spyOn(service.apollo, 'query').mockReturnValue(of(mockLogoutResponseWithData))
+  it('logoutMutat() fn should work as expected', done => {
+    jest.spyOn(service, 'logoutQuery').mockReturnValue(of(mockLogoutResponseWithData))
 
     service.logout().subscribe()
 
