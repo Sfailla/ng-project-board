@@ -2,16 +2,20 @@ import { TestBed } from '@angular/core/testing'
 import { AuthService } from './auth.service'
 import { Apollo } from 'apollo-angular'
 import { ToastService } from '@shared/services'
+import { provideRouter } from '@angular/router'
+import { DashboardComponent } from '../../../dashboard/dashboard.component'
+import { LoginComponent } from '../../components'
+import { ErrorMessages, Messages, Routes } from '@shared/types'
+import { lastValueFrom } from 'rxjs/internal/lastValueFrom'
 import { of } from 'rxjs/internal/observable/of'
 import {
   getAuthUserInput,
   mockLoginResponseWithData,
   mockLoginResponseWithError,
-  mockRegisterResponseWithData
+  mockLogoutResponseWithData,
+  mockRegisterResponseWithData,
+  mockRegisterResponseWithError
 } from '@testing/mocks/data'
-import { provideRouter } from '@angular/router'
-import { DashboardComponent } from '../../../dashboard/dashboard.component'
-import { ErrorMessages, Messages } from '@shared/types'
 
 const mockApolloClient = { client: { resetStore: jest.fn() } }
 
@@ -21,13 +25,18 @@ describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        provideRouter([{ path: 'dashboard', component: DashboardComponent }]),
+        provideRouter([
+          { path: 'dashboard', component: DashboardComponent },
+          { path: 'auth/login', component: LoginComponent }
+        ]),
         { provide: ToastService, useValue: { present: jest.fn() } },
         { provide: Apollo, useValue: mockApolloClient }
       ]
     })
 
     service = TestBed.inject(AuthService)
+
+    service.logCurrentUser = jest.fn(() => null)
   })
 
   afterEach(() => jest.clearAllMocks())
@@ -126,9 +135,23 @@ describe('AuthService', () => {
     done()
   })
 
+  it('should navigate to dashboard after successful login', async () => {
+    const authInput = getAuthUserInput()
+
+    jest.spyOn(service.navController, 'navigateRoot')
+
+    jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
+
+    await lastValueFrom(service.login(authInput))
+
+    expect(service.navController.navigateRoot).toHaveBeenCalledTimes(1)
+    expect(service.navController.navigateRoot).toHaveBeenCalledWith([Routes.DASHBOARD], {
+      animationDirection: 'forward'
+    })
+  })
+
   it('registerMutation() fn should work as expected', done => {
     const authInput = getAuthUserInput({ type: 'register' })
-    console.log({ reg: authInput })
 
     jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
 
@@ -139,5 +162,136 @@ describe('AuthService', () => {
 
     expect(service.registerMutation).toHaveBeenCalledTimes(1)
     expect(service.registerMutation).toHaveBeenCalledWith(authInput)
+  })
+
+  it('register() fn should call mutation with correct args', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service, 'register')
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+
+    service.register(authInput).subscribe()
+
+    expect(service.registerMutation).toHaveBeenCalledTimes(1)
+    expect(service.registerMutation).toHaveBeenCalledWith(authInput)
+
+    expect(service.register).toHaveBeenCalledTimes(1)
+    expect(service.register).toHaveBeenCalledWith(authInput)
+
+    done()
+  })
+
+  it('should set currentUser signal after successful registration', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+
+    service.register(authInput).subscribe()
+
+    expect(service.currentUser()).toEqual(mockRegisterResponseWithData.data.createUser.user)
+
+    done()
+  })
+
+  it('successful register() fn should call toast with correct args', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service.toastService, 'present')
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+
+    service.register(authInput).subscribe()
+
+    expect(service.toastService.present).toHaveBeenCalledTimes(1)
+    expect(service.toastService.present).toHaveBeenCalledWith({
+      variant: 'success',
+      message: Messages.REGISTRATION_SUCCESSFUL
+    })
+
+    done()
+  })
+
+  it('failed register() fn should call toast with correct args', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service.toastService, 'present')
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithError))
+
+    service.register(authInput).subscribe()
+
+    expect(service.toastService.present).toHaveBeenCalledTimes(1)
+    expect(service.toastService.present).toHaveBeenCalledWith({
+      variant: 'error',
+      message: ErrorMessages.REGISTRATION_FAILED
+    })
+
+    done()
+  })
+
+  it('should call toast if passwords do not match', done => {
+    const authInput = getAuthUserInput({
+      type: 'register',
+      updateKey: { confirmPassword: '12345' }
+    })
+
+    jest.spyOn(service.toastService, 'present')
+
+    service.register(authInput).subscribe()
+
+    expect(service.toastService.present).toHaveBeenCalledTimes(1)
+    expect(service.toastService.present).toHaveBeenCalledWith({
+      variant: 'error',
+      message: ErrorMessages.PASSWORDS_DO_NOT_MATCH
+    })
+
+    done()
+  })
+
+  it('successful register() fn should call resetStore', done => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+    jest.spyOn(service.apollo.client, 'resetStore')
+
+    service.register(authInput).subscribe()
+
+    expect(service.apollo.client.resetStore).toHaveBeenCalledTimes(1)
+
+    done()
+  })
+
+  it('should navigate to dashboard after successful registration', async () => {
+    const authInput = getAuthUserInput({ type: 'register' })
+
+    jest.spyOn(service.navController, 'navigateRoot')
+    jest.spyOn(service, 'registerMutation').mockReturnValue(of(mockRegisterResponseWithData))
+
+    await lastValueFrom(service.register(authInput))
+
+    expect(service.navController.navigateRoot).toHaveBeenCalledTimes(1)
+    expect(service.navController.navigateRoot).toHaveBeenCalledWith([Routes.DASHBOARD], {
+      animationDirection: 'forward'
+    })
+  })
+
+  it('logoutMutation() fn should work as expected', done => {
+    jest.spyOn(service.apollo, 'query').mockReturnValue(of(mockLogoutResponseWithData))
+
+    service.logout().subscribe()
+
+    expect(service.logoutQuery).toHaveBeenCalledTimes(1)
+
+    done()
+  })
+
+  it('logout() fn should work as expected', done => {
+    jest.spyOn(service, 'logout')
+    jest.spyOn(service, 'logoutQuery').mockReturnValue(of(mockLogoutResponseWithData))
+
+    service.logout().subscribe()
+
+    expect(service.logout).toHaveBeenCalledTimes(1)
+    expect(service.logoutQuery).toHaveBeenCalledTimes(1)
+
+    done()
   })
 })
