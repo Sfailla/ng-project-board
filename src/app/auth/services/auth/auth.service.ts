@@ -15,6 +15,7 @@ import { NavController } from '@ionic/angular/standalone'
 import { ErrorMessages, Messages, Routes } from '@shared/types'
 import { LogoutDocument, LogoutQuery } from '@generated/queries'
 import { ToastService } from '@shared/services'
+import { of } from 'rxjs/internal/observable/of'
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -60,7 +61,7 @@ export class AuthService {
 
     if (password !== confirmPassword) {
       this.toastService.present({ variant: 'error', message: ErrorMessages.PASSWORDS_DO_NOT_MATCH })
-      throw new Error(ErrorMessages.PASSWORDS_DO_NOT_MATCH)
+      return of(Promise.resolve())
     }
 
     return this.registerMutation(authUserInput).pipe(
