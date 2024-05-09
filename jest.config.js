@@ -35,5 +35,5 @@ module.exports = {
       }
     ]
   },
-  coverageReporters: ['html', 'text-summary', 'lcov']
+  coverageReporters: ['cobertura', 'lcov', 'text']
 }
