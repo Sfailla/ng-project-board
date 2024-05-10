@@ -32,11 +32,11 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN) || null
+    return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN)
   }
 
   getUser(): User | null {
     const user = localStorage.getItem(LocalStorageKeys.AUTH_USER)
-    return user ? JSON.parse(user) : null
+    return user !== null ? JSON.parse(user) : user
   }
 }
