@@ -46,6 +46,10 @@ export class AuthService {
     })
   }
 
+  isAuthenticated() {
+    return !!this.tokenService.getToken()
+  }
+
   registerMutation(authUserInput: AuthUserInput) {
     const { username, email, password } = authUserInput
 
@@ -137,9 +141,5 @@ export class AuthService {
         }
       })
     )
-  }
-
-  isAuthenticated() {
-    return !!this.tokenService.getToken()
   }
 }
