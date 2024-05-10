@@ -79,6 +79,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setCurrentUserIfAuthenticated()
+  }
+
+  setCurrentUserIfAuthenticated(): void {
     if (this.authService.isAuthenticated()) {
       this.authService.setCurrentUser()
     }
