@@ -58,15 +58,15 @@ import { AuthFormComponent } from '@shared/components'
 })
 export class AuthComponent implements OnInit, OnDestroy {
   title = input.required<string>()
-  // services
+
   authService: AuthService = inject(AuthService)
   destroyRef: DestroyRef = inject(DestroyRef)
-  // state
+
   isLogin = signal<boolean>(false)
-  // variables
+
   AuthTitles: typeof AuthTitles = AuthTitles
   Routes: typeof Routes = Routes
-  // form
+
   authForm = new FormGroup({
     username: new FormControl('', Validators.min(4)),
     email: new FormControl('', [Validators.email, Validators.required]),
@@ -75,6 +75,10 @@ export class AuthComponent implements OnInit, OnDestroy {
   })
 
   ngOnInit(): void {
+    this.setIsLogin()
+  }
+
+  setIsLogin(): void {
     this.isLogin.set(this.title() === AuthTitles.LOGIN)
   }
 
