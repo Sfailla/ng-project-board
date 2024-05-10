@@ -9,6 +9,7 @@ import { ErrorMessages, Messages, Routes } from '@shared/types'
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom'
 import { of } from 'rxjs/internal/observable/of'
 import {
+  mockToken,
   getAuthUserInput,
   mockLoginResponseWithData,
   mockLoginResponseWithError,
@@ -43,6 +44,18 @@ describe('AuthService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy()
+  })
+
+  it('should return false if user is not authenticated', () => {
+    jest.spyOn(service.tokenService, 'getToken').mockReturnValue(null)
+
+    expect(service.isAuthenticated()).toBeFalsy()
+  })
+
+  it('should return true if user is authenticated', () => {
+    jest.spyOn(service.tokenService, 'getToken').mockReturnValue(mockToken)
+
+    expect(service.isAuthenticated()).toBeTruthy()
   })
 
   it('loginMutation() fn should work as expected', done => {
@@ -273,7 +286,7 @@ describe('AuthService', () => {
     })
   })
 
-  it('logoutMutat() fn should work as expected', done => {
+  it('logoutMutation() fn should work as expected', done => {
     jest.spyOn(service, 'logoutQuery').mockReturnValue(of(mockLogoutResponseWithData))
 
     service.logout().subscribe()
@@ -293,5 +306,27 @@ describe('AuthService', () => {
     expect(service.logoutQuery).toHaveBeenCalledTimes(1)
 
     done()
+  })
+
+  it('should set currentUser signal to null after successful logout', done => {
+    jest.spyOn(service, 'logoutQuery').mockReturnValue(of(mockLogoutResponseWithData))
+
+    service.logout().subscribe()
+
+    expect(service.currentUser()).toBeNull()
+
+    done()
+  })
+
+  it('should redirect to login after successful logout', async () => {
+    jest.spyOn(service.navController, 'navigateRoot')
+    jest.spyOn(service, 'logoutQuery').mockReturnValue(of(mockLogoutResponseWithData))
+
+    await lastValueFrom(service.logout())
+
+    expect(service.navController.navigateRoot).toHaveBeenCalledTimes(1)
+    expect(service.navController.navigateRoot).toHaveBeenCalledWith([Routes.LOGIN], {
+      animationDirection: 'back'
+    })
   })
 })
