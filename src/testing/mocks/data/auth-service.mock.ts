@@ -1,7 +1,12 @@
 import { GraphQLError } from 'graphql'
 import { mockUser, mockToken } from './'
 import { AuthUserInput } from '../../../app/auth/auth-types'
-import { withMutateData, withMutateErrors, withQueryData } from '@testing/utils'
+import {
+  baseApolloMutationResponse,
+  baseApolloQueryResponse,
+  withData,
+  withErrors
+} from '@testing/utils'
 import { ErrorMessages } from '@shared/types'
 
 type AuthInputOptions = {
@@ -26,24 +31,24 @@ export const baseAuthenticatedResponse = {
   token: mockToken
 }
 
-export const mockLoginResponseWithData = withMutateData({
+export const mockLoginResponseWithData = withData({
   login: baseAuthenticatedResponse
-})
+})(baseApolloMutationResponse)
 
-export const mockRegisterResponseWithData = withMutateData({
+export const mockRegisterResponseWithData = withData({
   createUser: baseAuthenticatedResponse
-})
+})(baseApolloMutationResponse)
 
-export const mockLoginResponseWithError = withMutateErrors(<GraphQLError[]>[
+export const mockLoginResponseWithError = withErrors(<GraphQLError[]>[
   { message: ErrorMessages.LOGIN_FAILED }
-])
+])(baseApolloMutationResponse)
 
-export const mockRegisterResponseWithError = withMutateErrors(<GraphQLError[]>[
+export const mockRegisterResponseWithError = withErrors(<GraphQLError[]>[
   { message: ErrorMessages.REGISTRATION_FAILED }
-])
+])(baseApolloMutationResponse)
 
-export const mockLogoutResponseWithData = withQueryData({
+export const mockLogoutResponseWithData = withData({
   logout: {
     user: null
   }
-})
+})(baseApolloQueryResponse)
