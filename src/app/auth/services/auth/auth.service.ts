@@ -81,7 +81,7 @@ export class AuthService {
           this.currentUser.set(data.createUser.user)
 
           await this.apollo.client.resetStore()
-          await this.tokenService.saveUserAndToken(data?.createUser.user, data?.createUser.token)
+          await this.tokenService.saveUserAndToken(data.createUser)
           await this.navController.navigateRoot([Routes.DASHBOARD], {
             animationDirection: 'forward'
           })
@@ -114,7 +114,7 @@ export class AuthService {
           this.currentUser.set(data.login.user)
 
           await this.apollo.client.resetStore()
-          await this.tokenService.saveUserAndToken(data.login.user, data.login.token)
+          await this.tokenService.saveUserAndToken(data.login)
           await this.navController.navigateRoot([Routes.DASHBOARD], {
             animationDirection: 'forward'
           })
@@ -133,8 +133,8 @@ export class AuthService {
         if (error) this.toastService.present({ variant: 'error', message: error.message })
 
         if (logout) {
-          this.tokenService.destroySession()
           this.currentUser.set(null)
+          this.tokenService.destroySession()
           await this.navController.navigateRoot([Routes.LOGIN], {
             animationDirection: 'back'
           })
