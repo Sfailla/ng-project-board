@@ -1,22 +1,20 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { AuthUser, User } from '@generated/types'
 import { LocalStorageKeys } from '@shared/types'
+import { LocalStorageService } from '@shared/services'
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
-  destroySession(): void {
-    localStorage.removeItem(LocalStorageKeys.AUTH_TOKEN)
-    localStorage.removeItem(LocalStorageKeys.AUTH_USER)
-  }
+  storage: LocalStorageService = inject(LocalStorageService)
 
   saveToken(token: string): void {
-    localStorage.removeItem(LocalStorageKeys.AUTH_TOKEN)
-    localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, token)
+    this.storage.removeItem(LocalStorageKeys.AUTH_TOKEN)
+    this.storage.setItem(LocalStorageKeys.AUTH_TOKEN, token)
   }
 
   saveUser(user: User): void {
-    localStorage.removeItem(LocalStorageKeys.AUTH_USER)
-    localStorage.setItem(LocalStorageKeys.AUTH_USER, JSON.stringify(user))
+    this.storage.removeItem(LocalStorageKeys.AUTH_USER)
+    this.storage.setItem(LocalStorageKeys.AUTH_USER, JSON.stringify(user))
   }
 
   saveUserAndToken<T extends AuthUser>(response: T): Promise<void> {
@@ -32,11 +30,16 @@ export class TokenService {
   }
 
   getToken(): string | null {
-    return localStorage.getItem(LocalStorageKeys.AUTH_TOKEN)
+    return this.storage.getItem(LocalStorageKeys.AUTH_TOKEN)
   }
 
   getUser(): User | null {
-    const user = localStorage.getItem(LocalStorageKeys.AUTH_USER)
+    const user = this.storage.getItem(LocalStorageKeys.AUTH_USER)
     return user !== null ? JSON.parse(user) : user
+  }
+
+  destroySession(): void {
+    this.storage.removeItem(LocalStorageKeys.AUTH_TOKEN)
+    this.storage.removeItem(LocalStorageKeys.AUTH_USER)
   }
 }
