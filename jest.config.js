@@ -2,6 +2,12 @@ module.exports = {
   preset: 'jest-preset-angular',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules',
+    '<rootDir>/dist',
+    '<rootDir>/src/testing',
+    '<rootDir>/src/generated'
+  ],
   transformIgnorePatterns: [
     '<rootDir>/node_modules/(?!@angular|apollo-angular|@ionic/angular|@ionic/core|@stencil/core|ionicons)'
   ],
@@ -36,5 +42,5 @@ module.exports = {
     ]
   },
   coverageReporters: ['cobertura', 'lcov', 'text'],
-  coveragePathIgnorePatterns: ['<rootDir>/src/testing']
+  coveragePathIgnorePatterns: ['<rootDir>/src/testing', '<rootDir>/src/generated']
 }
