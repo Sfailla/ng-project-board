@@ -1,6 +1,9 @@
 @use '../../../../styles/abstracts' as *;
 
 .create-project {
+  container-type: inline-size;
+  container-name: card;
+
   &__card {
     border: 1px solid var(--select-project-card-border-color);
     border-radius: rem(5px);
@@ -8,13 +11,13 @@
     min-height: rem(300px);
     display: grid;
     grid-template-columns: 2fr 3fr;
-    position: relative;
     z-index: 1;
   }
 
   &__left-side {
     & .content-container {
       max-width: rem(350px);
+      margin-left: rem(25px);
     }
   }
 
@@ -37,6 +40,12 @@
 
     & ion-card-title {
       font-size: rem(20px);
+    }
+  }
+
+  @container (width <= 1000px) {
+    &__card {
+      min-width: 1000px;
     }
   }
 }
