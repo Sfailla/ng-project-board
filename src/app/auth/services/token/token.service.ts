@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core'
 import { AuthUser, User } from '@generated/types'
 import { LocalStorageKeys } from '@shared/types'
-import { CreateUserMutation, LoginMutation } from '../../../../generated/mutations'
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
