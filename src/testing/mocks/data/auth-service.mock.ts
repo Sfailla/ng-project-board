@@ -43,9 +43,7 @@ export const mockRegisterResponseWithError = withMutateErrors(<GraphQLError[]>[
 ])
 
 export const mockLogoutResponseWithData = withQueryData({
-  logout: {
-    user: null
-  }
+  logout: { user: null }
 })
 
 export const mockLogoutResponseWithError = withQueryError(<GraphQLError>{
