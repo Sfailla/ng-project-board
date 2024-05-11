@@ -1,21 +1,22 @@
 import { ApolloQueryResult } from '@apollo/client'
 import { GraphQLError } from 'graphql'
 
-export const baseApolloQueryResponse = {
+export const baseApolloQueryResponse: ApolloQueryResult<unknown> = {
   data: {},
   error: undefined,
   loading: false,
   networkStatus: 7
-} as ApolloQueryResult<unknown>
+}
 
 export const withQueryData = <T>(data: T) => ({
   ...baseApolloQueryResponse,
   data
 })
 
-export const withQueryErrors = (errors: GraphQLError[]) => ({
+export const withQueryError = <T>(error: GraphQLError) => ({
   ...baseApolloQueryResponse,
-  errors
+  data: {} as T,
+  error
 })
 
 export const withQueryLoading = (loading: boolean) => ({
