@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
 import { IonContent, IonRouterOutlet, NavController } from '@ionic/angular/standalone'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
-import { LocalStorageService, ProjectService } from '@shared/services'
+import { LocalStorageService } from '@shared/services'
 import { IonicRoutes, LocalStorageKeys } from '@shared/types'
 import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared/components'
 
@@ -51,7 +51,6 @@ import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  projectService: ProjectService = inject(ProjectService)
   storage: LocalStorageService = inject(LocalStorageService)
   navController: NavController = inject(NavController)
 
