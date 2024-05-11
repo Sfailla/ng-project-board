@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
-import { RouterOutlet } from '@angular/router'
-import { IonicModule } from '@ionic/angular'
-import { NavController } from '@ionic/angular/standalone'
+import { IonContent, IonRouterOutlet, NavController } from '@ionic/angular/standalone'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
 import { LocalStorageService, ProjectService } from '@shared/services'
 import { IonicRoutes, LocalStorageKeys } from '@shared/types'
@@ -11,8 +9,8 @@ import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    IonicModule,
-    RouterOutlet,
+    IonContent,
+    IonRouterOutlet,
     SideMenuComponent,
     HeaderComponent,
     SettingsMenuComponent,
@@ -54,7 +52,7 @@ import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared
 })
 export class DashboardComponent implements OnInit {
   projectService: ProjectService = inject(ProjectService)
-  storageService: LocalStorageService = inject(LocalStorageService)
+  storage: LocalStorageService = inject(LocalStorageService)
   navController: NavController = inject(NavController)
 
   ngOnInit(): void {
@@ -63,7 +61,7 @@ export class DashboardComponent implements OnInit {
 
   handleNavigation(): void {
     const { DASHBOARD, HOME, BOARD } = IonicRoutes
-    const projectId = this.storageService.getItem(LocalStorageKeys.PROJECT_ID)
+    const projectId = this.storage.getItem(LocalStorageKeys.PROJECT_ID)
 
     projectId
       ? this.navController.navigateForward([DASHBOARD, projectId, BOARD])
