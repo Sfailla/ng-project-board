@@ -35,5 +35,6 @@ module.exports = {
       }
     ]
   },
-  coverageReporters: ['cobertura', 'lcov', 'text']
+  coverageReporters: ['cobertura', 'lcov', 'text'],
+  coveragePathIgnorePatterns: ['<rootDir>/src/testing']
 }
