@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
-import { User } from '@generated/types'
+import { AuthUser, User } from '@generated/types'
 import { LocalStorageKeys } from '@shared/types'
+import { CreateUserMutation, LoginMutation } from '../../../../generated/mutations'
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
@@ -19,11 +20,11 @@ export class TokenService {
     localStorage.setItem(LocalStorageKeys.AUTH_USER, JSON.stringify(user))
   }
 
-  saveUserAndToken(user: User, token: string): Promise<void> {
+  saveUserAndToken<T extends AuthUser>(response: T): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        this.saveToken(token)
-        this.saveUser(user)
+        this.saveToken(response.token)
+        this.saveUser(response.user)
         resolve()
       } catch (error) {
         reject(error)
