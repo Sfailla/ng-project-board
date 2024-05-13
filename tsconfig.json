@@ -38,6 +38,8 @@
       "@testing/mocks/services": ["src/testing/mocks/services/index.ts"]
     }
   },
+  "include": ["src/*.ts"],
+  "exclude": ["src/*.spec.ts"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
