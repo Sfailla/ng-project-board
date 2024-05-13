@@ -131,13 +131,49 @@
               "browserTarget": "ng-project-board-v2:build:production"
             }
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ng-project-board-v2:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-project-board-v2:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "ng-project-board-v2:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ng-project-board-v2:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@angular-eslint/schematics", "@ionic/angular-toolkit"]
+    "schematicCollections": [
+      "@cypress/schematic",
+      "@angular-eslint/schematics",
+      "@ionic/angular-toolkit",
+      "@schematics/angular"
+    ]
   },
   "schematics": {
     "@schematics/angular:service": {
