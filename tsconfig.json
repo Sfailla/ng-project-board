@@ -38,8 +38,7 @@
       "@testing/mocks/services": ["src/testing/mocks/services/index.ts"]
     }
   },
-  "include": ["src/*.ts"],
-  "exclude": ["src/*.spec.ts"],
+  "exclude": ["cypress.config.ts", "cypress"],
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
