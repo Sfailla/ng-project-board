@@ -152,7 +152,6 @@ describe('AuthService', () => {
     const authInput = getAuthUserInput()
 
     jest.spyOn(service.navController, 'navigateRoot')
-
     jest.spyOn(service, 'loginMutation').mockReturnValue(of(mockLoginResponseWithData))
 
     await lastValueFrom(service.login(authInput))
