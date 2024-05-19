@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 import { AuthComponent } from './auth.component'
 import { AuthService } from '@auth/services'
 import { provideRouter } from '@angular/router'
-import { MockAuthService } from '@testing/mocks/services'
+import { AuthServiceMock } from '@testing/mocks/services'
 import { AuthTitles } from '../../auth-types'
 import { findNativeElement, getNativeElementText, setupTest } from '@testing/utils'
 import { Apollo } from 'apollo-angular'
@@ -30,7 +30,7 @@ describe('AuthComponent', () => {
           { path: 'auth/register', component: RegisterComponent }
         ]),
         { provide: Apollo, useValue: {} },
-        { provide: AuthService, useClass: MockAuthService }
+        { provide: AuthService, useClass: AuthServiceMock }
       ]
     }).compileComponents()
   })

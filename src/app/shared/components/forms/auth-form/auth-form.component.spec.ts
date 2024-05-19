@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing'
 import { AuthFormComponent } from './auth-form.component'
 import { AuthService } from '@auth/services'
-import { MockAuthService } from '@testing/mocks/services'
+import { AuthServiceMock } from '@testing/mocks/services'
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { findAllNativeElements, findNativeElement, setupTest } from '@testing/utils'
 import { Apollo } from 'apollo-angular'
@@ -32,7 +32,7 @@ describe('AuthFormComponent', () => {
           provide: NavController,
           useValue: { navigateRoot: jest.fn() }
         },
-        { provide: AuthService, useClass: MockAuthService }
+        { provide: AuthService, useClass: AuthServiceMock }
       ]
     }).compileComponents()
   })

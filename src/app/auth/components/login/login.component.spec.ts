@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { LoginComponent } from './login.component'
-import { MockAuthService } from '@testing/mocks/services'
+import { AuthServiceMock } from '@testing/mocks/services'
 import { Apollo } from 'apollo-angular'
 import { AuthService } from '@auth/services'
 import { provideRouter } from '@angular/router'
@@ -12,7 +12,7 @@ describe('LoginComponent', () => {
       providers: [
         provideRouter([]),
         { provide: Apollo, useValue: {} },
-        { provide: AuthService, useClass: MockAuthService }
+        { provide: AuthService, useClass: AuthServiceMock }
       ]
     }).compileComponents()
   })
