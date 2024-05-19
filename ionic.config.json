@@ -1,6 +1,6 @@
 {
   "name": "project-board",
-  "app_id": "",
+  "app_id": "mobile-project-board",
   "type": "angular-standalone",
   "integrations": {}
 }
