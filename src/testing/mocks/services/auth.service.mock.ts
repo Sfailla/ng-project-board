@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core'
 import { AuthService } from '@auth/services'
-import { LoginMutation } from '@generated/mutations'
-import { mockUser } from '../data'
+import { CreateUserMutation, LoginMutation } from '@generated/mutations'
+import { mockLoginResponseWithData, mockRegisterResponseWithData, mockUser } from '../data'
 import { Observable } from 'rxjs/internal/Observable'
 import { of } from 'rxjs/internal/observable/of'
 import { MutationResult } from 'apollo-angular/types'
 import { map } from 'rxjs/internal/operators/map'
 
 @Injectable({ providedIn: 'root' })
-export class MockAuthService extends AuthService {
+export class AuthServiceMock extends AuthService {
   constructor() {
     super()
   }
@@ -26,19 +26,10 @@ export class MockAuthService extends AuthService {
   }
 
   override loginMutation(): Observable<MutationResult<LoginMutation>> {
-    return of({
-      data: {
-        login: {
-          user: mockUser,
-          token: 'token'
-        }
-      },
-      errors: undefined,
-      loading: false
-    })
+    return of(mockLoginResponseWithData)
   }
 
-  override login() {
+  override login(): Observable<Promise<void>> {
     return this.loginMutation().pipe(
       map(async ({ data, errors, loading }) => {
         if (!data) return
@@ -49,20 +40,11 @@ export class MockAuthService extends AuthService {
     )
   }
 
-  override registerMutation() {
-    return of({
-      data: {
-        createUser: {
-          user: mockUser,
-          token: 'token'
-        }
-      },
-      errors: undefined,
-      loading: false
-    })
+  override registerMutation(): Observable<MutationResult<CreateUserMutation>> {
+    return of(mockRegisterResponseWithData)
   }
 
-  override register() {
+  override register(): Observable<Promise<void>> {
     return this.registerMutation().pipe(
       map(async ({ data, errors, loading }) => {
         if (!data) return
