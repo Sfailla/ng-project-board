@@ -2,8 +2,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": ["jest", "node"]
+    "outDir": "./dist/out-tsc/spec",
+    "types": ["jest", "node"],
+    "moduleResolution": "node"
   },
   "files": ["src/test-setup.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
