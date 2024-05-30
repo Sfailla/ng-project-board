@@ -29,15 +29,19 @@ module.exports = {
   },
   modulePathIgnorePatterns: ['dist'],
   moduleFileExtensions: ['ts', 'js', 'html'],
-  testMatch: ['**/+(*.)+(spec).+(ts)'],
   transform: {
     '^.+\\.(ts|js|mjs|html)$': [
       'jest-preset-angular',
       {
-        astTransformers: [
-          'jest-preset-angular/build/InlineFilesTransformer',
-          'jest-preset-angular/build/StripStylesTransformer'
-        ]
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+        stringifyContentPathRegex: '\\.(html|svg)$'
+      }
+    ],
+
+    '^.+\\.(ts|js|html)$': [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json'
       }
     ]
   },
