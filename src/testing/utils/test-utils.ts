@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser'
   and exported along with the `angular/core/testing` library.
 */
 
-export const debug = (fixture: { debugElement: { nativeElement: { innerHTML: HTMLElement } } }) => {
+export const debug = <T>(fixture: ComponentFixture<T>) => {
   phl(fixture.debugElement.nativeElement.innerHTML)
 }
 
