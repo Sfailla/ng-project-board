@@ -8,7 +8,7 @@ import { PageWrapperComponent } from '../../shared/components'
   imports: [SelectProjectComponent, PageWrapperComponent],
   template: `
     <app-page-wrapper title="Projects">
-      <app-select-project></app-select-project>
+      <app-select-project />
     </app-page-wrapper>
   `,
   styles: [``],
