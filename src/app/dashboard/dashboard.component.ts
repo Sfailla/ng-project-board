@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core'
+import { ChangeDetectionStrategy, Component, NgZone, OnInit, inject } from '@angular/core'
 import { IonContent, IonRouterOutlet, NavController } from '@ionic/angular/standalone'
 import { SideMenuComponent, HeaderComponent, SettingsMenuComponent } from './components'
 import { LocalStorageService } from '@shared/services'
@@ -53,17 +53,20 @@ import { ConfirmationComponent, ModalComponent, OverlayComponent } from '@shared
 export class DashboardComponent implements OnInit {
   storage: LocalStorageService = inject(LocalStorageService)
   navController: NavController = inject(NavController)
+  ngZone: NgZone = inject(NgZone)
 
-  ngOnInit(): void {
-    this.handleNavigation()
+  async ngOnInit(): Promise<void> {
+    await this.handleNavigation()
   }
 
-  handleNavigation(): void {
+  async handleNavigation(): Promise<void> {
     const { DASHBOARD, HOME, BOARD } = IonicRoutes
     const projectId = this.storage.getItem(LocalStorageKeys.PROJECT_ID)
 
-    projectId
-      ? this.navController.navigateForward([DASHBOARD, projectId, BOARD])
-      : this.navController.navigateForward([DASHBOARD, HOME])
+    this.ngZone.run(async () => {
+      projectId
+        ? await this.navController.navigateForward([DASHBOARD, projectId, BOARD])
+        : await this.navController.navigateForward([DASHBOARD, HOME])
+    })
   }
 }
