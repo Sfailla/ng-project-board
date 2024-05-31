@@ -1,18 +1,20 @@
-import { Type } from '@angular/core'
+import type { Type } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
-export type InputSignal = Record<string, any>
-
-export type AdditionalProvider<K, V> = { name: K; value: Type<V> }
-
-export type SetupTestOptions<K extends string, V> = {
+type InputSignal = Record<string, any>
+type AdditionalProviders = { name: string; value: Type<any> }[]
+type GetType<T> = T extends { value: Type<infer V> } ? V : never
+type ProvidersReturnType<TP extends AdditionalProviders> = {
+  [TK in TP[number]['name']]: GetType<Extract<TP[number], { name: TK }>>
+}
+type SetupTestOptions<TProviders extends AdditionalProviders> = {
   setInput?: InputSignal
-  additionalProviders?: AdditionalProvider<K, V>[]
+  additionalProviders?: TProviders
 }
 
-export function setupTest<T extends object, K extends string, V>(
+export function setupTest<T extends object, const TP extends AdditionalProviders>(
   Component: Type<T>,
-  options: SetupTestOptions<K, V> = {}
+  options: SetupTestOptions<TP> = {}
 ) {
   const fixture: ComponentFixture<T> = TestBed.createComponent(Component)
   const component: T = fixture.componentInstance
@@ -24,11 +26,11 @@ export function setupTest<T extends object, K extends string, V>(
     })
   }
 
-  const providers = <Record<K, V>>{}
+  const providers = <ProvidersReturnType<TP>>{}
 
   if (options.additionalProviders) {
     options.additionalProviders.forEach(({ name, value }) => {
-      providers[name] = TestBed.inject(value)
+      providers[name as keyof ProvidersReturnType<TP>] = TestBed.inject(value)
     })
   }
 
