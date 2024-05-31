@@ -6,10 +6,8 @@ import { provideRouter } from '@angular/router'
 import { AuthService } from '@auth/services'
 import { AuthServiceMock, LocalStorageServiceMock } from '@testing/mocks/services'
 import { LocalStorageService } from '@shared/services'
-import { RouterTestingHarness } from '@angular/router/testing'
 import { MockHomeComponent, MockTaskComponent } from '@testing/components'
 import { Location } from '@angular/common'
-import { NgZone } from '@angular/core'
 
 describe('DashboardComponent', () => {
   beforeEach(() => {
@@ -34,48 +32,46 @@ describe('DashboardComponent', () => {
 
   it('should call navController navigate forward with dashboard/home route if projectId is null', () => {
     const { component } = setupTest(DashboardComponent)
-    const navigateSpy = jest.spyOn(component.navController, 'navigateForward')
+    const navigateSpy = jest
+      .spyOn(component.navController, 'navigateForward')
+      .mockResolvedValue(true)
+
     component.handleNavigation()
+
     expect(navigateSpy).toHaveBeenCalledWith(['dashboard', 'home'])
   })
 
-  it('should call navController navigate forward with dashboard/:id/board route if projectId is not null', () => {
+  it('should call navController navigate forward with dashboard/:id/board route if projectId is not null', async () => {
     const { component } = setupTest(DashboardComponent)
+    const navigateSpy = jest
+      .spyOn(component.navController, 'navigateForward')
+      .mockResolvedValue(true)
+
     component.storage.setItem('project-id', '123')
-    const navigateSpy = jest.spyOn(component.navController, 'navigateForward')
-    component.handleNavigation()
+    await component.handleNavigation()
+
     expect(navigateSpy).toHaveBeenCalledWith(['dashboard', '123', 'board'])
   })
 
   it('should route to the dashboard/home route if projectId is null', async () => {
-    const { component, location, ngZone } = setupTest(DashboardComponent, {
-      additionalProviders: [
-        { name: 'location', value: Location },
-        { name: 'ngZone', value: NgZone }
-      ]
+    const { component, location } = setupTest(DashboardComponent, {
+      additionalProviders: [{ name: 'location', value: Location }]
     })
 
-    ngZone.run(async () => {
-      await RouterTestingHarness.create('/dashboard/home')
-      component.handleNavigation()
-      expect(location.path()).toBe('/dashboard/home')
-    })
+    await component.ngOnInit()
+
+    expect(location.path()).toBe('/dashboard/home')
   })
 
   it('should route to the dashboard/:id/board route if projectId is not null', async () => {
-    const { component, location, ngZone } = setupTest(DashboardComponent, {
-      additionalProviders: [
-        { name: 'location', value: Location },
-        { name: 'ngZone', value: NgZone }
-      ]
+    const { fixture, component, location } = setupTest(DashboardComponent, {
+      additionalProviders: [{ name: 'location', value: Location }]
     })
 
     component.storage.setItem('project-id', '123')
+    fixture.detectChanges()
+    await component.ngOnInit()
 
-    ngZone.run(async () => {
-      await RouterTestingHarness.create('/dashboard/123/board')
-      component.handleNavigation()
-      expect(location.path()).toBe('/dashboard/123/board')
-    })
+    expect(location.path()).toBe('/dashboard/123/board')
   })
 })
