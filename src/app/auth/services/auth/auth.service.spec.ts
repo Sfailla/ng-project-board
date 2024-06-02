@@ -4,7 +4,6 @@ import { Apollo } from 'apollo-angular'
 import { ToastService } from '@shared/services'
 import { provideRouter } from '@angular/router'
 import { DashboardComponent } from '../../../dashboard/dashboard.component'
-import { LoginComponent } from '../../components'
 import { ErrorMessages, Messages, Routes } from '@shared/types'
 import { lastValueFrom } from 'rxjs/internal/lastValueFrom'
 import { of } from 'rxjs/internal/observable/of'
@@ -17,6 +16,7 @@ import {
   mockRegisterResponseWithData,
   mockRegisterResponseWithError
 } from '@testing/mocks/data'
+import { LoginComponent } from '../../pages'
 
 const mockApolloClient = { client: { resetStore: jest.fn() } }
 

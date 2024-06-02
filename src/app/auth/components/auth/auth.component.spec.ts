@@ -7,8 +7,7 @@ import { AuthTitles } from '../../auth-types'
 import { findNativeElement, getNativeElementText, setupTest } from '@testing/utils'
 import { Apollo } from 'apollo-angular'
 import { Location } from '@angular/common'
-import { RegisterComponent } from '../register/register.component'
-import { LoginComponent } from '../login/login.component'
+import { LoginComponent, RegisterComponent } from '../../pages'
 
 function createComponent({ setInput = { title: AuthTitles.LOGIN } } = {}) {
   const { fixture, component, ...providers } = setupTest(AuthComponent, {
