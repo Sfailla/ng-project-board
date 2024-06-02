@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
 import { SelectProjectComponent } from './components/select-project/select-project.component'
-import { PageWrapperComponent } from '../../shared/components'
+import { PageWrapperComponent } from '../../../shared/components'
 
 @Component({
   selector: 'app-projects',

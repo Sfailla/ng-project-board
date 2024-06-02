@@ -1,3 +1,5 @@
+@use '../../../../../styles/abstracts' as *;
+
 :host {
   width: 100%;
 }
@@ -13,9 +15,7 @@
   row-gap: 10px;
 
   &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex(space-between);
   }
 
   &__title {
@@ -29,9 +29,8 @@
     height: auto;
     padding: 5px;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     gap: 10px;
+    @include flex(flex-start, normal, column);
   }
 
   ion-button {

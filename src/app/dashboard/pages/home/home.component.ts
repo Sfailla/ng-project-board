@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { CreateProjectComponent, SelectProjectComponent } from '../projects/components'
+import { CreateProjectComponent, SelectProjectComponent } from '../../pages/projects/components'
 import { PageWrapperComponent } from '@shared/components'
 
 @Component({

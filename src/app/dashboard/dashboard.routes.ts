@@ -10,15 +10,15 @@ export const DASHBOARD_ROUTES = [
     children: [
       {
         path: 'home',
-        loadChildren: () => import('./home/home.routes').then(m => m.HOME_ROUTES)
+        loadChildren: () => import('./pages/home/home.routes').then(m => m.HOME_ROUTES)
       },
       {
         path: ':id/board',
-        loadChildren: () => import('./board/board.routes').then(m => m.BOARD_ROUTES)
+        loadChildren: () => import('./pages/board/board.routes').then(m => m.BOARD_ROUTES)
       },
       {
         path: 'projects',
-        loadChildren: () => import('./projects/project.routes').then(m => m.PROJECT_ROUTES)
+        loadChildren: () => import('./pages/projects/project.routes').then(m => m.PROJECT_ROUTES)
       }
     ]
   }

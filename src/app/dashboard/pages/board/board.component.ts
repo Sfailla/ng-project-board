@@ -37,7 +37,7 @@ import { getDataAndSetSignals, SetSignals } from '@shared/utils'
   `,
   styles: [
     `
-      @use '../../styles/abstracts' as *;
+      @use '../../../styles/abstracts' as *;
 
       .board.cdk-drop-list-dragging {
         transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);

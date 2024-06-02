@@ -1,4 +1,4 @@
-@use '../../../../styles/abstracts' as *;
+@use '../../../../../styles/abstracts' as *;
 
 :host {
   @include flex(flex-start, center, column);

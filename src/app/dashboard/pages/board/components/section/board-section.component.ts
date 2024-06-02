@@ -48,7 +48,7 @@ import { getDataAndSetSignals, SetSignals, getCategoryId, getCategoryStatus } fr
       </div>
     </section>
   `,
-  styleUrl: './board-section.component.scss',
+  styleUrl: 'style.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BoardSectionComponent implements OnInit {
