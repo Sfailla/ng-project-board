@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
-import { AuthComponent } from '../auth/auth.component'
 import { AuthTitles } from '../../auth-types'
 import { PageWrapperComponent } from '../../../shared/components/page-wrapper/page-wrapper.component'
+import { AuthComponent } from '../../components'
 
 @Component({
   selector: 'app-register',

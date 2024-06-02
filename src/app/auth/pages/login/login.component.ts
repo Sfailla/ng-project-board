@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core'
-import { AuthComponent } from '../auth/auth.component'
 import { AuthTitles } from '../../auth-types'
 import { PageWrapperComponent } from '@shared/components'
+import { AuthComponent } from '../../components'
 
 @Component({
   selector: 'app-login',
