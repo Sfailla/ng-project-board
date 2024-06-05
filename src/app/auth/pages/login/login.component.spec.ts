@@ -4,6 +4,7 @@ import { AuthServiceMock } from '@testing/mocks/services'
 import { Apollo } from 'apollo-angular'
 import { AuthService } from '@auth/services'
 import { provideRouter } from '@angular/router'
+import { setupTest } from '@testing/utils'
 
 describe('LoginComponent', () => {
   beforeEach(async () => {
@@ -18,8 +19,7 @@ describe('LoginComponent', () => {
   })
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(LoginComponent)
-    const app = fixture.componentInstance
+    const { component: app } = setupTest(LoginComponent)
     expect(app).toBeTruthy()
   })
 })
