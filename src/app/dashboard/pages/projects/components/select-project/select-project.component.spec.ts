@@ -1,31 +1,29 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { TestBed } from '@angular/core/testing'
 
 import { SelectProjectComponent } from './select-project.component'
 import { ProjectService } from '@shared/services'
-import { of } from 'rxjs/internal/observable/of'
 import { RouterTestingModule } from '@angular/router/testing'
+import { debug, setupTest } from '@testing/utils'
+import { ProjectServiceMock } from '@testing/mocks/services'
+import { Apollo } from 'apollo-angular'
 
 describe('SelectProjectComponent', () => {
-  let component: SelectProjectComponent
-  let fixture: ComponentFixture<SelectProjectComponent>
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SelectProjectComponent, RouterTestingModule],
       providers: [
+        Apollo,
         {
           provide: ProjectService,
-          useValue: { getProjectId: () => null, getProjects: () => of([]) }
+          useClass: ProjectServiceMock
         }
       ]
     }).compileComponents()
-
-    fixture = TestBed.createComponent(SelectProjectComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
   })
 
   it('should create', () => {
+    const { fixture, component } = setupTest(SelectProjectComponent)
+    debug(fixture)
     expect(component).toBeTruthy()
   })
 })
