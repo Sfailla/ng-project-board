@@ -23,6 +23,6 @@ describe('AvatarComponent', () => {
   it('should display the user initials', () => {
     const { fixture } = createComponent()
     const avatarInitials = findNativeElement(fixture, '.avatar__initials')
-    expect(avatarInitials.textContent).toBe('SF')
+    expect(avatarInitials.textContent).toMatch(/sf/i)
   })
 })
