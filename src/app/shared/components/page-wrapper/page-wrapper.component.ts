@@ -1,14 +1,14 @@
 import { Component, input } from '@angular/core'
 
 @Component({
-  standalone: true,
   selector: 'app-page-wrapper',
+  standalone: true,
   template: `
     <div class="page-wrapper page-container">
       @if (title()) {
         <h2 class="page-wrapper__title">{{ title() }}</h2>
       }
-      <ng-content></ng-content>
+      <ng-content />
     </div>
   `,
   styles: [

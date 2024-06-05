@@ -9,7 +9,7 @@ import { AuthComponent } from '../../components'
   imports: [AuthComponent, PageWrapperComponent],
   template: `
     <app-page-wrapper class="register">
-      <app-auth [title]="AuthTitles.REGISTER"></app-auth>
+      <app-auth [title]="AuthTitles.REGISTER" />
     </app-page-wrapper>
   `,
   styles: [
