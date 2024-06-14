@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing'
 import { SelectProjectComponent } from './select-project.component'
 import { ProjectService } from '@shared/services'
 import { RouterTestingModule } from '@angular/router/testing'
-import { debug, setupTest } from '@testing/utils'
+import { setupTest } from '@testing/utils'
 import { ProjectServiceMock } from '@testing/mocks/services'
 import { Apollo } from 'apollo-angular'
 
@@ -22,8 +22,12 @@ describe('SelectProjectComponent', () => {
   })
 
   it('should create', () => {
-    const { fixture, component } = setupTest(SelectProjectComponent)
-    debug(fixture)
+    const { component } = setupTest(SelectProjectComponent)
     expect(component).toBeTruthy()
+  })
+
+  it('should get 3 projects and display on page', () => {
+    const { component } = setupTest(SelectProjectComponent)
+    expect(component.projects()).toHaveLength(3)
   })
 })
