@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
-  DestroyRef,
   OnDestroy,
   OnInit,
   inject,
@@ -60,7 +59,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   title = input.required<string>()
 
   authService: AuthService = inject(AuthService)
-  destroyRef: DestroyRef = inject(DestroyRef)
 
   isLogin = signal<boolean>(false)
 
