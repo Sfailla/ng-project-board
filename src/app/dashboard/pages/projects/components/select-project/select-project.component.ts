@@ -31,7 +31,7 @@ import { CreateProjectButtonComponent, SelectProjectButtonComponent } from '../b
             <ul>
               <app-create-project-button />
 
-              @for (project of projects(); track project.id; let idx = $index) {
+              @for (project of projects(); track project.id) {
                 <app-select-project-button [project]="project" />
               }
             </ul>
