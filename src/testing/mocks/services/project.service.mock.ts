@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core'
 import { ProjectService } from '@shared/services'
 import { of } from 'rxjs/internal/observable/of'
-import { mockProjectsResponseWithData } from '../data/project-service.mock'
+import {
+  mockCreateProjectResponseWithData,
+  mockGetProjectByIdResponseWithData,
+  mockProjectsResponseWithData,
+  mockUpdateProjectResponseWithData
+} from '../data/project-service.mock'
 
 @Injectable()
 export class ProjectServiceMock extends ProjectService {
@@ -13,7 +18,15 @@ export class ProjectServiceMock extends ProjectService {
     return of(mockProjectsResponseWithData)
   }
 
-  override getProjectId() {
-    return null
+  override getProjectByIdQuery() {
+    return of(mockGetProjectByIdResponseWithData)
+  }
+
+  override createProjectMutation() {
+    return of(mockCreateProjectResponseWithData)
+  }
+
+  override updateProjectMutation() {
+    return of(mockUpdateProjectResponseWithData)
   }
 }
