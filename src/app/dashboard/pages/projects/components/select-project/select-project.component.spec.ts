@@ -11,13 +11,7 @@ describe('SelectProjectComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [SelectProjectComponent, RouterTestingModule],
-      providers: [
-        Apollo,
-        {
-          provide: ProjectService,
-          useClass: ProjectServiceMock
-        }
-      ]
+      providers: [Apollo, { provide: ProjectService, useClass: ProjectServiceMock }]
     }).compileComponents()
   })
 
