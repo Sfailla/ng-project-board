@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 import { CreateProjectButtonComponent } from './create-project-button.component'
-import { debug, findNativeElement, setupTest } from '@testing/utils'
+import { findNativeElement, setupTest } from '@testing/utils'
 import { Router, provideRouter } from '@angular/router'
 
 describe('CreateProjectButtonComponent', () => {
@@ -16,8 +16,7 @@ describe('CreateProjectButtonComponent', () => {
   })
 
   it('should create', () => {
-    const { fixture, component } = setupTest(CreateProjectButtonComponent)
-    debug(fixture)
+    const { component } = setupTest(CreateProjectButtonComponent)
     expect(component).toBeTruthy()
   })
 
