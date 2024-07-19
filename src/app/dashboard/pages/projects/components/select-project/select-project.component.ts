@@ -1,6 +1,6 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
-import { ProjectService } from '@shared/services'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 import { CommonModule } from '@angular/common'
 import { RouterLink } from '@angular/router'
 import { Project } from '@generated/types'

@@ -4,8 +4,9 @@ import { LogoComponent } from '../logo/logo.component'
 import { RouterLink, RouterLinkActive } from '@angular/router'
 import { IonIconTitleDirective } from '@shared/directives'
 import { CommonModule } from '@angular/common'
-import { LocalStorageService, ProjectService } from '@shared/services'
+import { LocalStorageService } from '@shared/services'
 import { IonicRoutes, LocalStorageKeys, Routes } from '@shared/types'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 
 @Component({
   selector: 'app-side-menu',

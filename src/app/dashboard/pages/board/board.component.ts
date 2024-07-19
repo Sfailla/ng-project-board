@@ -9,7 +9,7 @@ import {
 import { PageWrapperComponent } from '@shared/components'
 import { IonicModule } from '@ionic/angular'
 import { Category, Project } from '@generated/types'
-import { CategoryService, ProjectService } from '@shared/services'
+import { CategoryService } from '@shared/services'
 import { CommonModule } from '@angular/common'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { map } from 'rxjs/internal/operators/map'
@@ -17,6 +17,7 @@ import { CdkDropList, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-dro
 import { Observable } from 'rxjs/internal/Observable'
 import { BoardSectionComponent } from './components'
 import { getDataAndSetSignals, SetSignals } from '@shared/utils'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 
 @Component({
   standalone: true,

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing'
 
 import { ProjectService } from './project.service'
 import { Apollo } from 'apollo-angular'
-import { ToastService } from '../toast/toast.service'
+import { ToastService } from '@shared/services'
 
 describe('ProjectService', () => {
   let service: ProjectService

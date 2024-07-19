@@ -10,7 +10,8 @@ import { IonicModule } from '@ionic/angular'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { Project } from '@generated/types'
-import { ModalService, ProjectService } from '@shared/services'
+import { ModalService } from '@shared/services'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 
 @Component({
   selector: 'app-project-details',
@@ -83,10 +84,10 @@ export class ProjectDetailsComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.handleInitializeForm()
+    this.initializeForm()
   }
 
-  handleInitializeForm(): void {
+  initializeForm(): void {
     this.form.patchValue({
       id: this.project().id,
       name: this.project().name,

@@ -16,12 +16,13 @@ import {
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { Category, OrderAndPositionInput, Task, TaskInput } from '@generated/types'
-import { ProjectService, TaskService } from '@shared/services'
+import { TaskService } from '@shared/services'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TaskComponent } from '../task/task.component'
 import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
 import { getDataAndSetSignals, SetSignals, getCategoryId, getCategoryStatus } from '@shared/utils'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 
 @Component({
   selector: 'app-board-section',

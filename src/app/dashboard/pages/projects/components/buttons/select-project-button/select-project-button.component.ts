@@ -5,8 +5,9 @@ import { NavController } from '@ionic/angular/standalone'
 import { Routes, IonicRoutes, ConfirmationHeader, ConfirmationMessage } from '@shared/types'
 import { Project } from '@generated/types'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
-import { ConfirmationService, ModalService, ProjectService } from '@shared/services'
+import { ConfirmationService, ModalService } from '@shared/services'
 import { ProjectDetailsComponent } from '../../project-details/project-details.component'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 
 @Component({
   selector: 'app-select-project-button',

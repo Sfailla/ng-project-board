@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { ProjectService } from '@shared/services'
+import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
 import { of } from 'rxjs/internal/observable/of'
 import {
   mockCreateProjectResponseWithData,
