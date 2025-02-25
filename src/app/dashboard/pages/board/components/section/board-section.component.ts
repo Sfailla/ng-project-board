@@ -16,13 +16,13 @@ import {
 } from '@angular/core'
 import { IonicModule } from '@ionic/angular'
 import { Category, OrderAndPositionInput, Task, TaskInput } from '@generated/types'
-import { TaskService } from '@shared/services'
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { TaskComponent } from '../task/task.component'
 import { map } from 'rxjs/internal/operators/map'
 import { Observable } from 'rxjs/internal/Observable'
 import { getDataAndSetSignals, SetSignals, getCategoryId, getCategoryStatus } from '@shared/utils'
 import { ProjectService } from 'src/app/dashboard/pages/projects/project/project.service'
+import { TaskService } from '../../task/task.service'
 
 @Component({
   selector: 'app-board-section',
@@ -56,9 +56,9 @@ export class BoardSectionComponent implements OnInit {
   categories = input.required<Category[]>()
   category = input.required<Category>()
 
-  taskService: TaskService = inject(TaskService)
-  projectService: ProjectService = inject(ProjectService)
-  destroyRef: DestroyRef = inject(DestroyRef)
+  taskService = inject(TaskService)
+  projectService = inject(ProjectService)
+  destroyRef = inject(DestroyRef)
 
   tasks = signal<Task[]>([])
 
