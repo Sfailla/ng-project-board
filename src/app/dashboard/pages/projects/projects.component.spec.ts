@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing'
 import { ProjectsComponent } from './projects.component'
-import { ProjectService } from '@shared/services'
 import { RouterTestingModule } from '@angular/router/testing'
 import { setupTest } from '@testing/utils'
 import { ProjectServiceMock } from '@testing/mocks/services'
 import { Apollo } from 'apollo-angular'
+import { ProjectService } from './project/project.service'
 
 describe('ProjectsComponent', () => {
   beforeEach(async () => {

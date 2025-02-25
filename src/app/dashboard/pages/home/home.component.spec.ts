@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing'
 import { HomeComponent } from './home.component'
-import { ProjectService } from '@shared/services'
 import { RouterTestingModule } from '@angular/router/testing'
 import { of } from 'rxjs/internal/observable/of'
 import { setupTest } from '@testing/utils'
+import { ProjectService } from '../projects/project/project.service'
 
 describe('HomeComponent', () => {
   beforeEach(async () => {
